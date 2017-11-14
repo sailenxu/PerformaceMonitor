@@ -6,4 +6,7 @@
 ## 2.实现方式：
 ### 1.获取cpu命令行
 adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
+将结果进行字符串解析
 ### 2.获取内存命令行
+adb shell dumpsys meminfo com.xstore.sevenfresh
+结果进行字符串解析
