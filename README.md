@@ -13,5 +13,7 @@ adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
 方法2：adb shell dumpsys meminfo|findstr Foreground
 返回当前应用的内存占用，好解析<br>
 ### 3.获取fps
+adb shell dumpsys gfxinfo com.xstore.sevenfresh
+此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps
 ### 4.获取流量
 ### 5.获取打开时间
