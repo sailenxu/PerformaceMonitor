@@ -9,7 +9,7 @@ import java.util.List;
 /***
  * cmdÃüÁîÖ´ĞĞÀà
  * @author xusai
- *
+ *packagename£ºcom.xstore.sevenfresh
  */
 public class CmdTool {
 
@@ -29,7 +29,7 @@ public class CmdTool {
 	 * Ö´ĞĞcmdÃüÁî
 	 * @param cmdString cmdÃüÁî
 	 */
-	public void singleCmd(String cmdString){
+	public static void singleCmd(String cmdString){
 		Runtime r=Runtime.getRuntime();
 		try {
 			Process process=r.exec("cmd /c "+cmdString);
@@ -43,7 +43,7 @@ public class CmdTool {
 	 * @param cmdString cmdÃüÁî
 	 * @return
 	 */
-	public List<String> getListByCmd(String cmdString){
+	public static List<String> getListByCmd(String cmdString){
 		List<String> list=new ArrayList<String>();
 		try {
 			Process process=Runtime.getRuntime().exec("cmd /c "+cmdString);
