@@ -23,4 +23,5 @@ public class MonitorData {
 		List<MemInfo> memInfos=new ArrayList<MemInfo>();
 		return memInfos;
 	}
+	
 }
