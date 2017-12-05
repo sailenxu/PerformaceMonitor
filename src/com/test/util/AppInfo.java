@@ -14,8 +14,6 @@ public class AppInfo {
 	}
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
-	 * @param packName 包名
-	 * @param device 设备udid
 	 * @return
 	 */
 	public static int getAPPCPU(){
@@ -24,6 +22,10 @@ public class AppInfo {
 		System.out.println();
 		return cpu;
 	}
+	/***
+	 * 获取指定应用的men瞬时占用情况
+	 * @return
+	 */
 	public static int getAPPMem(){
 		int mem=0;
 		

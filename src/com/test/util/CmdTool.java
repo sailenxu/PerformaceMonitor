@@ -26,7 +26,7 @@ public class CmdTool {
 
 	}
 	/***
-	 * 执行cmd命令
+	 * 执行cmd命令，获取返回值
 	 * @param cmdString cmd命令
 	 */
 	public static void singleCmd(String cmdString){
