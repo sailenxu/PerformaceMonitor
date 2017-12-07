@@ -60,6 +60,29 @@ public class CmdTool {
 		}
 		return list;
 	}
-	
+	/***
+	 * 执行cmd命令并将结果返回string类型
+	 * @param cmdString
+	 * @return
+	 */
+	public String getStringByCmd(String cmdString){
+		String getString="";
+		try {
+			Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
+			
+			InputStream in=process.getInputStream();
+			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+			String line=null;
+			while ((line=reader.readLine())!=null) {
+				getString=getString+line+"\n";
+			}
+			process.waitFor();
+			process.destroy();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return getString;
+	}
 	//执行cmd命令，并将结果返回string
 }
