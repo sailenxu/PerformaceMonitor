@@ -2,8 +2,8 @@ package com.test.main;
 
 import java.util.List;
 
-import com.test.data.MonitorData;
-import com.test.entity.CPUInfo;
+import com.test.perfordata.MonitorData;
+import com.test.perforentity.CPUInfo;
 
 /***
  * 性能数据处理

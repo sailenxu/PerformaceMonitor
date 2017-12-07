@@ -2,9 +2,9 @@ package com.test.main;
 
 import java.util.Date;
 
-import com.test.data.MonitorData;
-import com.test.entity.CPUInfo;
-import com.test.entity.MemInfo;
+import com.test.perfordata.MonitorData;
+import com.test.perforentity.CPUInfo;
+import com.test.perforentity.MemInfo;
 import com.test.util.AppInfo;
 /***
  * 开始性能监听，循环获取性能数据

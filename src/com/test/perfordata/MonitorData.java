@@ -1,10 +1,10 @@
-package com.test.data;
+package com.test.perfordata;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.test.entity.CPUInfo;
-import com.test.entity.MemInfo;
+import com.test.perforentity.CPUInfo;
+import com.test.perforentity.MemInfo;
 
 public class MonitorData {
 	/***

@@ -1,4 +1,4 @@
-package com.test.entity;
+package com.test.perforentity;
 
 public class MemInfo {
 	private String time;

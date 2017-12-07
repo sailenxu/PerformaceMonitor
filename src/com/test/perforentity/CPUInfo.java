@@ -1,4 +1,4 @@
-package com.test.entity;
+package com.test.perforentity;
 /***
  * 保存cpu瞬时的时间和值
  * @author xusaisai
