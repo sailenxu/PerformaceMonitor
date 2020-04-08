@@ -26,6 +26,7 @@ public class StartMonitor implements Runnable {
 	public void run() {
 		long time=System.currentTimeMillis();
 		running=true;
+		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
 		while (running) {
 			//获取cpu并存储数据
 			AppInfo appInfo=new AppInfo(packName, device);

@@ -12,7 +12,7 @@ public class AdbUtil {
 	private CmdTool cmdUtil = new CmdTool();
 	
 	/**
-	 * 执行adb devices指令，返回list集合，过滤启动信息
+	 * 执行adb指令，过滤启动信息,返回list集合
 	 * @param zhiling
 	 * @return
 	 */

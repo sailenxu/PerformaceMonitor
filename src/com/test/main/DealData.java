@@ -14,7 +14,6 @@ public class DealData {
 	
 	/**
 	 * 启动线程，让子线程跑30s，结束线程
-	 * 这是啥啊？都忘了……
 	 * push
 	 * @param args
 	 */

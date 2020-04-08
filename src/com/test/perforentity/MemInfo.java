@@ -1,5 +1,8 @@
 package com.test.perforentity;
 
+/**
+ * 保存内存的瞬间值和时间
+ */
 public class MemInfo {
 	private String time;
 	private int memValue;

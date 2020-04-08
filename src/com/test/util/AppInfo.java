@@ -1,7 +1,7 @@
 package com.test.util;
 /***
  * 获取指定应用的性能占用数据
- * @author xusaisai
+ * @author xusai
  *
  */
 public class AppInfo {
@@ -18,8 +18,7 @@ public class AppInfo {
 	 */
 	public static int getAPPCPU(){
 		int cpu=0;
-		
-		System.out.println();
+
 		return cpu;
 	}
 	/***
@@ -30,5 +29,10 @@ public class AppInfo {
 		int mem=0;
 		
 		return mem;
+	}
+
+	public static void main(String[] args) {
+		int cpuValue = AppInfo.getAPPCPU();
+		System.out.println(cpuValue);
 	}
 }
