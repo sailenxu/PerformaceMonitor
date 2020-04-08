@@ -1,7 +1,7 @@
 # 未完待续……
 # android性能测试平台
 ## 1.平台需求：
-桌面级应用，运行后桌面显示程序所有功能
+桌面级应用（可能是把，后边再说……），运行后桌面显示程序所有功能
 ### 1.设备信息查看
 ### 2.monkey测试
 ### 3.性能测试
@@ -17,7 +17,7 @@ adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
 方法1：adb shell dumpsys meminfo com.xstore.sevenfresh
 返回指定应用的内存情况，返回值较多，不好解析<br>
 方法2：adb shell dumpsys meminfo|findstr Foreground
-返回当前应用的内存占用，好解析<br>
+返回当前应用的内存占用，好解析。但是无法确认当前应用，如果app闪退，抓到的是luncher的内存了<br>
 ### 3.获取fps
 adb shell dumpsys gfxinfo com.xstore.sevenfresh
 此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps
