@@ -24,10 +24,15 @@ public class AppInfo {
 		double cpu=0;
 		AdbUtil adbUtil = new AdbUtil();
 		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell dumpsys cpuinfo|findstr "+packName);
-		String cpuValueString = result.get(0);//取到第一行13% 16464/com.jingdong.app.mall: 9.2% user + 4% kernel / faults: 10176 minor 15 major
-		//System.out.println(cpuValueString);
-		//进行解析，按照%分割
-		cpu = Double.valueOf(cpuValueString.split("%")[0]);//拿到13%，转为int保存
+		//增加判空，可能获取到的结果为空
+		if (result.size()!=0&&result!=null){
+			if (!result.get(0).equals("")&&result.get(0)!=null){
+				String cpuValueString = result.get(0);//取到第一行13% 16464/com.jingdong.app.mall: 9.2% user + 4% kernel / faults: 10176 minor 15 major
+				//进行解析，按照%分割
+				cpu = Double.valueOf(cpuValueString.split("%")[0]);//拿到13%，转为int保存
+			}
+		}
+		System.out.println("cpu:"+cpu);
 		return cpu;
 	}
 	/***

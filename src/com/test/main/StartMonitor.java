@@ -31,7 +31,6 @@ public class StartMonitor implements Runnable {
 		while (running) {
 			//获取cpu并存储数据
 			AppInfo appInfo=new AppInfo(packName, device);
-
 			CPUInfo cpuInfo=new CPUInfo(String.valueOf(time), appInfo.getAPPCPU());
 			MonitorData.getCPUinfolist().add(cpuInfo);
 			//获取内存并存储数据

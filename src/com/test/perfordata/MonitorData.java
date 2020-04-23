@@ -12,6 +12,8 @@ public class MonitorData {
 	 * @return
 	 */
 	public static List<CPUInfo> cpuInfos = new ArrayList<CPUInfo>();
+	public static List<MemInfo> memInfos = new ArrayList<MemInfo>();
+
 	public static List<CPUInfo> getCPUinfolist(){
 		return cpuInfos;
 	}
@@ -20,7 +22,6 @@ public class MonitorData {
 	 * @return
 	 */
 	public static List<MemInfo> getMeminfolist(){
-		List<MemInfo> memInfos=new ArrayList<MemInfo>();
 		return memInfos;
 	}
 	
