@@ -1,6 +1,7 @@
 package com.test.main;
 
 import java.util.Date;
+import java.util.List;
 
 import com.test.perfordata.MonitorData;
 import com.test.perforentity.CPUInfo;
@@ -27,16 +28,12 @@ public class StartMonitor implements Runnable {
 		long time=System.currentTimeMillis();
 		running=true;
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
-		int i=0;
 		while (running) {
 			//获取cpu并存储数据
 			AppInfo appInfo=new AppInfo(packName, device);
 
 			CPUInfo cpuInfo=new CPUInfo(String.valueOf(time), appInfo.getAPPCPU());
 			MonitorData.getCPUinfolist().add(cpuInfo);
-
-			System.out.println(time+":"+appInfo.getAPPCPU()+":");
-			i++;
 			//获取内存并存储数据
 			MemInfo memInfo=new MemInfo(String.valueOf(time), AppInfo.getAPPMem());
 			MonitorData.getMeminfolist().add(memInfo);

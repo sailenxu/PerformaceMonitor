@@ -11,8 +11,8 @@ public class MonitorData {
 	 * 存储cpu数据的集合
 	 * @return
 	 */
+	public static List<CPUInfo> cpuInfos = new ArrayList<CPUInfo>();
 	public static List<CPUInfo> getCPUinfolist(){
-		List<CPUInfo> cpuInfos=new ArrayList<CPUInfo>();
 		return cpuInfos;
 	}
 	/***
