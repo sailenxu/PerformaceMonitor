@@ -17,6 +17,7 @@ adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
   0% 16924/com.jingdong.app.mall:jdpush: 0% user + 0% kernel / faults: 40 minor
   0% 17019/com.jingdong.app.mall:WatchDogService: 0% user + 0% kernel / faults: 3 minor
 将结果进行字符串解析，获得第一行的13%即可
+2020.4.23：已实现，获取成功
 ### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.xstore.sevenfresh
 返回指定应用的内存情况，返回值较多，不好解析<br>

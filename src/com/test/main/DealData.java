@@ -7,13 +7,14 @@ import com.test.perforentity.CPUInfo;
 
 /***
  * 性能数据处理
- * @author xusaisai
+ * @author xusai
  *
  */
 public class DealData {
 	
 	/**
 	 * 启动线程，让子线程跑30s，结束线程
+	 * 只有线程结束后才能获得数据信息，没有实时性，需要达到边获取边输出的形式：目前加sleep是为了让主线程暂停，如果不加的话主线程结束，子线程也就获取结束了，桌面级应用主线程不会结束
 	 * push
 	 * @param args
 	 */
@@ -25,7 +26,7 @@ public class DealData {
 		Thread t1=new Thread(monitor);
 		t1.start();
 		try {
-			Thread.sleep(5*1000);
+			Thread.sleep(50*1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
