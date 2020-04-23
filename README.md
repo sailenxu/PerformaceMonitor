@@ -12,7 +12,11 @@
 ## 2.实现方式：
 ### 1.获取cpu命令行
 adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
-将结果进行字符串解析
+结果会有多行，因为一般app都有server服务进程
+  13% 16464/com.jingdong.app.mall: 9.2% user + 4% kernel / faults: 10176 minor 15 major
+  0% 16924/com.jingdong.app.mall:jdpush: 0% user + 0% kernel / faults: 40 minor
+  0% 17019/com.jingdong.app.mall:WatchDogService: 0% user + 0% kernel / faults: 3 minor
+将结果进行字符串解析，获得第一行的13%即可
 ### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.xstore.sevenfresh
 返回指定应用的内存情况，返回值较多，不好解析<br>

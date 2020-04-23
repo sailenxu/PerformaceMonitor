@@ -6,9 +6,9 @@ package com.test.perforentity;
  */
 public class CPUInfo {
 	private String time;
-	private int cpuValue;
+	private double cpuValue;
 	
-	public CPUInfo(String time,int cpuValue) {
+	public CPUInfo(String time,double cpuValue) {
 		// TODO Auto-generated constructor stub
 		this.time=time;
 		this.cpuValue=cpuValue;
@@ -17,7 +17,7 @@ public class CPUInfo {
 	public String time(){
 		return time;
 	}
-	public int cpuValue(){
+	public double cpuValue(){
 		return cpuValue;
 	}
 	

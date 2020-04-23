@@ -18,14 +18,14 @@ public class DealData {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String packName="";
-		String device="";
+		String packName="com.jingdong.app.mall";
+		String device="Q5S5T19529000632";
 
 		StartMonitor monitor=new StartMonitor(packName,device);
 		Thread t1=new Thread(monitor);
 		t1.start();
 		try {
-			Thread.sleep(30*1000);
+			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,6 +34,7 @@ public class DealData {
 		// TODO Auto-generated method stub
 		//打印获取到的cpu数据
 		List<CPUInfo> cpuInfos=MonitorData.getCPUinfolist();
+		System.out.println(cpuInfos.size()+"cpuuuuuuuuuuuuuuu");
 		for(CPUInfo info:cpuInfos){
 			System.out.println(info.cpuValue());
 		}
