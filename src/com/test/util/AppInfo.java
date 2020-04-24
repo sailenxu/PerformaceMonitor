@@ -1,5 +1,7 @@
 package com.test.util;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import java.util.List;
 
 /***
@@ -10,6 +12,7 @@ import java.util.List;
 public class AppInfo {
 	private String packName;
 	private String device;
+	private AdbUtil adbUtil=new AdbUtil();
 
 	public AppInfo(String packName,String device) {
 		this.packName=packName;
@@ -22,8 +25,7 @@ public class AppInfo {
 	 */
 	public double getAPPCPU(){
 		double cpu=0;
-		AdbUtil adbUtil = new AdbUtil();
-		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+packName);//get的为空
+		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+packName);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){
@@ -38,9 +40,18 @@ public class AppInfo {
 	 * 获取指定应用的men瞬时占用情况
 	 * @return
 	 */
-	public static int getAPPMem(){
+	public int getAPPMem(){
 		int mem=0;
-		
+		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell dumpsys meminfo -s "+packName);
+		//可能获取到的结果为空，或进程不存在
+		if (result.size()!=0&&result!=null){
+			for (String ss:result){
+				if (ss.contains("TOTAL")){
+					mem = Integer.parseInt(ss.split("\\s+")[1]);
+					System.out.println(mem);
+				}
+			}
+		}
 		return mem;
 	}
 
