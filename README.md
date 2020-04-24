@@ -20,7 +20,10 @@ adb shell dumpsys cpuinfo|findstr com.xstore.sevenfresh
 ~~~
 将结果进行字符串解析，获得第一行的13%即可  
 华为手机使用此命令时有延迟，打开应用后，刚开始无法获取到cpu数据
-网上评论，cpuinfo是一段时间的平均值，受其他命令影响大，尤其是dumpsys meminfo,建议用busybox top -b -n 1
+网上评论，cpuinfo是一段时间的平均值，受其他命令影响大，尤其是dumpsys meminfo,建议用top  
+使用top时，包名显示不全，华为手机，不知道其他手机是否如此,暂时使用自定义显示内容来解决  
+adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 1|findstr com.jingdong.app.mall
+由于此命令会一直输出，并不是一次请求就结束的，执行命令后，后边的代码不再执行了，无法获取到cpu值  
 
 ### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.xstore.sevenfresh

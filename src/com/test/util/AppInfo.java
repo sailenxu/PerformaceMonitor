@@ -23,16 +23,19 @@ public class AppInfo {
 	public double getAPPCPU(){
 		double cpu=0;
 		AdbUtil adbUtil = new AdbUtil();
-		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell dumpsys cpuinfo|findstr "+packName);
+		System.out.println("11111+++++"+cpu);
+		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell top -o ARGS -o %CPU -d 0.5|findstr "+packName);//get的为空
+		System.out.println("2222+++++"+cpu);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){
 				String cpuValueString = result.get(0);//取到第一行13% 16464/com.jingdong.app.mall: 9.2% user + 4% kernel / faults: 10176 minor 15 major
 				//进行解析，按照%分割
-				cpu = Double.valueOf(cpuValueString.split("%")[0]);//拿到13%，转为int保存
+				cpu = Double.valueOf(cpuValueString.split("\\t")[0]);//拿到13%，转为int保存
+				System.out.println("cpu+++++"+cpu);
 			}
 		}
-		System.out.println("cpu:"+cpu);
+		System.out.println("cpu:"+cpu+":"+result.size());
 		return cpu;
 	}
 	/***

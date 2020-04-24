@@ -25,7 +25,6 @@ public class DealData {
 		StartMonitor monitor=new StartMonitor(packName,device);
 		Thread t1=new Thread(monitor);
 		t1.start();
-        System.out.println(MonitorData.getCPUinfolist().size()+":cpuuuuuu");
 		try {
 			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
