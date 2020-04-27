@@ -35,6 +35,15 @@ public class AdbUtil {
 		String adbpath = System.getProperty("user.dir")+"\\adb.exe";
 		return adbpath;
 	}
+
+	/**
+	 * 执行adb命令，不返回数据
+	 * @param zhiling
+	 */
+	public void runADB(String zhiling){
+		cmdUtil.getListByCmd(zhiling);
+	}
+
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
 //		AdbUtil adbUtil=new AdbUtil();

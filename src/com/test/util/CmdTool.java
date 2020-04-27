@@ -1,6 +1,7 @@
 package com.test.util;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -84,5 +85,16 @@ public class CmdTool {
 		}
 		return getString;
 	}
-	//执行cmd命令，并将结果返回string
+
+	/**
+	 * 执行cmd命令，返回bufferreader，将结果流返回，实时获取结果
+	 * @param cmdString
+	 * @return
+	 */
+	public BufferedReader getBRByCmd(String cmdString) throws IOException {
+		Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
+		InputStream in=process.getInputStream();
+		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+		return reader;
+	}
 }

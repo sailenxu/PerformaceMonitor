@@ -4,6 +4,12 @@
 桌面级应用（可能是把，后边再说……），运行后桌面显示程序所有功能
 ### 1.设备信息查看
 ### 2.monkey测试
+点击执行monkey，进行monkey测试，实时打印日志  
+如何做到实时日志获取并打印到前台？  
+方法1：monkey命令执行结果输出到本地一个txt文件中，代码读取文件内容，实时打印  
+我自己想出来的方法，并没有去写，仔细想一下就特么不好搞……txt一边读一边写，那不是搞死，哈哈  
+方法2：执行cmd命令时，肯定需要流来读取结果的呀，把流返回来，直接将流输出到前台不就可以了，看来IO那块没白学  
+具体见cmdtool类
 ### 3.性能测试
 多线程应用
 通过adb实时监控device的性能，包括时间，内存，cpu，流量，fps
@@ -33,12 +39,13 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdo
 这样成功获取cpu值
 ### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.jingdong.app.mall  
-返回指定应用的内存情况，获取total值作为内存参数
+返回指定应用的内存情况，获取total值作为内存参数  
 方法2：adb shell dumpsys meminfo|findstr Foreground  
 返回当前应用的内存占用，好解析。但是无法确认当前应用，如果app闪退，抓到的是luncher的内存了  
-
+使用方法1获取成功
 ### 3.获取fps
 adb shell dumpsys gfxinfo com.xstore.sevenfresh
 此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps
 ### 4.获取流量
+
 ### 5.获取打开时间
