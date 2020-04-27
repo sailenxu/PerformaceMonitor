@@ -55,6 +55,7 @@ public class AppInfo {
 		return mem;
 	}
 
+
 //	public static void main(String[] args) {
 //		AppInfo appInfo=new AppInfo("com.jingdong.app.mall", "Q5S5T19529000632");
 //		int cpuValue = appInfo.getAPPCPU();

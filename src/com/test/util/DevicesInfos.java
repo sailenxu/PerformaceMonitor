@@ -19,7 +19,7 @@ public class DevicesInfos {
 				if (result[1].equals("device")) {
 					String device=result[0];
 					deviceList.add(device);
-				}else if (result[1]=="offline") {
+				}else if (result[1].equals("offline")) {
 					System.out.println(result[0]+"设备离线，请重新插拔！！！");
 				}else {
 					System.out.println("设备还是有问题，自己检查吧！！！");
@@ -30,5 +30,13 @@ public class DevicesInfos {
 			}
 		}
 		return deviceList;
+	}
+	public String[] getDevicesArray(){
+		List<String> result = getDevicesID();
+		String[] devices=new String[result.size()];
+		for (int i=0; i<result.size(); i++){
+			devices[i]=result.get(i);
+		}
+		return devices;
 	}
 }
