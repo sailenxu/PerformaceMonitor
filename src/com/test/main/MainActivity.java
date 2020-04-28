@@ -1,11 +1,14 @@
 package com.test.main;
 
+import com.test.perfordata.DeviceAndPack;
 import com.test.util.AppInfo;
 import com.test.util.DevicesInfos;
 import com.test.util.InfoByDevice;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
  */
 public class MainActivity {
     public static void main(String[] args) {
+        DeviceAndPack deviceAndPack = new DeviceAndPack();
+
         JFrame jFrame = new JFrame("PerformanceMonitor--by sai");
 
         jFrame.setSize(1500, 1000);
@@ -37,8 +42,18 @@ public class MainActivity {
         JLabel device=new JLabel("device：");
         panel.add(device);
         DevicesInfos devicesInfos = new DevicesInfos();
-        String[] packBox=devicesInfos.getDevicesArray();
-        JComboBox packCombo = new JComboBox(packBox);
+        String[] packBoxValue=devicesInfos.getDevicesArray();
+        JComboBox packCombo = new JComboBox(packBoxValue);
+        packCombo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange()==e.SELECTED){
+                    System.out.println("12322131");
+                }
+            }
+        });
+
+
         panel.add(packCombo);
 
         //添加包名选择
@@ -51,6 +66,18 @@ public class MainActivity {
         JList jList=new JList();
         JScrollPane jp=new JScrollPane(jList);
         jp.setPreferredSize(new Dimension(100, 200));
+
+        jComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) {
+                    //选择包名后，就可以监听应用信息
+                    System.out.println("package::::" + jComboBox.getSelectedItem());
+                    deviceAndPack.setPackagename(String.valueOf(jComboBox.getSelectedItem()));
+                }
+            }
+        });
+
         panel.add(jComboBox);
 
         jFrame.add(panel);
