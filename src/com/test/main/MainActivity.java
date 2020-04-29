@@ -44,14 +44,21 @@ public class MainActivity {
         DevicesInfos devicesInfos = new DevicesInfos();
         String[] packBoxValue=devicesInfos.getDevicesArray();
         JComboBox packCombo = new JComboBox(packBoxValue);
-        packCombo.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange()==e.SELECTED){
-                    System.out.println("12322131");
+        if (packBoxValue.length>1) {
+            packCombo.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == e.SELECTED) {
+                        System.out.println("12322131");
+                        deviceAndPack.setDeivceid(String.valueOf(packCombo.getSelectedItem()));
+                    }
                 }
-            }
-        });
+            });
+        }else if(packBoxValue.length==1){
+            deviceAndPack.setDeivceid(packBoxValue[0]);
+        }else{
+            System.out.println("device is exception");
+        }
 
 
         panel.add(packCombo);
@@ -72,8 +79,8 @@ public class MainActivity {
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
                     //选择包名后，就可以监听应用信息
-                    System.out.println("package::::" + jComboBox.getSelectedItem());
                     deviceAndPack.setPackagename(String.valueOf(jComboBox.getSelectedItem()));
+                    System.out.println(deviceAndPack.getDeivceid()+"::::"+deviceAndPack.getPackagename());
                 }
             }
         });

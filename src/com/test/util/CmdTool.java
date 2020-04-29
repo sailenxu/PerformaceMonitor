@@ -17,15 +17,15 @@ public class CmdTool {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		CmdTool cmdTool=new CmdTool();
-		List<String> list=cmdTool.getListByCmd("adb shell dumpsys meminfo|findstr Foreground");
-		for(String s:list){
-			System.out.println(s+"****");
-		}
-
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		CmdTool cmdTool=new CmdTool();
+//		List<String> list=cmdTool.getListByCmd("adb shell dumpsys meminfo|findstr Foreground");
+//		for(String s:list){
+//			System.out.println(s+"****");
+//		}
+//
+//	}
 	/***
 	 * 执行cmd命令，获取返回值
 	 * @param cmdString cmd命令

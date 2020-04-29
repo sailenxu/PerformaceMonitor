@@ -19,9 +19,9 @@ public class Monkey {
         return br;
     }
 
-    public static void main(String[] args) throws IOException {
-        Monkey monkey=new Monkey("com.jingdong.app.mall", "Q5S5T19529000632");
-        monkey.monkeyTest("1000", "30");
-    }
+//    public static void main(String[] args) throws IOException {
+//        Monkey monkey=new Monkey("com.jingdong.app.mall", "Q5S5T19529000632");
+//        monkey.monkeyTest("1000", "30");
+//    }
 
 }
