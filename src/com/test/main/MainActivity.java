@@ -17,13 +17,41 @@ import java.util.List;
  * 20200427:开始搞界面
  */
 public class MainActivity {
+
+    public JComboBox packComboBox(){
+        String deviceAndPack = DeviceAndPack.deivceid;
+        System.out.println(deviceAndPack);
+        String[] comboValue=new InfoByDevice(deviceAndPack).getAllPack();
+
+        JComboBox jComboBox = new JComboBox(comboValue);
+        JList jList=new JList();
+        JScrollPane jp=new JScrollPane(jList);
+        jp.setPreferredSize(new Dimension(100, 200));
+
+        jComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED) {
+                    //选择包名后，就可以监听应用信息
+                    DeviceAndPack dp=new DeviceAndPack();
+                    dp.setDeivceid(deviceAndPack);
+                    dp.setPackagename(String.valueOf(jComboBox.getSelectedItem()));
+                    System.out.println(DeviceAndPack.deivceid+"::::"+DeviceAndPack.packagename);
+                }
+            }
+        });
+
+        return jComboBox;
+    }
+
     public static void main(String[] args) {
+        MainActivity mainActivity = new MainActivity();
         DeviceAndPack deviceAndPack = new DeviceAndPack();
 
         JFrame jFrame = new JFrame("PerformanceMonitor--by sai");
 
         jFrame.setSize(1500, 1000);
-        jFrame.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 50));
+        jFrame.setLayout(new FlowLayout(FlowLayout.LEFT));
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -33,7 +61,7 @@ public class MainActivity {
             }
         });
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 500, 500));
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBackground(Color.YELLOW);
 //        JButton bt1=new JButton("TEST");
 //        panel.add(bt1);
@@ -49,43 +77,23 @@ public class MainActivity {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == e.SELECTED) {
-                        System.out.println("12322131");
+                        //选择设备后，需要给device赋值
                         deviceAndPack.setDeivceid(String.valueOf(packCombo.getSelectedItem()));
+                        //并且要强制让package下拉框刷新，来获取最新的packages
                     }
                 }
             });
         }else if(packBoxValue.length==1){
             deviceAndPack.setDeivceid(packBoxValue[0]);
+            System.out.println("111111111:"+deviceAndPack.getDeivceid());
         }else{
             System.out.println("device is exception");
         }
-
-
         panel.add(packCombo);
 
         //添加包名选择
-        InfoByDevice info=new InfoByDevice("Q5S5T19529000632");
-        String[] comboValue=info.getAllPack();
-
-        JLabel label=new JLabel("包名：");
-        panel.add(label);
-        JComboBox jComboBox = new JComboBox(comboValue);
-        JList jList=new JList();
-        JScrollPane jp=new JScrollPane(jList);
-        jp.setPreferredSize(new Dimension(100, 200));
-
-        jComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    //选择包名后，就可以监听应用信息
-                    deviceAndPack.setPackagename(String.valueOf(jComboBox.getSelectedItem()));
-                    System.out.println(deviceAndPack.getDeivceid()+"::::"+deviceAndPack.getPackagename());
-                }
-            }
-        });
-
-        panel.add(jComboBox);
+        JComboBox pack=mainActivity.packComboBox();
+        panel.add(pack);
 
         jFrame.add(panel);
 
