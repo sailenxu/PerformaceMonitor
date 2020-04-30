@@ -15,16 +15,12 @@ public class InfoByDevice {
         String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
         System.out.println(command);
         List<String> result= adbUtil.getListByADB(command);
-        System.out.println("size:::"+result.size());
         String[] packages=new String[result.size()];
         for (int i=0; i<result.size(); i++){
             if (result.get(i)!=null&&!result.get(i).equals("")) {
-                System.out.println(result.get(i) + "++++");
-                System.out.println(result.get(i).split(":").length + ":length");
                 packages[i] = result.get(i).split(":")[1];
             }
         }
-        System.out.println("length:::"+packages.length);
         return packages;
     }
 }

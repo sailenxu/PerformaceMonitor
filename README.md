@@ -6,7 +6,9 @@
 写页面的时候遇到问题了：创建了deviceandpack类，用来存device和pack，一旦选择就赋值，但是每次用的时候都要初始化类，才可以调里面的get方法，初始化后前面赋值就没啦！get为null  
 是不是new一个对象，对象的属性都是null？  
 当然了，两个类中分别new一个对象，是两个不同的对象，对象属性可以分别进行赋值  
-所以讲device和package变为静态变量，可以不用new直接使用，如果要new的话需要重新赋值
+所以将device和package变为静态变量，可以不用new直接使用，如果要new的话需要重新赋值  
+又遇到了问题，deviceandpack类中有两个静态变量device和pack，在不同的时间对两个变量赋值，但是又不能new对象，如果new的话另一个值就没了  
+
 ### 1.设备信息查看
 ### 2.monkey测试
 点击执行monkey，进行monkey测试，实时打印日志  

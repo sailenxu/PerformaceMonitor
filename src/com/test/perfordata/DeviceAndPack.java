@@ -10,10 +10,4 @@ public class DeviceAndPack {
     public void setPackagename(String packagename) {
         this.packagename = packagename;
     }
-    public String getDeivceid() {
-        return deivceid;
-    }
-    public String getPackagename() {
-        return packagename;
-    }
 }

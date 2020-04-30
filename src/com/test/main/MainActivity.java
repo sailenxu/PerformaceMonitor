@@ -81,8 +81,6 @@ public class MainActivity {
         JComboBox packJComboBox=mainActivity.packComboBox();
         panel.add(packJComboBox);
 
-
-
         if (devicesArray.length>1) {
             packCombo.addItemListener(new ItemListener() {
                 @Override
