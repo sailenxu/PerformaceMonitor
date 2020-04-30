@@ -3,14 +3,6 @@
 ## 1.平台需求：
 桌面级应用（可能是把，后边再说……），运行后桌面显示程序所有功能
 有刷新按钮，刷新后对device和package进行重置，device下拉框显示所有已连接设备，选择deviceis，显示设备信息、package下拉框显示所有已安装应用，选择package包名，就可以对该应用的性能指数进行监控  
-写页面的时候遇到问题了：创建了deviceandpack类，用来存device和pack，一旦选择就赋值，但是每次用的时候都要初始化类，才可以调里面的get方法，初始化后前面赋值就没啦！get为null  
-是不是new一个对象，对象的属性都是null？  
-当然了，两个类中分别new一个对象，是两个不同的对象，对象属性可以分别进行赋值  
-所以将device和package变为静态变量，可以不用new直接使用，如果要new的话需要重新赋值  
-又遇到了问题，deviceandpack类中有两个静态变量device和pack，在不同的时间对两个变量赋值，但是又不能new对象，如果new的话另一个值就没了  
-我擦，我好像给自己整蒙圈了，new的对象只在当前类下有效啊，我定义的deviceandpack类并不是全局的static类，里面的device不能全局使用，static这块需要好好复习一下了  
-通过实践证明，device和package设置为static后，new对象，他们的属性不会为null，所以上面遇到的问题理解错误  
-cao!解决了，device和package实现了联动，并且选择后成功存入deviceandpack，后边都可以拿来用了
 ## 1.设备信息查看
 ## 2.monkey测试
 点击执行monkey，进行monkey测试，实时打印日志  
@@ -62,5 +54,13 @@ adb shell dumpsys gfxinfo com.xstore.sevenfresh
 
 
 ## 4.问题及解决方法
+### 1.写页面的时候遇到问题了：创建了deviceandpack类，用来存device和pack，一旦选择就赋值，但是每次用的时候都要初始化类，才可以调里面的get方法，初始化后前面赋值就没啦！get为null  
+是不是new一个对象，对象的属性都是null？  
+当然了，两个类中分别new一个对象，是两个不同的对象，对象属性可以分别进行赋值  
+所以将device和package变为静态变量，可以不用new直接使用
+又遇到了问题，deviceandpack类中有两个静态变量device和pack，在不同的时间对两个变量赋值，但是又不能new对象，如果new的话另一个值就没了  
+我擦，我好像给自己整蒙圈了，new的对象只在当前类下有效啊，我定义的deviceandpack类并不是全局的static类，里面的device不能全局使用，static这块需要好好复习一下了  
+通过实践证明，device和package设置为static后，new对象，他们的属性不会为null，所以上面遇到的问题理解错误  
+cao!解决了，device和package实现了联动，并且选择后成功存入deviceandpack，后边都可以拿来用了
 ### 1.个对象有两个属性a和b，要在某个地方对a赋值，在另外一个地方对b赋值，这咋弄？不能在两个地方new吧，那就是两个对象了
 将a和b设为static静态方法，两个地方new对象，不会对a和b的值有影响，可以在两个地方分别new对象来进行a和b的set  
