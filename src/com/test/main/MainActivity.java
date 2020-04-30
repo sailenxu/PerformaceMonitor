@@ -21,7 +21,7 @@ public class MainActivity {
     public JComboBox packComboBox(){
         String deviceAndPack = DeviceAndPack.deivceid;
         System.out.println(deviceAndPack);
-        String[] comboValue=new InfoByDevice(deviceAndPack).getAllPack();
+        String[] comboValue=new InfoByDevice().getAllPack();
 
         JComboBox jComboBox = new JComboBox(comboValue);
         JList jList=new JList();
@@ -46,7 +46,6 @@ public class MainActivity {
 
     public static void main(String[] args) {
         MainActivity mainActivity = new MainActivity();
-        DeviceAndPack deviceAndPack = new DeviceAndPack();
 
         JFrame jFrame = new JFrame("PerformanceMonitor--by sai");
 
@@ -70,30 +69,40 @@ public class MainActivity {
         JLabel device=new JLabel("device：");
         panel.add(device);
         DevicesInfos devicesInfos = new DevicesInfos();
-        String[] packBoxValue=devicesInfos.getDevicesArray();
-        JComboBox packCombo = new JComboBox(packBoxValue);
-        if (packBoxValue.length>1) {
+        String[] devicesArray=devicesInfos.getDevicesArray();
+        JComboBox packCombo = new JComboBox(devicesArray);
+
+
+        panel.add(packCombo);
+
+        //添加包名选择
+        JLabel packagename=new JLabel("device：");
+        panel.add(packagename);
+        JComboBox packJComboBox=mainActivity.packComboBox();
+        panel.add(packJComboBox);
+
+
+
+        if (devicesArray.length>1) {
             packCombo.addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == e.SELECTED) {
                         //选择设备后，需要给device赋值
-                        deviceAndPack.setDeivceid(String.valueOf(packCombo.getSelectedItem()));
+                        new DeviceAndPack().setDeivceid(String.valueOf(packCombo.getSelectedItem()));
+                        System.out.println(DeviceAndPack.deivceid+":::::::::::");
                         //并且要强制让package下拉框刷新，来获取最新的packages
+                        packJComboBox.removeAllItems();
+                        packJComboBox.setModel(new DefaultComboBoxModel<>(new InfoByDevice().getAllPack()));
                     }
                 }
             });
-        }else if(packBoxValue.length==1){
-            deviceAndPack.setDeivceid(packBoxValue[0]);
-            System.out.println("111111111:"+deviceAndPack.getDeivceid());
+        }else if(devicesArray.length==1){
+            new DeviceAndPack().setDeivceid(devicesArray[0]);
         }else{
             System.out.println("device is exception");
         }
-        panel.add(packCombo);
 
-        //添加包名选择
-        JComboBox pack=mainActivity.packComboBox();
-        panel.add(pack);
 
         jFrame.add(panel);
 

@@ -1,23 +1,30 @@
 package com.test.util;
 
+import com.sun.org.apache.regexp.internal.RE;
+import com.test.perfordata.DeviceAndPack;
+
 import java.util.List;
 
 public class InfoByDevice {
-    private String device;
     private AdbUtil adbUtil=new AdbUtil();
-    public InfoByDevice(String device){
-        this.device = device;
-    }
     /**
      * 获取设备已安装app
      * @return
      */
     public String[] getAllPack(){
-        List<String> result= adbUtil.getListByADB("adb -s "+device+" shell pm list package");
+        String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
+        System.out.println(command);
+        List<String> result= adbUtil.getListByADB(command);
+        System.out.println("size:::"+result.size());
         String[] packages=new String[result.size()];
         for (int i=0; i<result.size(); i++){
-            packages[i] = result.get(i).split(":")[1];
+            if (result.get(i)!=null&&!result.get(i).equals("")) {
+                System.out.println(result.get(i) + "++++");
+                System.out.println(result.get(i).split(":").length + ":length");
+                packages[i] = result.get(i).split(":")[1];
+            }
         }
+        System.out.println("length:::"+packages.length);
         return packages;
     }
 }

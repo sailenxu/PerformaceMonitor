@@ -19,10 +19,12 @@ public class AdbUtil {
 	public List<String> getListByADB(String zhiling){
 		List<String> adblist=new ArrayList<String>();
 		for(String s:cmdUtil.getListByCmd(zhiling)){
-			if (s.contains("daemon")) {
-				continue;
-			}else {
-				adblist.add(s);
+			if (s!=null&&!s.equals("")) {//去掉换行，有的手机会将换行返回
+				if (s.contains("daemon")) {
+					continue;
+				} else {
+					adblist.add(s.trim());
+				}
 			}
 		}
 		return adblist;
