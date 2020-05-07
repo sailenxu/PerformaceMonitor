@@ -9,6 +9,26 @@ public class DeviceInfo {
 	private CmdTool cmdTool=new CmdTool();
 	private String deviceId= DeviceAndPack.deivceid;
 
+	/**
+	 * 获取手机品牌
+	 * @return
+	 */
+	public String getBrand() {
+		String brand = "";
+		if (deviceId != null && deviceId != "") {
+			List<String> list = cmdTool.getListByCmd("adb -s " + deviceId + " shell getprop ro.product.brand");
+			for (String s : list) {
+				if (s != null && s != "") {
+					brand = s;
+					break;
+				}
+			}
+		}
+		if (brand.equals("") || brand == null) {
+			brand = "sorry，没获取到……";
+		}
+		return brand;
+	}
 	/***
 	 * 获取设备的产品型号
 	 * @return
@@ -16,7 +36,7 @@ public class DeviceInfo {
 	public String getOs(){
 		String os="";
 		if (deviceId!=null&&deviceId!="") {
-			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell getprop ro.product.model");
+			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.product.model");
 			for(String s:list){
 				if (s!=null&&s!="") {
 					if (s.contains("=")) {
@@ -63,7 +83,6 @@ public class DeviceInfo {
 	}
 	/***
 	 * 获取手机系统版本
-	 * @param deviceId
 	 * @return
 	 */
 	public String getOsVersionCode(){
@@ -84,7 +103,6 @@ public class DeviceInfo {
 	}
 	/***
 	 * 获取手机imei
-	 * @param deviceId
 	 * @return
 	 */
 	public String getIMEI(){
