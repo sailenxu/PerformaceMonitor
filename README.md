@@ -62,5 +62,8 @@ adb shell dumpsys gfxinfo com.xstore.sevenfresh
 我擦，我好像给自己整蒙圈了，new的对象只在当前类下有效啊，我定义的deviceandpack类并不是全局的static类，里面的device不能全局使用，static这块需要好好复习一下了  
 通过实践证明，device和package设置为static后，new对象，他们的属性不会为null，所以上面遇到的问题理解错误  
 cao!解决了，device和package实现了联动，并且选择后成功存入deviceandpack，后边都可以拿来用了
-### 1.个对象有两个属性a和b，要在某个地方对a赋值，在另外一个地方对b赋值，这咋弄？不能在两个地方new吧，那就是两个对象了
+### 2.个对象有两个属性a和b，要在某个地方对a赋值，在另外一个地方对b赋值，这咋弄？不能在两个地方new吧，那就是两个对象了
 将a和b设为static静态方法，两个地方new对象，不会对a和b的值有影响，可以在两个地方分别new对象来进行a和b的set  
+### 3.JComboBox组件只有一个值时，监听不生效
+itemlistener和actionlistener两个监听器，只有在改变的时候才会执行，当combobox只有一个值时，点击不会触发监听器，因此不会执行  
+做一个combobox值得判断，当=1时直接进行赋值，>1时才会走监听器

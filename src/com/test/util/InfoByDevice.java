@@ -13,7 +13,6 @@ public class InfoByDevice {
      */
     public String[] getAllPack(){
         String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
-        System.out.println(command);
         List<String> result= adbUtil.getListByADB(command);
         String[] packages=new String[result.size()];
         for (int i=0; i<result.size(); i++){

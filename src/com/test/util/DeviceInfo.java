@@ -1,25 +1,21 @@
 package com.test.util;
 
+import com.test.perfordata.DeviceAndPack;
+
 import java.util.List;
 
 public class DeviceInfo {
 	private AdbUtil adbUtil = new AdbUtil();
 	private CmdTool cmdTool=new CmdTool();
-	private String deviceId;
-	
-	public DeviceInfo(String deviceId) {
-		// TODO Auto-generated constructor stub
-		this.deviceId=deviceId;
-	}
+	private String deviceId= DeviceAndPack.deivceid;
+
 	/***
 	 * 获取设备的产品型号
-	 * @param deviceId
 	 * @return
 	 */
 	public String getOs(){
 		String os="";
 		if (deviceId!=null&&deviceId!="") {
-			
 			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell getprop ro.product.model");
 			for(String s:list){
 				if (s!=null&&s!="") {
@@ -38,13 +34,12 @@ public class DeviceInfo {
 	}
 	/***
 	 * 获取手机分辨率
-	 * @param deviceId
 	 * @return
 	 */
 	public String getDp(){
 		String dp="";
 		if (deviceId!=null&&deviceId!="") {
-			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell dumpsys window|findstr init");
+			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys window|findstr init");
 			for(String s:list){
 				if(s!=null&&s!=""){
 					if (s.contains("init")) {

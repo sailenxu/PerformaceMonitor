@@ -2,15 +2,13 @@ package com.test.main;
 
 import com.test.perfordata.DeviceAndPack;
 import com.test.util.AppInfo;
+import com.test.util.DeviceInfo;
 import com.test.util.DevicesInfos;
 import com.test.util.InfoByDevice;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.List;
 
 /**
@@ -23,26 +21,40 @@ public class MainActivity {
         JComboBox deviceJComeboBox = new JComboBox(devicesArray);
 
         if (devicesArray.length>1) {
+            new DeviceAndPack().setDeivceid(devicesArray[0]);
+            refreshPackCombobox(packJComboBox);
             deviceJComeboBox.addItemListener(new ItemListener() {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == e.SELECTED) {
                         //选择设备后，需要给device赋值
-                        DeviceAndPack dandp = new DeviceAndPack();
-                        dandp.setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
+                        new DeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
                         System.out.println(DeviceAndPack.deivceid+":::::::::::");
                         //并且要强制让package下拉框刷新，来获取最新的packages
-                        packJComboBox.removeAllItems();
-                        packJComboBox.setModel(new DefaultComboBoxModel<>(new InfoByDevice().getAllPack()));
+                        refreshPackCombobox(packJComboBox);
                     }
                 }
             });
         }else if(devicesArray.length==1){
             new DeviceAndPack().setDeivceid(devicesArray[0]);
+            //刷新pack下拉框
+            refreshPackCombobox(packJComboBox);
         }else{
             System.out.println("device is exception");
         }
         return deviceJComeboBox;
+    }
+    public void refreshDeviceCombobox(JComboBox deviceCombobox){
+        deviceCombobox.removeAllItems();
+        deviceCombobox.setModel(new DefaultComboBoxModel<>(new DevicesInfos().getDevicesArray()));
+    }
+    /**
+     * 刷新包名下拉框
+     * @param packJComboBox
+     */
+    public void refreshPackCombobox(JComboBox packJComboBox){
+        packJComboBox.removeAllItems();
+        packJComboBox.setModel(new DefaultComboBoxModel<>(new InfoByDevice().getAllPack()));
     }
 
     public JComboBox packComboBox(){
@@ -88,6 +100,9 @@ public class MainActivity {
 //        JButton bt1=new JButton("TEST");
 //        panel.add(bt1);
 
+        JButton refreshButton=new JButton("刷新");
+
+
         //添加设备选择
         JLabel device=new JLabel("device：");
         panel.add(device);
@@ -95,11 +110,25 @@ public class MainActivity {
         JComboBox deviceJComeboBox = mainActivity.deviceComboBox(packJComboBox);
         panel.add(deviceJComeboBox);
 
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("refreshhhh");
+                mainActivity.refreshDeviceCombobox(deviceJComeboBox);
+            }
+        });
+        panel.add(refreshButton);
         //添加包名选择
         JLabel packagename=new JLabel("package：");
         panel.add(packagename);
 
         panel.add(packJComboBox);
+
+        DeviceInfo deviceInfo = new DeviceInfo();
+        JLabel fenbian=new JLabel("分辨率：");
+        panel.add(fenbian);
+        JLabel fenbianlv=new JLabel(deviceInfo.getDp());
+        panel.add(fenbianlv);
 
 
         jFrame.add(panel);
