@@ -1,5 +1,7 @@
 package com.test.util;
 
+import com.test.perfordata.DeviceAndPack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,21 @@ public class AdbUtil {
 	 */
 	public void runADB(String zhiling){
 		cmdUtil.getListByCmd(zhiling);
+	}
+
+	/**
+	 * Çå³ýapk»º´æ
+	 * @param packagename
+	 */
+	public void clearAPK(String packagename){
+
+	}
+	/**
+	 * °²×°apk
+	 * @param path
+	 */
+	public void installAPK(String path){
+		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 	}
 
 //	public static void main(String[] args) {

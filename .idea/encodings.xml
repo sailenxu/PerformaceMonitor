@@ -2,8 +2,8 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="GBK">
     <file url="file://$PROJECT_DIR$/src/com/test/main/DealData.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/com/test/main/MainActivity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/test/main/StartMonitor.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/test/page/MainActivity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/test/perfordata/MonitorData.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/test/perforentity/CPUInfo.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/test/util/AdbUtil.java" charset="GBK" />

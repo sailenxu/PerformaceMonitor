@@ -33,24 +33,22 @@ public class DeviceInfo {
 	 * 获取设备的产品型号
 	 * @return
 	 */
-	public String getOs(){
-		String os="";
+	public String getModel(){
+		String model="";
 		if (deviceId!=null&&deviceId!="") {
 			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.product.model");
 			for(String s:list){
 				if (s!=null&&s!="") {
-					if (s.contains("=")) {
-						String[] osSplit=s.split("=");
-						os=osSplit[1];
-						break;
-					}
+					model=s;
+					break;
+
 				}
 			}
 		}
-		if (os.equals("")||os==null) {
-			os="sorry，没获取到……";
+		if (model.equals("")||model==null) {
+			model="sorry，没获取到……";
 		}
-		return os;
+		return model;
 	}
 	/***
 	 * 获取手机分辨率
