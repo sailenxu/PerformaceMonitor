@@ -53,7 +53,7 @@ public class AdbUtil {
 	 * @param packagename
 	 */
 	public void clearAPK(String packagename){
-
+		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
 	/**
 	 * °²×°apk
@@ -62,7 +62,7 @@ public class AdbUtil {
 	public void installAPK(String path){
 		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 	}
-
+	public void uninstallAPK(String packagename){runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);}
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
 //		AdbUtil adbUtil=new AdbUtil();

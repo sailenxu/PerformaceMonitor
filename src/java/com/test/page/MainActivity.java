@@ -2,6 +2,7 @@ package com.test.page;
 
 import com.test.main.StartMonitor;
 import com.test.perfordata.DeviceAndPack;
+import com.test.util.AdbUtil;
 import com.test.util.DeviceInfo;
 import com.test.util.DevicesInfos;
 import com.test.util.InfoByDevice;
@@ -71,16 +72,6 @@ public class MainActivity {
         packJComboBox.removeAllItems();
         packJComboBox.setModel(new DefaultComboBoxModel(new InfoByDevice().getAllPack()));
     }
-    public void refreshBrand(JLabel brand){
-        brand.setText(new DeviceInfo().getBrand());
-    }
-    /**
-     * 分辨率刷新
-     * @param fenbianlv
-     */
-    public void refreshDp(JLabel fenbianlv){
-        fenbianlv.setText(new DeviceInfo().getDp());
-    }
 
     /**
      * 包名下拉框初始化
@@ -129,31 +120,53 @@ public class MainActivity {
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.setBackground(Color.YELLOW);
 
-        JButton refreshButton=new JButton("刷新");
-
+        JButton deviceRefreshButton=new JButton("刷新");
+        JButton packRefreshButton=new JButton("刷新");
+        JButton clearCach = new JButton("清除cm缓存");
+        JButton uninstallCM = new JButton("卸载cm");
         //添加设备选择
         JLabel device=new JLabel("device：");
         final JComboBox packJComboBox=mainActivity.packComboBox();
         final JComboBox deviceJComeboBox = new JComboBox();
         mainActivity.initDeviceComboBox(deviceJComeboBox, packJComboBox);
         //刷新按钮添加监听
-        refreshButton.addActionListener(new ActionListener() {
+        deviceRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainActivity.refreshDeviceCombobox(deviceJComeboBox, packJComboBox);
                 mainActivity.refreshPackCombobox(packJComboBox);
                 deviceInfoPanel.refreshDeviceInfoPanel();
             }
         });
+        //package刷新按钮监听
+        packRefreshButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainActivity.refreshPackCombobox(packJComboBox);
+            }
+        });
         
         panel.add(device);
         panel.add(deviceJComeboBox);
-        panel.add(refreshButton);
+        panel.add(deviceRefreshButton);
         //添加包名选择
         JLabel packagename=new JLabel("package：");
         panel.add(packagename);
         panel.add(packJComboBox);
 
+        panel.add(packRefreshButton);
 
+        clearCach.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //清除cm缓存
+                new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
+            }
+        });
+        uninstallCM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new AdbUtil().uninstallAPK("com.cleanmaster.mguard_cn");
+            }
+        });
+        panel.add(clearCach);
+        panel.add(uninstallCM);
 
         jFrame.add(panel);
         jFrame.add(devicePanel);
