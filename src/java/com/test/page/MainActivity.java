@@ -1,5 +1,6 @@
 package com.test.page;
 
+import com.test.log.LogDemo;
 import com.test.main.StartMonitor;
 import com.test.perfordata.DeviceAndPack;
 import com.test.util.AdbUtil;
@@ -17,6 +18,7 @@ import org.apache.log4j.Logger;
  * 20200427:开始搞界面
  */
 public class MainActivity {
+    private final static Logger logger = Logger.getLogger(LogDemo.class);
 
     /**
      * device下拉框初始化
@@ -28,6 +30,7 @@ public class MainActivity {
         String[] devicesArray=devicesInfos.getDevicesArray();
         deviceJComeboBox.setModel(new DefaultComboBoxModel(devicesArray));
         if (devicesArray.length>1) {
+            logger.info("有多个设备，默认选中"+devicesArray[0]);
             new DeviceAndPack().setDeivceid(devicesArray[0]);
             refreshPackCombobox(packJComboBox);
             new DeviceInfoPanel().refreshDeviceInfoPanel();
@@ -35,6 +38,7 @@ public class MainActivity {
 
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == e.SELECTED) {
+                        logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
                         //选择设备后，需要给device赋值
                         new DeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
                         System.out.println(DeviceAndPack.deivceid+":::::::::::");
@@ -45,12 +49,14 @@ public class MainActivity {
                 }
             });
         }else if(devicesArray.length==1){
+            logger.info("检测出一个设备并选中："+devicesArray[0]);
             new DeviceAndPack().setDeivceid(devicesArray[0]);
             //刷新pack下拉框
             refreshPackCombobox(packJComboBox);
         }else{
             //没有设备
-            System.out.println("device is exception");
+            logger.info("没有设备…………");
+//            System.out.println("device is exception");
 //            new DeviceAndPack().setDeivceid("");
         }
     }
@@ -61,6 +67,7 @@ public class MainActivity {
      * @param packJComboBox
      */
     public void refreshDeviceCombobox(JComboBox deviceCombobox, JComboBox packJComboBox){
+        logger.info("刷新设备列表");
         System.out.println("refresh device");
         initDeviceComboBox(deviceCombobox, packJComboBox);
     }
@@ -69,6 +76,7 @@ public class MainActivity {
      * @param packJComboBox
      */
     public void refreshPackCombobox(JComboBox packJComboBox){
+        logger.info("刷新已安装软件列表");
         packJComboBox.removeAllItems();
         packJComboBox.setModel(new DefaultComboBoxModel(new InfoByDevice().getAllPack()));
     }
@@ -162,6 +170,7 @@ public class MainActivity {
         });
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
                 new AdbUtil().uninstallAPK("com.cleanmaster.mguard_cn");
             }
         });
@@ -170,6 +179,20 @@ public class MainActivity {
 
         jFrame.add(panel);
         jFrame.add(devicePanel);
+
+        JPanel logJPanel = new JPanel();
+        JTextArea logta = new JTextArea();
+        JScrollPane logsp = new JScrollPane(logta);
+        logta.setColumns(40);
+        logta.setRows(15);
+        logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        LogDemo logDemoFrame = new LogDemo(logta, logsp);
+        logDemoFrame.initLog();
+        logJPanel.add(logsp);
+
+
+        jFrame.add(logJPanel);
         jFrame.setVisible(true);
 
         //如何在前端添加性能监测折线图？使用多线程来抓性能数据似乎再此不适用，因为需要实时数据，将瞬时数据直接给到前端来显示，而不是收集一个list来return

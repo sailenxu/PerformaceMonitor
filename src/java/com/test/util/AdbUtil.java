@@ -1,6 +1,8 @@
 package com.test.util;
 
+import com.test.log.LogDemo;
 import com.test.perfordata.DeviceAndPack;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
  *
  */
 public class AdbUtil {
+	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private CmdTool cmdUtil = new CmdTool();
 	
 	/**
