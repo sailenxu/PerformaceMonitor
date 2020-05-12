@@ -77,9 +77,22 @@ public class MainActivity {
      * @param packJComboBox
      */
     public void refreshPackCombobox(JComboBox packJComboBox){
+        //有cm时，默认选中cm
         logger.info("刷新已安装软件列表");
+        String[] comboValue=new InfoByDevice().getAllPack();
+        boolean flag = false;
+        for (String s:comboValue){
+            if (s.contains("com.cleanmaster.mguard_cn")){
+                flag = true;
+            }
+        }
+        System.out.println("flag::::+"+flag);
         packJComboBox.removeAllItems();
-        packJComboBox.setModel(new DefaultComboBoxModel(new InfoByDevice().getAllPack()));
+        packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
+        if (flag){
+            logger.info("设置默认包名：com.cleanmaster.mguard_cn");
+            packJComboBox.setSelectedItem("com.cleanmaster.mguard_cn");
+        }
     }
 
     /**
@@ -87,9 +100,7 @@ public class MainActivity {
      * @return
      */
     public JComboBox packComboBox(){
-        String[] comboValue=new InfoByDevice().getAllPack();
-
-        final JComboBox jComboBox = new JComboBox(comboValue);
+        final JComboBox jComboBox = new JComboBox();
         JList jList=new JList();
         JScrollPane jp=new JScrollPane(jList);
         jp.setPreferredSize(new Dimension(100, 200));
@@ -100,6 +111,7 @@ public class MainActivity {
                     //选择包名后，就可以监听应用信息
                     DeviceAndPack dp=new DeviceAndPack();
                     dp.setPackagename(String.valueOf(jComboBox.getSelectedItem()));
+                    logger.info("选择包名："+DeviceAndPack.packagename);
                     System.out.println(dp.deivceid+"::::"+DeviceAndPack.packagename);
                 }
             }
@@ -166,16 +178,16 @@ public class MainActivity {
         clearCach.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //清除cm缓存
-                logger.info("清除cm缓存…………");
-                new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
+                logger.info("清除缓存…………"+DeviceAndPack.packagename);
+                new AdbUtil().clearAPK(DeviceAndPack.packagename);
             }
         });
         //卸载按钮监听
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                logger.info("卸载cm…………");
-                new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
-                new AdbUtil().uninstallAPK("com.cleanmaster.mguard_cn");
+                logger.info("卸载…………"+DeviceAndPack.packagename);
+                new AdbUtil().clearAPK(DeviceAndPack.packagename);
+                new AdbUtil().uninstallAPK(DeviceAndPack.packagename);
             }
         });
         panel.add(clearCach);
@@ -183,6 +195,10 @@ public class MainActivity {
 
         jFrame.add(panel);
         jFrame.add(devicePanel);
+        //添加monkey执行panel
+        JPanel monkeyJPanel = new MonkeyPanel().getMonkeyPanel();
+        jFrame.add(monkeyJPanel);
+
         //添加日志打印，可以显示log信息
         JPanel logJPanel = new JPanel();
         JTextArea logta = new JTextArea();
