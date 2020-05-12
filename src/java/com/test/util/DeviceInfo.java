@@ -106,7 +106,7 @@ public class DeviceInfo {
 	public String getIMEI(){
 		String imei="";
 		if (deviceId!=null&&deviceId!="") {
-			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell dumpsys iphonesubinfo");
+			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys iphonesubinfo");
 			for(String s:list){
 				if(s!=null&&s!=""){
 					if (s.contains("Device")) {

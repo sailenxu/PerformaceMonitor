@@ -1,7 +1,12 @@
 package com.test.util;
 
+import com.test.log.LogDemo;
+import com.test.perfordata.DeviceAndPack;
+import org.apache.log4j.Logger;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 /***
@@ -10,14 +15,9 @@ import java.util.List;
  *
  */
 public class AppInfo {
-	private String packName;
-	private String device;
+	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private AdbUtil adbUtil=new AdbUtil();
 
-	public AppInfo(String packName,String device) {
-		this.packName=packName;
-		this.device=device;
-	}
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
 	 * @return
@@ -25,7 +25,7 @@ public class AppInfo {
 	 */
 	public double getAPPCPU(){
 		double cpu=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+packName);
+		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+DeviceAndPack.packagename);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){
@@ -42,7 +42,7 @@ public class AppInfo {
 	 */
 	public int getAPPMem(){
 		int mem=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+device+" shell dumpsys meminfo -s "+packName);
+		List<String> result = adbUtil.getListByADB("adb -s "+DeviceAndPack.deivceid+" shell dumpsys meminfo -s "+DeviceAndPack.packagename);
 		//可能获取到的结果为空，或进程不存在
 		if (result.size()!=0&&result!=null){
 			for (String ss:result){
@@ -53,6 +53,19 @@ public class AppInfo {
 			}
 		}
 		return mem;
+	}
+
+	public void runMonkey() throws IOException {
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle 400 50";
+			logger.info(monkeyCommand);
+			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
+			while (br.readLine() != null) {
+				logger.info(br.readLine());
+			}
+		}else {
+			logger.info("请选择设备或包名…………");
+		}
 	}
 
 

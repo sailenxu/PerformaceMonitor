@@ -29,8 +29,10 @@ class TextDropTargetListener implements DropTargetListener {
         int a = event.getDropAction();
         if ((a & DnDConstants.ACTION_COPY) != 0)
             System.out.println("ACTION_COPY\n");
-        if ((a & DnDConstants.ACTION_MOVE) != 0)
+        if ((a & DnDConstants.ACTION_MOVE) != 0) {
             System.out.println("ACTION_MOVE\n");
+            logger.info("drag_ACTION_MOVE");
+        }
         if ((a & DnDConstants.ACTION_LINK) != 0)
             System.out.println("ACTION_LINK\n");
 
@@ -55,16 +57,14 @@ class TextDropTargetListener implements DropTargetListener {
     }
 
     public void drop(DropTargetDropEvent event) {
+        logger.info("ÍÏ×§ÎÄ¼þ¼àÌý");
         if (!isDropAcceptable(event)) {
             //¾Ü¾ø Drop¡£
             event.rejectDrop();
             return;
         }
-
         event.acceptDrop(DnDConstants.ACTION_COPY);
-
         Transferable transferable = event.getTransferable();
-
         DataFlavor[] flavors = transferable.getTransferDataFlavors();
         for (int i = 0; i < flavors.length; i++) {
             DataFlavor d = flavors[i];
@@ -85,7 +85,6 @@ class TextDropTargetListener implements DropTargetListener {
                     }
                 } else if (d.equals(DataFlavor.stringFlavor)) {
                     String s = (String) transferable.getTransferData(d);
-                    System.out.println("2222222222222");
                 }
             } catch (Exception e) {
             }

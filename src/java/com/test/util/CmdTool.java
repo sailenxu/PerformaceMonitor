@@ -95,8 +95,14 @@ public class CmdTool {
 	 * @param cmdString
 	 * @return
 	 */
-	public BufferedReader getBRByCmd(String cmdString) throws IOException {
-		Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
+	public BufferedReader getBRByCmd(String cmdString) {
+
+		Process process = null;
+		try {
+			process = Runtime.getRuntime().exec("cmd /c "+cmdString);
+		} catch (IOException e) {
+			logger.error(e);
+		}
 		logger.info("cmd command:"+cmdString);
 		InputStream in=process.getInputStream();
 		BufferedReader reader=new BufferedReader(new InputStreamReader(in));

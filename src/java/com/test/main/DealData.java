@@ -22,7 +22,7 @@ public class DealData {
 		String packName="com.jingdong.app.mall";
 		String device="Q5S5T19529000632";
 
-		com.test.main.StartMonitor monitor=new com.test.main.StartMonitor(packName,device);
+		com.test.main.StartMonitor monitor=new com.test.main.StartMonitor();
 		Thread t1=new Thread(monitor);
 		t1.start();
 		try {

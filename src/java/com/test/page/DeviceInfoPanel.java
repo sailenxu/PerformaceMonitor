@@ -7,11 +7,11 @@ import java.awt.*;
 
 public class DeviceInfoPanel {
     private static JPanel deviceInfoPanel=new JPanel();
-    private static JLabel brand=new JLabel("品牌：");
+    private JLabel brand=new JLabel("品牌：");
     private static JLabel brandJlabel=new JLabel();
-    private static JLabel model=new JLabel("型号：");
+    private JLabel model=new JLabel("型号：");
     private static JLabel modelJlabel=new JLabel();
-    private static JLabel dp=new JLabel("分辨率：");
+    private JLabel dp=new JLabel("分辨率：");
     private static JLabel dpJlabel=new JLabel();
 
     public JPanel getDeviceInfoPanel() {
