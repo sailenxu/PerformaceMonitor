@@ -1,6 +1,8 @@
 package com.test.page;
 
+import com.test.log.LogDemo;
 import com.test.util.AdbUtil;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -15,6 +17,7 @@ public class DropTargetFrame extends JFrame {
     }
 }
 class TextDropTargetListener implements DropTargetListener {
+    private final static Logger logger = Logger.getLogger(LogDemo.class);
     /**
      * Constructs a listener.
      *
@@ -71,13 +74,13 @@ class TextDropTargetListener implements DropTargetListener {
                     for (File f : fileList) {
                         //f有可能是文件或文件夹
                         if (f.isFile()){
-                            System.out.println("pathhhh:"+f.getAbsolutePath());
+                            logger.info("path:"+f.getAbsolutePath());
                             if (f.getAbsolutePath().contains("apk")){
-                                System.out.println("安装:"+f);
+                                logger.info("安装："+f);
                                 new AdbUtil().installAPK(f.getAbsolutePath());
                             }
                         }else if (f.isDirectory()){
-                            System.out.println("文件夹:"+f);
+                            logger.info("文件夹："+f);
                         }
                     }
                 } else if (d.equals(DataFlavor.stringFlavor)) {

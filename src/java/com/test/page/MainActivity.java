@@ -179,12 +179,12 @@ public class MainActivity {
 
         jFrame.add(panel);
         jFrame.add(devicePanel);
-
+        //添加日志打印，可以显示log信息
         JPanel logJPanel = new JPanel();
         JTextArea logta = new JTextArea();
         JScrollPane logsp = new JScrollPane(logta);
-        logta.setColumns(40);
-        logta.setRows(15);
+        logta.setColumns(80);
+        logta.setRows(30);
         logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         LogDemo logDemoFrame = new LogDemo(logta, logsp);

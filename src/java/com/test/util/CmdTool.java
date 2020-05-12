@@ -1,5 +1,8 @@
 package com.test.util;
 
+import com.test.log.LogDemo;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,26 +16,15 @@ import java.util.List;
  *packagename：com.xstore.sevenfresh
  */
 public class CmdTool {
-
-	/**
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		CmdTool cmdTool=new CmdTool();
-//		List<String> list=cmdTool.getListByCmd("adb shell dumpsys meminfo|findstr Foreground");
-//		for(String s:list){
-//			System.out.println(s+"****");
-//		}
-//
-//	}
+	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	/***
-	 * 执行cmd命令，获取返回值
+	 * 执行cmd命令，不获取返回值
 	 * @param cmdString cmd命令
 	 */
 	public static void singleCmd(String cmdString){
 		Runtime r=Runtime.getRuntime();
 		try {
+			logger.info("cmd command:"+cmdString);
 			Process process=r.exec("cmd /c "+cmdString);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -48,12 +40,14 @@ public class CmdTool {
 		List<String> list=new ArrayList<String>();
 		try {
 			Process process=Runtime.getRuntime().exec("cmd /c "+cmdString);
+			logger.info("cmd command:"+cmdString);
 			InputStream in=process.getInputStream();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 			String lineString=null;
 			while (StringTool.replaceBlank((lineString=reader.readLine()))!=null) {
 				list.add(lineString.trim());
 			}
+			logger.info("result:"+list);
 			process.waitFor();
 			process.destroy();
 		} catch (Exception e) {
@@ -70,13 +64,14 @@ public class CmdTool {
 		String getString="";
 		try {
 			Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
-			
+			logger.info("cmd command:"+cmdString);
 			InputStream in=process.getInputStream();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 			String line=null;
 			while ((line=reader.readLine())!=null) {
 				getString=getString+line+"\n";
 			}
+			logger.info(getString);
 			process.waitFor();
 			process.destroy();
 		} catch (Exception e) {
@@ -93,6 +88,7 @@ public class CmdTool {
 	 */
 	public BufferedReader getBRByCmd(String cmdString) throws IOException {
 		Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
+		logger.info("cmd command:"+cmdString);
 		InputStream in=process.getInputStream();
 		BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 		return reader;

@@ -15,13 +15,13 @@ import java.util.List;
 public class AdbUtil {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private CmdTool cmdUtil = new CmdTool();
-	
 	/**
 	 * 执行adb指令，过滤启动信息,返回list集合
 	 * @param zhiling
 	 * @return
 	 */
 	public List<String> getListByADB(String zhiling){
+		logger.info("adb command:"+zhiling);
 		List<String> adblist=new ArrayList<String>();
 		for(String s:cmdUtil.getListByCmd(zhiling)){
 			if (s!=null&&!s.equals("")) {//去掉换行，有的手机会将换行返回
@@ -34,6 +34,10 @@ public class AdbUtil {
 		}
 		return adblist;
 	}
+	public String getStringByADB(String command){
+		logger.info("adb command:"+command);
+		return cmdUtil.getStringByCmd(command);
+	}
 	/**
 	 * 获取当前路径，使用当前路径下的adb
 	 * @return
@@ -44,7 +48,7 @@ public class AdbUtil {
 	}
 
 	/**
-	 * 执行adb命令，不返回数据
+	 * 执行adb命令
 	 * @param zhiling
 	 */
 	public void runADB(String zhiling){
@@ -56,16 +60,27 @@ public class AdbUtil {
 	 * @param packagename
 	 */
 	public void clearAPK(String packagename){
-		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
+		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename;
+		logger.info(command);
+		logger.info(getStringByADB(command));
+//		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
 	/**
 	 * 安装apk
 	 * @param path
 	 */
 	public void installAPK(String path){
-		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
+		String command = "adb -s "+ DeviceAndPack.deivceid+" install -r "+path;
+		logger.info("adb command:"+command);
+		logger.info(getStringByADB(command));
+//		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 	}
-	public void uninstallAPK(String packagename){runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);}
+	public void uninstallAPK(String packagename){
+		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename;
+		logger.info("adb command:"+command);
+		logger.info(getStringByADB(command));
+//		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+	}
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
 //		AdbUtil adbUtil=new AdbUtil();
