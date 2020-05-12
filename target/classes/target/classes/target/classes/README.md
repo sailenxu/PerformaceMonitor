@@ -75,3 +75,4 @@ itemlistener和actionlistener两个监听器，只有在改变的时候才会执
 先是按照上面说的，将src设置为sources，然后配置文件放在src根目录下！！！
 ### 6.log4j日志输出到前端控件
 https://www.iteye.com/blog/yshjava-1325036
+### 7.jcombobox控件的选择监听会执行两遍

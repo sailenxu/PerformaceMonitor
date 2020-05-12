@@ -75,3 +75,6 @@ itemlistener和actionlistener两个监听器，只有在改变的时候才会执
 先是按照上面说的，将src设置为sources，然后配置文件放在src根目录下！！！
 ### 6.log4j日志输出到前端控件
 https://www.iteye.com/blog/yshjava-1325036
+### 7.jcombobox控件的选择监听会执行两遍
+正常情况下，监听会执行两遍，itemstate有两种状态，Selected 和 deSelected（即选中和未被选中），增加一个判断if (e.getStateChange() == e.SELECTED)，itemstate状态和是选中状态时执行。  
+但是点击刷新按钮后，监听会执行四遍，很奇怪……刷新按钮只是把device下拉框重新初始化一遍，选择监听就会执行四遍，难道刷新不可以初始化？

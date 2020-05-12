@@ -35,8 +35,8 @@ public class MainActivity {
             refreshPackCombobox(packJComboBox);
             new DeviceInfoPanel().refreshDeviceInfoPanel();
             deviceJComeboBox.addItemListener(new ItemListener() {
-
                 public void itemStateChanged(ItemEvent e) {
+                    System.out.println("eeeeee:"+e.getStateChange());
                     if (e.getStateChange() == e.SELECTED) {
                         logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
                         //选择设备后，需要给device赋值
@@ -69,7 +69,7 @@ public class MainActivity {
     public void refreshDeviceCombobox(JComboBox deviceCombobox, JComboBox packJComboBox){
         logger.info("刷新设备列表");
         System.out.println("refresh device");
-        initDeviceComboBox(deviceCombobox, packJComboBox);
+        deviceCombobox.setModel(new DefaultComboBoxModel(new DevicesInfos().getDevicesArray()));
     }
     /**
      * 刷新包名下拉框
