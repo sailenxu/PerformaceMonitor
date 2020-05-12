@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
  */
 public class MainActivity {
     private final static Logger logger = Logger.getLogger(LogDemo.class);
-
     /**
      * device下拉框初始化
      * @param deviceJComeboBox
@@ -69,7 +68,9 @@ public class MainActivity {
     public void refreshDeviceCombobox(JComboBox deviceCombobox, JComboBox packJComboBox){
         logger.info("刷新设备列表");
         System.out.println("refresh device");
+//        initDeviceComboBox(deviceCombobox, packJComboBox);
         deviceCombobox.setModel(new DefaultComboBoxModel(new DevicesInfos().getDevicesArray()));
+        new DeviceAndPack().setDeivceid(new DevicesInfos().getDevicesArray()[0]);
     }
     /**
      * 刷新包名下拉框
@@ -141,7 +142,7 @@ public class MainActivity {
         deviceRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainActivity.refreshDeviceCombobox(deviceJComeboBox, packJComboBox);
-//                mainActivity.refreshPackCombobox(packJComboBox);
+                mainActivity.refreshPackCombobox(packJComboBox);
                 deviceInfoPanel.refreshDeviceInfoPanel();
             }
         });
@@ -161,14 +162,15 @@ public class MainActivity {
         panel.add(packJComboBox);
 
         panel.add(packRefreshButton);
-
+        //清缓存按钮监听
         clearCach.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //清除cm缓存
-                logger.info("清楚cm缓存…………");
+                logger.info("清除cm缓存…………");
                 new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
             }
         });
+        //卸载按钮监听
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 logger.info("卸载cm…………");
@@ -188,13 +190,12 @@ public class MainActivity {
         logta.setColumns(80);
         logta.setRows(30);
         logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
         LogDemo logDemoFrame = new LogDemo(logta, logsp);
         logDemoFrame.initLog();
         logJPanel.add(logsp);
-
-
         jFrame.add(logJPanel);
+
+
         jFrame.setVisible(true);
 
         //如何在前端添加性能监测折线图？使用多线程来抓性能数据似乎再此不适用，因为需要实时数据，将瞬时数据直接给到前端来显示，而不是收集一个list来return
