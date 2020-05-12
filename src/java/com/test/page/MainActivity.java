@@ -137,11 +137,11 @@ public class MainActivity {
         final JComboBox packJComboBox=mainActivity.packComboBox();
         final JComboBox deviceJComeboBox = new JComboBox();
         mainActivity.initDeviceComboBox(deviceJComeboBox, packJComboBox);
-        //Ë¢ÐÂ°´Å¥Ìí¼Ó¼àÌý
+        //deviceË¢ÐÂ°´Å¥Ìí¼Ó¼àÌý
         deviceRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainActivity.refreshDeviceCombobox(deviceJComeboBox, packJComboBox);
-                mainActivity.refreshPackCombobox(packJComboBox);
+//                mainActivity.refreshPackCombobox(packJComboBox);
                 deviceInfoPanel.refreshDeviceInfoPanel();
             }
         });
@@ -165,11 +165,13 @@ public class MainActivity {
         clearCach.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //Çå³ýcm»º´æ
+                logger.info("Çå³þcm»º´æ¡­¡­¡­¡­");
                 new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
             }
         });
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                logger.info("Ð¶ÔØcm¡­¡­¡­¡­");
                 new AdbUtil().clearAPK("com.cleanmaster.mguard_cn");
                 new AdbUtil().uninstallAPK("com.cleanmaster.mguard_cn");
             }

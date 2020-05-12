@@ -22,10 +22,19 @@ public class CmdTool {
 	 * @param cmdString cmd√¸¡Ó
 	 */
 	public static void singleCmd(String cmdString){
+		String getString="";
 		Runtime r=Runtime.getRuntime();
 		try {
-			logger.info("cmd command:"+cmdString);
 			Process process=r.exec("cmd /c "+cmdString);
+			InputStream in=process.getInputStream();
+			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+			String line=null;
+			while ((line=reader.readLine())!=null) {
+				getString=getString+line+"\n";
+			}
+			logger.info(getString);
+			process.waitFor();
+			process.destroy();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

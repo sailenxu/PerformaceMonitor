@@ -34,10 +34,6 @@ public class AdbUtil {
 		}
 		return adblist;
 	}
-	public String getStringByADB(String command){
-		logger.info("adb command:"+command);
-		return cmdUtil.getStringByCmd(command);
-	}
 	/**
 	 * 获取当前路径，使用当前路径下的adb
 	 * @return
@@ -52,7 +48,7 @@ public class AdbUtil {
 	 * @param zhiling
 	 */
 	public void runADB(String zhiling){
-		cmdUtil.getListByCmd(zhiling);
+		cmdUtil.singleCmd(zhiling);
 	}
 
 	/**
@@ -61,8 +57,8 @@ public class AdbUtil {
 	 */
 	public void clearAPK(String packagename){
 		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename;
-		logger.info(command);
-		logger.info(getStringByADB(command));
+		logger.info("adb command:"+command);
+		runADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
 	/**
@@ -72,13 +68,13 @@ public class AdbUtil {
 	public void installAPK(String path){
 		String command = "adb -s "+ DeviceAndPack.deivceid+" install -r "+path;
 		logger.info("adb command:"+command);
-		logger.info(getStringByADB(command));
+		runADB(command);
 //		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 	}
 	public void uninstallAPK(String packagename){
 		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename;
 		logger.info("adb command:"+command);
-		logger.info(getStringByADB(command));
+		runADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
 	}
 //	public static void main(String[] args) {
