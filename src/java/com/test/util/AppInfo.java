@@ -55,9 +55,9 @@ public class AppInfo {
 		return mem;
 	}
 
-	public void runMonkey() throws IOException {
+	public void runMonkey(int count) throws IOException {
 		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
-			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle 400 50";
+			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle 400 "+count;
 			logger.info(monkeyCommand);
 			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
 			while (br.readLine() != null) {
