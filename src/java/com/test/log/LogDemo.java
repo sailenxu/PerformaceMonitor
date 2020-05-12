@@ -29,22 +29,22 @@ public class LogDemo {
         }
     }
 
-    public static void main(String[] s) {
-        JFrame jFrame = new JFrame();
-        jFrame.setSize(500, 500);
-        JTextArea logta = new JTextArea();
-        JScrollPane logsp = new JScrollPane(logta);
-        logta.setColumns(20);
-        logta.setRows(5);
-        logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        LogDemo logDemoFrame = new LogDemo(logta, logsp);
-        logDemoFrame.initLog();
-        jFrame.add(logsp);
-        jFrame.setVisible(true);
-        for (int i = 0; i < 1000; i++) {
-//            log.info("测试日志输出:" + i);
-            logger.info("inoffffoof"+i);
-        }
-    }
+//    public static void main(String[] s) {
+//        JFrame jFrame = new JFrame();
+//        jFrame.setSize(500, 500);
+//        JTextArea logta = new JTextArea();
+//        JScrollPane logsp = new JScrollPane(logta);
+//        logta.setColumns(20);
+//        logta.setRows(5);
+//        logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//
+//        LogDemo logDemoFrame = new LogDemo(logta, logsp);
+//        logDemoFrame.initLog();
+//        jFrame.add(logsp);
+//        jFrame.setVisible(true);
+//        for (int i = 0; i < 1000; i++) {
+////            log.info("测试日志输出:" + i);
+//            logger.info("inoffffoof"+i);
+//        }
+//    }
 }
