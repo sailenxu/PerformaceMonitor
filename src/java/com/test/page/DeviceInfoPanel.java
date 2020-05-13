@@ -15,8 +15,9 @@ public class DeviceInfoPanel {
     private static JLabel dpJlabel=new JLabel();
 
     public JPanel getDeviceInfoPanel() {
+        deviceInfoPanel.setBorder(BorderFactory.createTitledBorder("device infomation"));
         deviceInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        deviceInfoPanel.setBackground(Color.GRAY);
+//        deviceInfoPanel.setBackground(Color.GRAY);
 
         brandJlabel.setText(new DeviceInfo().getBrand());
         modelJlabel.setText(new DeviceInfo().getModel());

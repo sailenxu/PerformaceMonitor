@@ -15,15 +15,19 @@ public class MonkeyPanel {
     private JButton monkeyJButton = new JButton("执行monkey");
     private JLabel countLabel = new JLabel("次数：");
     private JTextField count = new JTextField(8);
+    private JCheckBox ignoreCrash=new JCheckBox("ignorecrashes");
+    private JCheckBox ignoreTimeouts = new JCheckBox("ignoretimeouts");
 
     public JPanel getMonkeyPanel(){
+        monkeyPanel.setBorder(BorderFactory.createTitledBorder("monkey"));
         monkeyJButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (count.getText()!=null&&!count.getText().equals("")){
                         if (Integer.parseInt(count.getText())>0){
-                            new AppInfo().runMonkey(Integer.parseInt(count.getText()));
+//                            if (ignoreCrash.isSelected())
+                            new AppInfo().runMonkey(ignoreCrash.isSelected(), ignoreTimeouts.isSelected(), Integer.parseInt(count.getText()));
                         }else {
                             logger.info("执行次数输入不正确!!");
                         }
@@ -36,6 +40,8 @@ public class MonkeyPanel {
                 }
             }
         });
+        monkeyPanel.add(ignoreCrash);
+        monkeyPanel.add(ignoreTimeouts);
         monkeyPanel.add(countLabel);
         monkeyPanel.add(count);
         monkeyPanel.add(monkeyJButton);

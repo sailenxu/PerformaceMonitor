@@ -51,32 +51,6 @@ public class AdbUtil {
 		cmdUtil.singleCmd(zhiling);
 	}
 
-	/**
-	 * Çå³ýapk»º´æ
-	 * @param packagename
-	 */
-	public void clearAPK(String packagename){
-		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename;
-		logger.info("adb command:"+command);
-		runADB(command);
-//		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
-	}
-	/**
-	 * °²×°apk
-	 * @param path
-	 */
-	public void installAPK(String path){
-		String command = "adb -s "+ DeviceAndPack.deivceid+" install -r "+path;
-		logger.info("adb command:"+command);
-		runADB(command);
-//		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
-	}
-	public void uninstallAPK(String packagename){
-		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename;
-		logger.info("adb command:"+command);
-		runADB(command);
-//		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
-	}
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
 //		AdbUtil adbUtil=new AdbUtil();

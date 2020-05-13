@@ -17,6 +17,8 @@ import java.util.List;
 public class AppInfo {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private AdbUtil adbUtil=new AdbUtil();
+	private String deviceid=DeviceAndPack.deivceid;
+	private String packagename = DeviceAndPack.packagename;
 
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
@@ -25,7 +27,7 @@ public class AppInfo {
 	 */
 	public double getAPPCPU(){
 		double cpu=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+DeviceAndPack.packagename);
+		List<String> result = adbUtil.getListByADB("adb -s "+ deviceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+packagename);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){
@@ -42,7 +44,7 @@ public class AppInfo {
 	 */
 	public int getAPPMem(){
 		int mem=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+DeviceAndPack.deivceid+" shell dumpsys meminfo -s "+DeviceAndPack.packagename);
+		List<String> result = adbUtil.getListByADB("adb -s "+deviceid+" shell dumpsys meminfo -s "+packagename);
 		//可能获取到的结果为空，或进程不存在
 		if (result.size()!=0&&result!=null){
 			for (String ss:result){
@@ -54,10 +56,9 @@ public class AppInfo {
 		}
 		return mem;
 	}
-
-	public void runMonkey(int count) throws IOException {
-		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
-			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle 400 "+count;
+	public void runMonkey(boolean isIgnoreCrashes, boolean isIgnoreTimeouts, int count) throws IOException {
+		if (deviceid!=null&&packagename!=null) {
+			String monkeyCommand = "adb -s " + deviceid + " shell monkey -p " + packagename + " -v -v --throttle 400 "+(isIgnoreCrashes?" --ignore-crashes ":"")+(isIgnoreTimeouts?" --ignore-timeouts ":"")+count;
 			logger.info(monkeyCommand);
 			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
 			while (br.readLine() != null) {
@@ -67,7 +68,21 @@ public class AppInfo {
 			logger.info("请选择设备或包名…………");
 		}
 	}
-
+	/**
+	 * 清除apk缓存
+	 */
+	public void clearAPK(){
+		String command = "adb -s "+deviceid+" shell pm clear "+packagename;
+		logger.info("adb command:"+command);
+		adbUtil.runADB(command);
+//		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
+	}
+	public void uninstallAPK(){
+		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename;
+		logger.info("adb command:"+command);
+		adbUtil.runADB(command);
+//		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+	}
 
 //	public static void main(String[] args) {
 //		AppInfo appInfo=new AppInfo("com.jingdong.app.mall", "Q5S5T19529000632");

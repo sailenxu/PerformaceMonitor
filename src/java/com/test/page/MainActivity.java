@@ -3,10 +3,7 @@ package com.test.page;
 import com.test.log.LogDemo;
 import com.test.main.StartMonitor;
 import com.test.perfordata.DeviceAndPack;
-import com.test.util.AdbUtil;
-import com.test.util.DeviceInfo;
-import com.test.util.DevicesInfos;
-import com.test.util.InfoByDevice;
+import com.test.util.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,14 +49,12 @@ public class MainActivity {
             new DeviceAndPack().setDeivceid(devicesArray[0]);
             //刷新pack下拉框
             refreshPackCombobox(packJComboBox);
+            new DeviceInfoPanel().refreshDeviceInfoPanel();
         }else{
             //没有设备
             logger.info("没有设备…………");
-//            System.out.println("device is exception");
-//            new DeviceAndPack().setDeivceid("");
         }
     }
-
     /**
      * 设备下拉框刷新
      * @param deviceCombobox
@@ -69,8 +64,18 @@ public class MainActivity {
         logger.info("刷新设备列表");
         System.out.println("refresh device");
 //        initDeviceComboBox(deviceCombobox, packJComboBox);
-        deviceCombobox.setModel(new DefaultComboBoxModel(new DevicesInfos().getDevicesArray()));
-        new DeviceAndPack().setDeivceid(new DevicesInfos().getDevicesArray()[0]);
+        String[] devicesArray=new DevicesInfos().getDevicesArray();
+        System.out.println("devicearray:"+devicesArray.length);
+        deviceCombobox.removeAllItems();
+        if (devicesArray.length>0){
+            deviceCombobox.setModel(new DefaultComboBoxModel(devicesArray));
+            new DeviceAndPack().setDeivceid(devicesArray[0]);
+            refreshPackCombobox(packJComboBox);
+
+        }else {
+            logger.info("没有设备…………");
+            new DeviceAndPack().setDeivceid("");
+        }
     }
     /**
      * 刷新包名下拉框
@@ -79,22 +84,24 @@ public class MainActivity {
     public void refreshPackCombobox(JComboBox packJComboBox){
         //有cm时，默认选中cm
         logger.info("刷新已安装软件列表");
-        String[] comboValue=new InfoByDevice().getAllPack();
-        boolean flag = false;
-        for (String s:comboValue){
-            if (s.contains("com.cleanmaster.mguard_cn")){
-                flag = true;
+        String[] comboValue=new DeviceInfo().getAllPack();
+        packJComboBox.removeAllItems();
+        if (comboValue!=null) {
+            boolean flag = false;
+            for (String s : comboValue) {
+                if (s.contains("com.cleanmaster.mguard_cn")) {
+                    flag = true;
+                }
+            }
+            System.out.println("flag::::+" + flag);
+
+            packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
+            if (flag) {
+                logger.info("设置默认包名：com.cleanmaster.mguard_cn");
+                packJComboBox.setSelectedItem("com.cleanmaster.mguard_cn");
             }
         }
-        System.out.println("flag::::+"+flag);
-        packJComboBox.removeAllItems();
-        packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
-        if (flag){
-            logger.info("设置默认包名：com.cleanmaster.mguard_cn");
-            packJComboBox.setSelectedItem("com.cleanmaster.mguard_cn");
-        }
     }
-
     /**
      * 包名下拉框初始化
      * @return
@@ -142,9 +149,10 @@ public class MainActivity {
         panel.setBackground(Color.YELLOW);
 
         JButton deviceRefreshButton=new JButton("刷新");
+        JButton clearLogcat = new JButton("清除logcat");
         JButton packRefreshButton=new JButton("刷新");
-        JButton clearCach = new JButton("清除cm缓存");
-        JButton uninstallCM = new JButton("卸载cm");
+        JButton clearCach = new JButton("清除缓存");
+        JButton uninstallCM = new JButton("卸    载");
         //添加设备选择
         JLabel device=new JLabel("device：");
         final JComboBox packJComboBox=mainActivity.packComboBox();
@@ -158,6 +166,13 @@ public class MainActivity {
                 deviceInfoPanel.refreshDeviceInfoPanel();
             }
         });
+        clearLogcat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logger.info("清除"+DeviceAndPack.deivceid+":logcat");
+                new DeviceInfo().clearLogcat();
+            }
+        });
         //package刷新按钮监听
         packRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -168,6 +183,7 @@ public class MainActivity {
         panel.add(device);
         panel.add(deviceJComeboBox);
         panel.add(deviceRefreshButton);
+        panel.add(clearLogcat);
         //添加包名选择
         JLabel packagename=new JLabel("package：");
         panel.add(packagename);
@@ -179,15 +195,15 @@ public class MainActivity {
             public void actionPerformed(ActionEvent e) {
                 //清除cm缓存
                 logger.info("清除缓存…………"+DeviceAndPack.packagename);
-                new AdbUtil().clearAPK(DeviceAndPack.packagename);
+                new AppInfo().clearAPK();
             }
         });
         //卸载按钮监听
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 logger.info("卸载…………"+DeviceAndPack.packagename);
-                new AdbUtil().clearAPK(DeviceAndPack.packagename);
-                new AdbUtil().uninstallAPK(DeviceAndPack.packagename);
+                new AppInfo().clearAPK();
+                new AppInfo().uninstallAPK();
             }
         });
         panel.add(clearCach);

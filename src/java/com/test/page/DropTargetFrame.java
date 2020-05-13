@@ -2,6 +2,7 @@ package com.test.page;
 
 import com.test.log.LogDemo;
 import com.test.util.AdbUtil;
+import com.test.util.DeviceInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -77,7 +78,7 @@ class TextDropTargetListener implements DropTargetListener {
                             logger.info("path:"+f.getAbsolutePath());
                             if (f.getAbsolutePath().contains("apk")){
                                 logger.info("安装："+f);
-                                new AdbUtil().installAPK(f.getAbsolutePath());
+                                new DeviceInfo().installAPK(f.getAbsolutePath());
                             }
                         }else if (f.isDirectory()){
                             logger.info("文件夹："+f);

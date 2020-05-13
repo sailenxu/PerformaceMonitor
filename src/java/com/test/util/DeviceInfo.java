@@ -1,10 +1,13 @@
 package com.test.util;
 
+import com.test.log.LogDemo;
 import com.test.perfordata.DeviceAndPack;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class DeviceInfo {
+	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private AdbUtil adbUtil = new AdbUtil();
 	private CmdTool cmdTool=new CmdTool();
 	private String deviceId= DeviceAndPack.deivceid;
@@ -15,7 +18,7 @@ public class DeviceInfo {
 	 */
 	public String getBrand() {
 		String brand = "";
-		if (deviceId != null && deviceId != "") {
+		if (deviceId != null && !deviceId.equals("") ) {
 			List<String> list = cmdTool.getListByCmd("adb -s " + deviceId + " shell getprop ro.product.brand");
 			for (String s : list) {
 				if (s != null && s != "") {
@@ -35,7 +38,7 @@ public class DeviceInfo {
 	 */
 	public String getModel(){
 		String model="";
-		if (deviceId!=null&&deviceId!="") {
+		if (deviceId!=null && !deviceId.equals("")) {
 			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.product.model");
 			for(String s:list){
 				if (s!=null&&s!="") {
@@ -56,7 +59,7 @@ public class DeviceInfo {
 	 */
 	public String getDp(){
 		String dp="";
-		if (deviceId!=null&&deviceId!="") {
+		if (deviceId!=null && !deviceId.equals("")) {
 			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys window|findstr init");
 			for(String s:list){
 				if(s!=null&&s!=""){
@@ -85,7 +88,7 @@ public class DeviceInfo {
 	 */
 	public String getOsVersionCode(){
 		String versionCode="";
-		if (deviceId!=null&&deviceId!="") {
+		if (deviceId!=null && !deviceId.equals("")) {
 			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell getprop ro.build.version.release");
 			for(String s:list){
 				if (s!=null&&s!="") {
@@ -105,7 +108,7 @@ public class DeviceInfo {
 	 */
 	public String getIMEI(){
 		String imei="";
-		if (deviceId!=null&&deviceId!="") {
+		if (deviceId!=null && !deviceId.equals("")) {
 			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys iphonesubinfo");
 			for(String s:list){
 				if(s!=null&&s!=""){
@@ -121,5 +124,45 @@ public class DeviceInfo {
 			}
 		}
 		return imei;
+	}
+	/**
+	 * 安装apk
+	 * @param path
+	 */
+	public void installAPK(String path){
+		if (deviceId!=null && !deviceId.equals("")) {
+			String command = "adb -s " + deviceId + " install -r " + path;
+			logger.info("adb command:" + command);
+			adbUtil.runADB(command);
+//		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
+		}
+	}
+	public void clearLogcat(){
+		if (deviceId!=null && !deviceId.equals("")) {
+			String command = "adb -s " + deviceId + " shell logcat -c";
+			logger.info("adb command:" + command);
+			adbUtil.runADB(command);
+		}
+	}
+	/**
+	 * 获取设备已安装app
+	 * @return
+	 */
+	public String[] getAllPack(){
+		String[] packages = null;
+		if (deviceId!=null && !deviceId.equals("")) {
+			String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
+			List<String> result= adbUtil.getListByADB(command);
+			packages=new String[result.size()];
+			for (int i=0; i<result.size(); i++){
+				if (result.get(i)!=null&&!result.get(i).equals("")) {
+					packages[i] = result.get(i).split(":")[1];
+				}
+			}
+		}else {
+			logger.info("设备有问题……");
+		}
+
+		return packages;
 	}
 }
