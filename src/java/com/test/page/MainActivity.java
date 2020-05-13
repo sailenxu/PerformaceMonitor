@@ -94,7 +94,6 @@ public class MainActivity {
                 }
             }
             System.out.println("flag::::+" + flag);
-
             packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
             if (flag) {
                 logger.info("设置默认包名：com.cleanmaster.mguard_cn");
@@ -111,7 +110,6 @@ public class MainActivity {
         JList jList=new JList();
         JScrollPane jp=new JScrollPane(jList);
         jp.setPreferredSize(new Dimension(100, 200));
-
         jComboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
@@ -198,12 +196,13 @@ public class MainActivity {
                 new AppInfo().clearAPK();
             }
         });
-        //卸载按钮监听
+        //卸载按钮监听，卸载后pack下拉框要刷新
         uninstallCM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 logger.info("卸载…………"+DeviceAndPack.packagename);
                 new AppInfo().clearAPK();
                 new AppInfo().uninstallAPK();
+                mainActivity.refreshPackCombobox(packJComboBox);
             }
         });
         panel.add(clearCach);

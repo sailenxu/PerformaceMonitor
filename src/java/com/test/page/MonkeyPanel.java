@@ -13,11 +13,11 @@ public class MonkeyPanel {
     private final static Logger logger = Logger.getLogger(LogDemo.class);
     private JPanel monkeyPanel=new JPanel();
     private JButton monkeyJButton = new JButton("Ö´ÐÐmonkey");
-    private JLabel countLabel = new JLabel("´ÎÊý(*)£º");
+    private JLabel countLabel = new JLabel("count(*):");
     private JTextField count = new JTextField(8);
     private JCheckBox ignoreCrash=new JCheckBox("ignorecrashes");
     private JCheckBox ignoreTimeouts = new JCheckBox("ignoretimeouts");
-    private JLabel throttleLabel = new JLabel("throttle(*)£º");
+    private JLabel throttleLabel = new JLabel("throttle(*):");
     private JTextField throttle = new JTextField(8);
 
     public JPanel getMonkeyPanel(){
