@@ -98,6 +98,9 @@ public class MainActivity {
             if (flag) {
                 logger.info("设置默认包名：com.cleanmaster.mguard_cn");
                 packJComboBox.setSelectedItem("com.cleanmaster.mguard_cn");
+            }else {
+                logger.info("未安装com.cleanmaster.mguard_cn，默认选中包名："+comboValue[0]);
+                new DeviceAndPack().setPackagename(comboValue[0]);
             }
         }
     }
@@ -137,7 +140,6 @@ public class MainActivity {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                
                 System.out.println("closing……");
                 System.exit(0);
             }
@@ -147,6 +149,7 @@ public class MainActivity {
         panel.setBackground(Color.YELLOW);
 
         JButton deviceRefreshButton=new JButton("刷新");
+        JButton screenshotButton = new JButton("截图");
         JButton clearLogcat = new JButton("清除logcat");
         JButton packRefreshButton=new JButton("刷新");
         JButton clearCach = new JButton("清除缓存");
@@ -162,6 +165,13 @@ public class MainActivity {
                 mainActivity.refreshDeviceCombobox(deviceJComeboBox, packJComboBox);
                 mainActivity.refreshPackCombobox(packJComboBox);
                 deviceInfoPanel.refreshDeviceInfoPanel();
+            }
+        });
+        //截图按钮监听
+        screenshotButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DeviceInfo().screenShot();
             }
         });
         clearLogcat.addActionListener(new ActionListener() {
@@ -181,6 +191,7 @@ public class MainActivity {
         panel.add(device);
         panel.add(deviceJComeboBox);
         panel.add(deviceRefreshButton);
+        panel.add(screenshotButton);
         panel.add(clearLogcat);
         //添加包名选择
         JLabel packagename=new JLabel("package：");

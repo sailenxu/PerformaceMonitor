@@ -32,7 +32,7 @@ class TextDropTargetListener implements DropTargetListener {
             System.out.println("ACTION_COPY\n");
         if ((a & DnDConstants.ACTION_MOVE) != 0) {
             System.out.println("ACTION_MOVE\n");
-            logger.info("drag_ACTION_MOVE");
+            logger.info("安装中，请稍等…………");
         }
         if ((a & DnDConstants.ACTION_LINK) != 0)
             System.out.println("ACTION_LINK\n");

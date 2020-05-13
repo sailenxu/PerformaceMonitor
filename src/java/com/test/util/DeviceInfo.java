@@ -44,7 +44,6 @@ public class DeviceInfo {
 				if (s!=null&&s!="") {
 					model=s;
 					break;
-
 				}
 			}
 		}
@@ -89,10 +88,12 @@ public class DeviceInfo {
 	public String getOsVersionCode(){
 		String versionCode="";
 		if (deviceId!=null && !deviceId.equals("")) {
-			List<String> list=cmdTool.getListByCmd(adbUtil.getAdbPath()+" -s "+deviceId+" shell getprop ro.build.version.release");
+			System.out.println("ossssssss");
+			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.build.version.release");
 			for(String s:list){
 				if (s!=null&&s!="") {
 					versionCode=s;
+					System.out.println("sssssssssssss:"+s);
 					break;
 				}
 			}
@@ -162,7 +163,11 @@ public class DeviceInfo {
 		}else {
 			logger.info("设备有问题……");
 		}
-
 		return packages;
+	}
+	public void screenShot(){
+		if (deviceId!=null && !deviceId.equals("")) {
+			
+		}
 	}
 }
