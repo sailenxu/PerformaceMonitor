@@ -13,10 +13,12 @@ public class MonkeyPanel {
     private final static Logger logger = Logger.getLogger(LogDemo.class);
     private JPanel monkeyPanel=new JPanel();
     private JButton monkeyJButton = new JButton("执行monkey");
-    private JLabel countLabel = new JLabel("次数：");
+    private JLabel countLabel = new JLabel("次数(*)：");
     private JTextField count = new JTextField(8);
     private JCheckBox ignoreCrash=new JCheckBox("ignorecrashes");
     private JCheckBox ignoreTimeouts = new JCheckBox("ignoretimeouts");
+    private JLabel throttleLabel = new JLabel("throttle(*)：");
+    private JTextField throttle = new JTextField(8);
 
     public JPanel getMonkeyPanel(){
         monkeyPanel.setBorder(BorderFactory.createTitledBorder("monkey"));
@@ -24,15 +26,15 @@ public class MonkeyPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (count.getText()!=null&&!count.getText().equals("")){
-                        if (Integer.parseInt(count.getText())>0){
+                    if (count.getText()!=null && !count.getText().equals("") && throttle.getText()!=null && !throttle.getText().equals("")){
+                        if (Integer.parseInt(count.getText())>0 && Integer.parseInt(throttle.getText())>0){
 //                            if (ignoreCrash.isSelected())
-                            new AppInfo().runMonkey(ignoreCrash.isSelected(), ignoreTimeouts.isSelected(), Integer.parseInt(count.getText()));
+                            new AppInfo().runMonkey(ignoreCrash.isSelected(), ignoreTimeouts.isSelected(), Integer.parseInt(throttle.getText()), Integer.parseInt(count.getText()));
                         }else {
-                            logger.info("执行次数输入不正确!!");
+                            logger.info("输入不正确!!");
                         }
                     }else {
-                        logger.info("输入执行次数!!!");
+                        logger.info("输入throttle或执行次数!!!");
                     }
 
                 } catch (IOException ioException) {
@@ -42,6 +44,8 @@ public class MonkeyPanel {
         });
         monkeyPanel.add(ignoreCrash);
         monkeyPanel.add(ignoreTimeouts);
+        monkeyPanel.add(throttleLabel);
+        monkeyPanel.add(throttle);
         monkeyPanel.add(countLabel);
         monkeyPanel.add(count);
         monkeyPanel.add(monkeyJButton);

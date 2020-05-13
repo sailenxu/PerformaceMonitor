@@ -56,9 +56,9 @@ public class AppInfo {
 		}
 		return mem;
 	}
-	public void runMonkey(boolean isIgnoreCrashes, boolean isIgnoreTimeouts, int count) throws IOException {
+	public void runMonkey(boolean isIgnoreCrashes, boolean isIgnoreTimeouts,int throttle, int count) throws IOException {
 		if (deviceid!=null&&packagename!=null) {
-			String monkeyCommand = "adb -s " + deviceid + " shell monkey -p " + packagename + " -v -v --throttle 400 "+(isIgnoreCrashes?" --ignore-crashes ":"")+(isIgnoreTimeouts?" --ignore-timeouts ":"")+count;
+			String monkeyCommand = "adb -s " + deviceid + " shell monkey -p " + packagename + " -v -v --throttle "+throttle+(isIgnoreCrashes?" --ignore-crashes ":" ")+(isIgnoreTimeouts?" --ignore-timeouts ":" ")+count;
 			logger.info(monkeyCommand);
 			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
 			while (br.readLine() != null) {
