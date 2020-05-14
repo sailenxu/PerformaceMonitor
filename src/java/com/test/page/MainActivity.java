@@ -71,7 +71,6 @@ public class MainActivity {
             deviceCombobox.setModel(new DefaultComboBoxModel(devicesArray));
             new DeviceAndPack().setDeivceid(devicesArray[0]);
             refreshPackCombobox(packJComboBox);
-
         }else {
             logger.info("没有设备…………");
             new DeviceAndPack().setDeivceid("");
@@ -171,6 +170,7 @@ public class MainActivity {
         screenshotButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                logger.info("截图…………");
                 new DeviceInfo().screenShot();
             }
         });

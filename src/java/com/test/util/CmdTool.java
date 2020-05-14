@@ -26,6 +26,7 @@ public class CmdTool {
 		Runtime r=Runtime.getRuntime();
 		try {
 			Process process=r.exec("cmd /c "+cmdString);
+			logger.info("cmd command:"+cmdString);
 			InputStream in=process.getInputStream();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 			String line=null;

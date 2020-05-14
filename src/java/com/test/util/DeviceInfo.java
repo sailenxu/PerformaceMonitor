@@ -152,7 +152,7 @@ public class DeviceInfo {
 	public String[] getAllPack(){
 		String[] packages = null;
 		if (deviceId!=null && !deviceId.equals("")) {
-			String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
+			String command="adb -s "+ deviceId +" shell pm list package";
 			List<String> result= adbUtil.getListByADB(command);
 			packages=new String[result.size()];
 			for (int i=0; i<result.size(); i++){
@@ -165,9 +165,17 @@ public class DeviceInfo {
 		}
 		return packages;
 	}
+
+	/**
+	 * 截图步骤：adb执行截图，将手机里的pull到电脑，删除手机中图片
+	 */
 	public void screenShot(){
 		if (deviceId!=null && !deviceId.equals("")) {
-			
+			long screenName = System.currentTimeMillis();
+			String screenCommand = "adb -s "+deviceId+" shell screencap -p /sdcard/"+String.valueOf(screenName)+".png";
+			adbUtil.runADB(screenCommand);
+			adbUtil.runADB("adb -s "+deviceId+" pull /sdcard/"+String.valueOf(screenName)+".png D:/Desktop");
+			adbUtil.runADB("adb -s "+deviceId+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
 		}
 	}
 }
