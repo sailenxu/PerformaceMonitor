@@ -8,6 +8,7 @@ import com.test.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
@@ -88,17 +89,17 @@ public class MainActivity {
         if (comboValue!=null) {
             boolean flag = false;
             for (String s : comboValue) {
-                if (s.contains("com.cleanmaster.mguard_cn")) {
+                if (s.contains(ResourceBundle.getBundle("config").getString("defaultPackage"))) {
                     flag = true;
                 }
             }
             System.out.println("flag::::+" + flag);
             packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
             if (flag) {
-                logger.info("设置默认包名：com.cleanmaster.mguard_cn");
-                packJComboBox.setSelectedItem("com.cleanmaster.mguard_cn");
+                logger.info("设置默认包名："+ResourceBundle.getBundle("config").getString("defaultPackage"));
+                packJComboBox.setSelectedItem(ResourceBundle.getBundle("config").getString("defaultPackage"));
             }else {
-                logger.info("未安装com.cleanmaster.mguard_cn，默认选中包名："+comboValue[0]);
+                logger.info("未安装"+ResourceBundle.getBundle("config").getString("defaultPackage")+"，默认选中包名："+comboValue[0]);
                 new DeviceAndPack().setPackagename(comboValue[0]);
             }
         }
@@ -236,7 +237,6 @@ public class MainActivity {
         logDemoFrame.initLog();
         logJPanel.add(logsp);
         jFrame.add(logJPanel);
-
 
         jFrame.setVisible(true);
 

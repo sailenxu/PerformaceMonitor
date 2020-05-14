@@ -5,6 +5,7 @@ import com.test.perfordata.DeviceAndPack;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class DeviceInfo {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
@@ -174,7 +175,7 @@ public class DeviceInfo {
 			long screenName = System.currentTimeMillis();
 			String screenCommand = "adb -s "+deviceId+" shell screencap -p /sdcard/"+String.valueOf(screenName)+".png";
 			adbUtil.runADB(screenCommand);
-			adbUtil.runADB("adb -s "+deviceId+" pull /sdcard/"+String.valueOf(screenName)+".png D:/Desktop");
+			adbUtil.runADB("adb -s "+deviceId+" pull /sdcard/"+String.valueOf(screenName)+".png "+ ResourceBundle.getBundle("config").getString("screenShotPath"));
 			adbUtil.runADB("adb -s "+deviceId+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
 		}
 	}
