@@ -22,12 +22,11 @@ public class StartMonitor implements Runnable {
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
 		while (running) {
 
-			AppInfo appInfo=new AppInfo();
 			//获取cpu并存储数据
-			CPUInfo cpuInfo=new CPUInfo(String.valueOf(time), appInfo.getAPPCPU());
+			CPUInfo cpuInfo=new CPUInfo(String.valueOf(time), AppInfo.getAppInfo().getAPPCPU());
 			MonitorData.getCPUinfolist().add(cpuInfo);
 			//获取内存并存储数据
-			MemInfo memInfo=new MemInfo(String.valueOf(time), appInfo.getAPPMem());
+			MemInfo memInfo=new MemInfo(String.valueOf(time), AppInfo.getAppInfo().getAPPMem());
 			MonitorData.getMeminfolist().add(memInfo);
 			//增加延时
 			try {

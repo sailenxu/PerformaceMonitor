@@ -21,10 +21,10 @@ public class DeviceInfoPanel {
         deviceInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 //        deviceInfoPanel.setBackground(Color.GRAY);
 
-        brandJlabel.setText(new DeviceInfo().getBrand());
-        modelJlabel.setText(new DeviceInfo().getModel());
-        dpJlabel.setText(new DeviceInfo().getDp());
-        osJlabel.setText(new DeviceInfo().getOsVersionCode());
+        brandJlabel.setText(DeviceInfo.getDeviceInfo().getBrand());
+        modelJlabel.setText(DeviceInfo.getDeviceInfo().getModel());
+        dpJlabel.setText(DeviceInfo.getDeviceInfo().getDp());
+        osJlabel.setText(DeviceInfo.getDeviceInfo().getOsVersionCode());
 
         deviceInfoPanel.add(brand);
         deviceInfoPanel.add(brandJlabel);
@@ -37,9 +37,9 @@ public class DeviceInfoPanel {
         return deviceInfoPanel;
     }
     public void refreshDeviceInfoPanel(){
-        brandJlabel.setText(new DeviceInfo().getBrand());
-        modelJlabel.setText(new DeviceInfo().getModel());
-        dpJlabel.setText(new DeviceInfo().getDp());
-        osJlabel.setText(new DeviceInfo().getOsVersionCode());
+        brandJlabel.setText(DeviceInfo.getDeviceInfo().getBrand());
+        modelJlabel.setText(DeviceInfo.getDeviceInfo().getModel());
+        dpJlabel.setText(DeviceInfo.getDeviceInfo().getDp());
+        osJlabel.setText(DeviceInfo.getDeviceInfo().getOsVersionCode());
     }
 }

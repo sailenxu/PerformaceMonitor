@@ -29,7 +29,7 @@ public class MonkeyPanel {
                     if (count.getText()!=null && !count.getText().equals("") && throttle.getText()!=null && !throttle.getText().equals("")){
                         if (Integer.parseInt(count.getText())>0 && Integer.parseInt(throttle.getText())>0){
 //                            if (ignoreCrash.isSelected())
-                            new AppInfo().runMonkey(ignoreCrash.isSelected(), ignoreTimeouts.isSelected(), Integer.parseInt(throttle.getText()), Integer.parseInt(count.getText()));
+                            AppInfo.getAppInfo().runMonkey(ignoreCrash.isSelected(), ignoreTimeouts.isSelected(), Integer.parseInt(throttle.getText()), Integer.parseInt(count.getText()));
                         }else {
                             logger.info("输入不正确!!");
                         }

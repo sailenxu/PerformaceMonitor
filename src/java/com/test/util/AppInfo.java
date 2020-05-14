@@ -19,7 +19,11 @@ public class AppInfo {
 	private AdbUtil adbUtil=new AdbUtil();
 	private String deviceid=DeviceAndPack.deivceid;
 	private String packagename = DeviceAndPack.packagename;
-
+	private static AppInfo appInfo = new AppInfo();
+	//增加单例模式，减少对象初始化
+	public static AppInfo getAppInfo() {
+		return appInfo;
+	}
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
 	 * @return

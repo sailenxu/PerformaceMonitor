@@ -49,7 +49,7 @@ public class DevicePackPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logger.info("截图…………");
-                new DeviceInfo().screenShot();
+                DeviceInfo.getDeviceInfo().screenShot();
             }
         });
         //清除logcat按钮监听
@@ -57,7 +57,7 @@ public class DevicePackPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 logger.info("清除"+DeviceAndPack.deivceid+":logcat");
-                new DeviceInfo().clearLogcat();
+                DeviceInfo.getDeviceInfo().clearLogcat();
             }
         });
         //package刷新按钮监听
@@ -71,15 +71,15 @@ public class DevicePackPanel {
             public void actionPerformed(ActionEvent e) {
                 //清除cm缓存
                 logger.info("清除缓存…………"+DeviceAndPack.packagename);
-                new AppInfo().clearAPK();
+                AppInfo.getAppInfo().clearAPK();
             }
         });
         //卸载按钮监听，卸载后pack下拉框要刷新
         uninstallButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 logger.info("卸载…………"+DeviceAndPack.packagename);
-                new AppInfo().clearAPK();
-                new AppInfo().uninstallAPK();
+                AppInfo.getAppInfo().clearAPK();
+                AppInfo.getAppInfo().uninstallAPK();
                 refreshPackCombobox(packJComboBox);
             }
         });
@@ -161,7 +161,7 @@ public class DevicePackPanel {
     public void refreshPackCombobox(JComboBox packJComboBox){
         //有cm时，默认选中cm
         logger.info("刷新已安装软件列表");
-        String[] comboValue=new DeviceInfo().getAllPack();
+        String[] comboValue=DeviceInfo.getDeviceInfo().getAllPack();
         packJComboBox.removeAllItems();
         if (comboValue!=null) {
             boolean flag = false;

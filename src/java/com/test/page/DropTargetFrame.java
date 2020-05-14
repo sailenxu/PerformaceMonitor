@@ -78,7 +78,7 @@ class TextDropTargetListener implements DropTargetListener {
                             logger.info("path:"+f.getAbsolutePath());
                             if (f.getAbsolutePath().contains("apk")){
                                 logger.info("安装："+f);
-                                new DeviceInfo().installAPK(f.getAbsolutePath());
+                                DeviceInfo.getDeviceInfo().installAPK(f.getAbsolutePath());
                             }
                         }else if (f.isDirectory()){
                             logger.info("文件夹："+f);

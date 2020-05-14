@@ -12,7 +12,11 @@ public class DeviceInfo {
 	private AdbUtil adbUtil = new AdbUtil();
 	private CmdTool cmdTool=new CmdTool();
 	private String deviceId= DeviceAndPack.deivceid;
-
+	private static DeviceInfo deviceInfo = new DeviceInfo();
+	//增加单例模式，减少对象的初始化
+	public static DeviceInfo getDeviceInfo() {
+		return deviceInfo;
+	}
 	/**
 	 * 获取手机品牌
 	 * @return
