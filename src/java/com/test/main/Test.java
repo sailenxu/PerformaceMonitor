@@ -8,7 +8,6 @@ public class Test {
     private static Logger logger= Logger.getLogger(Test.class);
 
     public static void main(String[] args) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
-        System.out.println(resourceBundle.getString("screenShotPath"));
+        logger.info("woqu");
     }
 }

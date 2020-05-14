@@ -1,13 +1,8 @@
 package com.test.log;
 
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
-
 
 public class LogDemo {
     private JScrollPane logScrollPane;
