@@ -149,7 +149,6 @@ public class DevicePackPanel {
         if (devicesArray.length>0){
             deviceCombobox.setModel(new DefaultComboBoxModel(devicesArray));
             new DeviceAndPack().setDeivceid(devicesArray[0]);
-            refreshPackCombobox(packJComboBox);
         }else {
             logger.info("没有设备…………");
             new DeviceAndPack().setDeivceid("");
