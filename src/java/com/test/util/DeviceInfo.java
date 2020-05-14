@@ -89,12 +89,10 @@ public class DeviceInfo {
 	public String getOsVersionCode(){
 		String versionCode="";
 		if (deviceId!=null && !deviceId.equals("")) {
-			System.out.println("ossssssss");
 			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.build.version.release");
 			for(String s:list){
 				if (s!=null&&s!="") {
 					versionCode=s;
-					System.out.println("sssssssssssss:"+s);
 					break;
 				}
 			}

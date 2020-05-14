@@ -1,14 +1,9 @@
 package com.test.page;
 
 import com.test.log.LogDemo;
-import com.test.perfordata.DeviceAndPack;
-import com.test.util.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ResourceBundle;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -18,8 +13,6 @@ public class MainActivity {
     private final static Logger logger = Logger.getLogger(LogDemo.class);
 
     public static void main(String[] args) {
-        JPanel deviceInfoPanel=new DeviceInfoPanel().getDeviceInfoPanel();
-
         JFrame jFrame = new DropTargetFrame();
         jFrame.setTitle("PerformanceMonitor--by sai");
         jFrame.setSize(1500, 1000);
@@ -32,25 +25,11 @@ public class MainActivity {
                 System.exit(0);
             }
         });
-        JPanel devicePackPanel = new DevicePackPanel().getDevicePackPanel();
-
-        jFrame.add(devicePackPanel);
-        jFrame.add(deviceInfoPanel);
-        //添加monkey执行panel
-        JPanel monkeyJPanel = new MonkeyPanel().getMonkeyPanel();
-        jFrame.add(monkeyJPanel);
-
-        //添加日志打印，可以显示log信息
-        JPanel logJPanel = new JPanel();
-        JTextArea logta = new JTextArea();
-        JScrollPane logsp = new JScrollPane(logta);
-        logta.setColumns(80);
-        logta.setRows(30);
-        logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        LogDemo logDemoFrame = new LogDemo(logta, logsp);
-        logDemoFrame.initLog();
-        logJPanel.add(logsp);
-        jFrame.add(logJPanel);
+        
+        jFrame.add(new DevicePackPanel().getDevicePackPanel());
+        jFrame.add(new DeviceInfoPanel().getDeviceInfoPanel());
+        jFrame.add(new MonkeyPanel().getMonkeyPanel());
+        jFrame.add(new LogPanel().getLogPanel());
 
         jFrame.setVisible(true);
 

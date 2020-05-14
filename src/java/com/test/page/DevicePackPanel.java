@@ -112,7 +112,6 @@ public class DevicePackPanel {
             new DeviceInfoPanel().refreshDeviceInfoPanel();
             deviceJComeboBox.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
-                    System.out.println("eeeeee:"+e.getStateChange());
                     if (e.getStateChange() == e.SELECTED) {
                         logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
                         //选择设备后，需要给device赋值
@@ -172,7 +171,6 @@ public class DevicePackPanel {
                     flag = true;
                 }
             }
-            System.out.println("flag::::+" + flag);
             packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
             if (flag) {
                 logger.info("设置默认包名："+ResourceBundle.getBundle("config").getString("defaultPackage"));
