@@ -19,8 +19,8 @@ public class AppInfo {
 	private AdbUtil adbUtil=new AdbUtil();
 	private String deviceid=DeviceAndPack.deivceid;
 	private String packagename = DeviceAndPack.packagename;
-	private static AppInfo appInfo = new AppInfo();
 	//增加单例模式，减少对象初始化
+	private static AppInfo appInfo = new AppInfo();
 	public static AppInfo getAppInfo() {
 		return appInfo;
 	}

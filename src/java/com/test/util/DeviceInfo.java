@@ -11,7 +11,6 @@ public class DeviceInfo {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private AdbUtil adbUtil = new AdbUtil();
 	private CmdTool cmdTool=new CmdTool();
-	private String deviceId= DeviceAndPack.deivceid;
 	private static DeviceInfo deviceInfo = new DeviceInfo();
 	//增加单例模式，减少对象的初始化
 	public static DeviceInfo getDeviceInfo() {
@@ -23,8 +22,8 @@ public class DeviceInfo {
 	 */
 	public String getBrand() {
 		String brand = "";
-		if (deviceId != null && !deviceId.equals("") ) {
-			List<String> list = cmdTool.getListByCmd("adb -s " + deviceId + " shell getprop ro.product.brand");
+		if (DeviceAndPack.deivceid != null && !DeviceAndPack.deivceid.equals("") ) {
+			List<String> list = cmdTool.getListByCmd("adb -s " + DeviceAndPack.deivceid + " shell getprop ro.product.brand");
 			for (String s : list) {
 				if (s != null && s != "") {
 					brand = s;
@@ -43,8 +42,8 @@ public class DeviceInfo {
 	 */
 	public String getModel(){
 		String model="";
-		if (deviceId!=null && !deviceId.equals("")) {
-			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.product.model");
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			List<String> list=cmdTool.getListByCmd("adb -s "+DeviceAndPack.deivceid+" shell getprop ro.product.model");
 			for(String s:list){
 				if (s!=null&&s!="") {
 					model=s;
@@ -63,8 +62,8 @@ public class DeviceInfo {
 	 */
 	public String getDp(){
 		String dp="";
-		if (deviceId!=null && !deviceId.equals("")) {
-			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys window|findstr init");
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			List<String> list=cmdTool.getListByCmd("adb -s "+DeviceAndPack.deivceid+" shell dumpsys window|findstr init");
 			for(String s:list){
 				if(s!=null&&s!=""){
 					if (s.contains("init")) {
@@ -92,8 +91,8 @@ public class DeviceInfo {
 	 */
 	public String getOsVersionCode(){
 		String versionCode="";
-		if (deviceId!=null && !deviceId.equals("")) {
-			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell getprop ro.build.version.release");
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			List<String> list=cmdTool.getListByCmd("adb -s "+DeviceAndPack.deivceid+" shell getprop ro.build.version.release");
 			for(String s:list){
 				if (s!=null&&s!="") {
 					versionCode=s;
@@ -112,8 +111,8 @@ public class DeviceInfo {
 	 */
 	public String getIMEI(){
 		String imei="";
-		if (deviceId!=null && !deviceId.equals("")) {
-			List<String> list=cmdTool.getListByCmd("adb -s "+deviceId+" shell dumpsys iphonesubinfo");
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			List<String> list=cmdTool.getListByCmd("adb -s "+DeviceAndPack.deivceid+" shell dumpsys iphonesubinfo");
 			for(String s:list){
 				if(s!=null&&s!=""){
 					if (s.contains("Device")) {
@@ -134,16 +133,16 @@ public class DeviceInfo {
 	 * @param path
 	 */
 	public void installAPK(String path){
-		if (deviceId!=null && !deviceId.equals("")) {
-			String command = "adb -s " + deviceId + " install -r " + path;
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " install -r " + path;
 			logger.info("adb command:" + command);
 			adbUtil.runADB(command);
 //		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 		}
 	}
 	public void clearLogcat(){
-		if (deviceId!=null && !deviceId.equals("")) {
-			String command = "adb -s " + deviceId + " shell logcat -c";
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " shell logcat -c";
 			logger.info("adb command:" + command);
 			adbUtil.runADB(command);
 		}
@@ -154,8 +153,8 @@ public class DeviceInfo {
 	 */
 	public String[] getAllPack(){
 		String[] packages = null;
-		if (deviceId!=null && !deviceId.equals("")) {
-			String command="adb -s "+ deviceId +" shell pm list package";
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command="adb -s "+ DeviceAndPack.deivceid +" shell pm list package";
 			List<String> result= adbUtil.getListByADB(command);
 			packages=new String[result.size()];
 			for (int i=0; i<result.size(); i++){
@@ -173,12 +172,12 @@ public class DeviceInfo {
 	 * 截图步骤：adb执行截图，将手机里的pull到电脑，删除手机中图片
 	 */
 	public void screenShot(){
-		if (deviceId!=null && !deviceId.equals("")) {
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
 			long screenName = System.currentTimeMillis();
-			String screenCommand = "adb -s "+deviceId+" shell screencap -p /sdcard/"+String.valueOf(screenName)+".png";
+			String screenCommand = "adb -s "+DeviceAndPack.deivceid+" shell screencap -p /sdcard/"+String.valueOf(screenName)+".png";
 			adbUtil.runADB(screenCommand);
-			adbUtil.runADB("adb -s "+deviceId+" pull /sdcard/"+String.valueOf(screenName)+".png "+ ResourceBundle.getBundle("config").getString("screenShotPath"));
-			adbUtil.runADB("adb -s "+deviceId+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
+			adbUtil.runADB("adb -s "+DeviceAndPack.deivceid+" pull /sdcard/"+String.valueOf(screenName)+".png "+ ResourceBundle.getBundle("config").getString("screenShotPath"));
+			adbUtil.runADB("adb -s "+DeviceAndPack.deivceid+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
 		}
 	}
 }

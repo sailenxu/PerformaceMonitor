@@ -35,13 +35,13 @@ public class DevicePackPanel {
         devicePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         devicePanel.setBackground(Color.YELLOW);
 
-        initDeviceComboBox(deviceJComeboBox, packJComboBox);
-        initPackComboBox(packJComboBox);
+        initDeviceComboBox();
+        initPackComboBox();
         //device刷新按钮添加监听
         deviceRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 refreshDeviceCombobox(deviceJComeboBox, packJComboBox);
-                refreshPackCombobox(packJComboBox);
+                refreshPackCombobox();
                 new DeviceInfoPanel().refreshDeviceInfoPanel();
             }
         });
@@ -64,7 +64,7 @@ public class DevicePackPanel {
         //package刷新按钮监听
         packRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                refreshPackCombobox(packJComboBox);
+                refreshPackCombobox();
             }
         });
         //清缓存按钮监听
@@ -81,7 +81,7 @@ public class DevicePackPanel {
                 logger.info("卸载…………"+DeviceAndPack.packagename);
                 AppInfo.getAppInfo().clearAPK();
                 AppInfo.getAppInfo().uninstallAPK();
-                refreshPackCombobox(packJComboBox);
+                refreshPackCombobox();
             }
         });
         perforButton.addActionListener(new ActionListener() {
@@ -107,36 +107,34 @@ public class DevicePackPanel {
     }
     /**
      * device下拉框初始化
-     * @param deviceJComeboBox
-     * @param packJComboBox
      */
-    public void initDeviceComboBox(final JComboBox deviceJComeboBox, final JComboBox packJComboBox){
+    public void initDeviceComboBox(){
         DevicesInfos devicesInfos = new DevicesInfos();
         String[] devicesArray=devicesInfos.getDevicesArray();
         deviceJComeboBox.setModel(new DefaultComboBoxModel(devicesArray));
         if (devicesArray.length>1) {
             logger.info("有多个设备，默认选中"+devicesArray[0]);
-            new DeviceAndPack().setDeivceid(devicesArray[0]);
-            refreshPackCombobox(packJComboBox);
+            DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
+            refreshPackCombobox();
             new DeviceInfoPanel().refreshDeviceInfoPanel();
             deviceJComeboBox.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == e.SELECTED) {
                         logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
                         //选择设备后，需要给device赋值
-                        new DeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
+                        DeviceAndPack.getDeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
                         System.out.println(DeviceAndPack.deivceid+":::::::::::");
                         //并且要强制让package下拉框刷新，来获取最新的packages
-                        refreshPackCombobox(packJComboBox);
+                        refreshPackCombobox();
                         new DeviceInfoPanel().refreshDeviceInfoPanel();
                     }
                 }
             });
         }else if(devicesArray.length==1){
             logger.info("检测出一个设备并选中："+devicesArray[0]);
-            new DeviceAndPack().setDeivceid(devicesArray[0]);
+            DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
             //刷新pack下拉框
-            refreshPackCombobox(packJComboBox);
+            refreshPackCombobox();
             new DeviceInfoPanel().refreshDeviceInfoPanel();
         }else{
             //没有设备
@@ -157,17 +155,16 @@ public class DevicePackPanel {
         deviceCombobox.removeAllItems();
         if (devicesArray.length>0){
             deviceCombobox.setModel(new DefaultComboBoxModel(devicesArray));
-            new DeviceAndPack().setDeivceid(devicesArray[0]);
+            DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
         }else {
             logger.info("没有设备…………");
-            new DeviceAndPack().setDeivceid("");
+            DeviceAndPack.getDeviceAndPack().setDeivceid("");
         }
     }
     /**
      * 刷新包名下拉框
-     * @param packJComboBox
      */
-    public void refreshPackCombobox(JComboBox packJComboBox){
+    public void refreshPackCombobox(){
         //有cm时，默认选中cm
         logger.info("刷新已安装软件列表");
         String[] comboValue=DeviceInfo.getDeviceInfo().getAllPack();
@@ -185,7 +182,7 @@ public class DevicePackPanel {
                 packJComboBox.setSelectedItem(ResourceBundle.getBundle("config").getString("defaultPackage"));
             }else {
                 logger.info("未安装"+ResourceBundle.getBundle("config").getString("defaultPackage")+"，默认选中包名："+comboValue[0]);
-                new DeviceAndPack().setPackagename(comboValue[0]);
+                DeviceAndPack.getDeviceAndPack().setPackagename(comboValue[0]);
             }
         }
     }
@@ -193,7 +190,7 @@ public class DevicePackPanel {
      * 包名下拉框初始化
      * @return
      */
-    public void initPackComboBox(final JComboBox packJComboBox){
+    public void initPackComboBox(){
         JList jList=new JList();
         JScrollPane jp=new JScrollPane(jList);
         jp.setPreferredSize(new Dimension(100, 200));
@@ -201,7 +198,7 @@ public class DevicePackPanel {
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {
                     //选择包名后，就可以监听应用信息
-                    DeviceAndPack dp=new DeviceAndPack();
+                    DeviceAndPack dp=DeviceAndPack.getDeviceAndPack();
                     dp.setPackagename(String.valueOf(packJComboBox.getSelectedItem()));
                     logger.info("选择包名："+DeviceAndPack.packagename);
                     System.out.println(dp.deivceid+"::::"+DeviceAndPack.packagename);
