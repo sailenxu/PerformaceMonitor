@@ -11,8 +11,7 @@ public class DevicesInfos {
 	 */
 	public List<String> getDevicesID(){
 		List<String> deviceList=new ArrayList<String>();
-		CmdTool cmd=new CmdTool();
-		List<String> resultList=cmd.getListByCmd("adb devices");
+		List<String> resultList=new CmdTool().getListByCmd("adb devices");
 		for(int i=1;i<resultList.size()-1;i++){
 			if (resultList.get(i)!=null&&resultList.get(i)!="") {
 				String[] result=resultList.get(i).split("\t");

@@ -29,6 +29,7 @@ public class DevicePackPanel {
     private JButton packRefreshButton=new JButton("刷新");
     private JButton clearCachButton = new JButton("清除缓存");
     private JButton uninstallButton = new JButton("卸    载");
+    private JButton perforButton = new JButton("性能监测");
 
     public JPanel getDevicePackPanel(){
         devicePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -83,6 +84,13 @@ public class DevicePackPanel {
                 refreshPackCombobox(packJComboBox);
             }
         });
+        perforButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logger.info("开始性能监测……");
+
+            }
+        });
 
         devicePanel.add(device);
         devicePanel.add(deviceJComeboBox);
@@ -94,6 +102,7 @@ public class DevicePackPanel {
         devicePanel.add(packRefreshButton);
         devicePanel.add(clearCachButton);
         devicePanel.add(uninstallButton);
+        devicePanel.add(perforButton);
         return devicePanel;
     }
     /**

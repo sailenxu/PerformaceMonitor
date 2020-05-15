@@ -29,6 +29,7 @@ public class MainActivity {
         jFrame.add(new DevicePackPanel().getDevicePackPanel());
         jFrame.add(new DeviceInfoPanel().getDeviceInfoPanel());
         jFrame.add(new MonkeyPanel().getMonkeyPanel());
+        jFrame.add(new PerforPanel().getPerforPanel());
         jFrame.add(new LogPanel().getLogPanel());
 
         jFrame.setVisible(true);
