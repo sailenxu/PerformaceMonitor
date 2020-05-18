@@ -21,7 +21,7 @@ public class ChartPanel {
 
     public void xchart(double data){
         if (seriesData.size() == this.size){
-            seriesData.clear();
+            seriesData.remove(0);
         }
         seriesData.add(data);
         if (swingWrapper==null) {
@@ -40,7 +40,7 @@ public class ChartPanel {
 
     public static void main(String[] args) throws InterruptedException {
         JFrame jFrame = new JFrame("charttttt");
-        ChartPanel xChartPanel=new ChartPanel(jFrame,20);
+        ChartPanel xChartPanel=new ChartPanel(jFrame,10);
 //        xChartPanel.xchart(1);
         for (int i=1;i<50; i++){
             xChartPanel.xchart(i);

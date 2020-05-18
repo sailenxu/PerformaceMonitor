@@ -2,6 +2,7 @@ package com.test.main;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.test.page.ChartPanel;
 import com.test.perfordata.DeviceAndPack;
@@ -42,7 +43,7 @@ public class StartMonitor implements Runnable {
 			xChartPanel.xchart(cpu);
 			//Ôö¼ÓÑÓÊ±
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
