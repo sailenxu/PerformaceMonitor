@@ -1,5 +1,6 @@
 package com.test.page;
 
+import com.sun.javaws.util.JfxHelper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
@@ -11,8 +12,17 @@ public class ChartPanel {
     private List<Double> seriesData=new ArrayList<Double>();
     private XYChart chart;
     private SwingWrapperBase swingWrapper;
+    private JFrame jFrame;
+    private int size = 100;//默认100条数据刷新一次
+    public ChartPanel(JFrame jFrame, int size){
+        this.jFrame=jFrame;
+        this.size=size;
+    }
 
-    public void xchart(double data, JFrame jFrame){
+    public void xchart(double data){
+        if (seriesData.size() == this.size){
+            seriesData.clear();
+        }
         seriesData.add(data);
         if (swingWrapper==null) {
             chart = new XYChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
@@ -30,10 +40,10 @@ public class ChartPanel {
 
     public static void main(String[] args) throws InterruptedException {
         JFrame jFrame = new JFrame("charttttt");
-        ChartPanel xChartPanel=new ChartPanel();
+        ChartPanel xChartPanel=new ChartPanel(jFrame,20);
 //        xChartPanel.xchart(1);
         for (int i=1;i<50; i++){
-            xChartPanel.xchart(i,jFrame);
+            xChartPanel.xchart(i);
             Thread.sleep(1000);
         }
         jFrame.setVisible(true);

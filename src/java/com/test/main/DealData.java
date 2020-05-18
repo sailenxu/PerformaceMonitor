@@ -22,16 +22,16 @@ public class DealData {
 		String packName="com.jingdong.app.mall";
 		String device="Q5S5T19529000632";
 
-		com.test.main.StartMonitor monitor=new com.test.main.StartMonitor();
-		Thread t1=new Thread(monitor);
-		t1.start();
+//		com.test.main.StartMonitor monitor=new com.test.main.StartMonitor();
+//		Thread t1=new Thread(monitor);
+//		t1.start();
 		try {
 			Thread.sleep(5*1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		t1.stop();
+//		t1.stop();
 		// TODO Auto-generated method stub
 		//打印获取到的cpu数据
 //		List<CPUInfo> cpuInfos=MonitorData.getCPUinfolist();

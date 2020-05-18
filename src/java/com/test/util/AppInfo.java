@@ -17,7 +17,6 @@ import java.util.List;
 public class AppInfo {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private AdbUtil adbUtil=new AdbUtil();
-	private String packagename = DeviceAndPack.packagename;
 	//增加单例模式，减少对象初始化
 	private static AppInfo appInfo = new AppInfo();
 	public static AppInfo getAppInfo() {
@@ -28,9 +27,10 @@ public class AppInfo {
 	 * @return
 	 * adb -s Q5S5T19529000632 shell dumpsys cpuinfo|findstr com.jingdong.app.mall
 	 */
-	public double getAPPCPU(){
+	public double
+	getAPPCPU(){
 		double cpu=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+packagename);
+		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+DeviceAndPack.packagename);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){
@@ -47,7 +47,7 @@ public class AppInfo {
 	 */
 	public int getAPPMem(){
 		int mem=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+DeviceAndPack.deivceid+" shell dumpsys meminfo -s "+packagename);
+		List<String> result = adbUtil.getListByADB("adb -s "+DeviceAndPack.deivceid+" shell dumpsys meminfo -s "+DeviceAndPack.packagename);
 		//可能获取到的结果为空，或进程不存在
 		if (result.size()!=0&&result!=null){
 			for (String ss:result){
@@ -60,8 +60,8 @@ public class AppInfo {
 		return mem;
 	}
 	public void runMonkey(boolean isIgnoreCrashes, boolean isIgnoreTimeouts,int throttle, int count) throws IOException {
-		if (DeviceAndPack.deivceid!=null&&packagename!=null) {
-			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + packagename + " -v -v --throttle "+throttle+(isIgnoreCrashes?" --ignore-crashes ":" ")+(isIgnoreTimeouts?" --ignore-timeouts ":" ")+count;
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle "+throttle+(isIgnoreCrashes?" --ignore-crashes ":" ")+(isIgnoreTimeouts?" --ignore-timeouts ":" ")+count;
 			logger.info(monkeyCommand);
 			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
 			while (br.readLine() != null) {
@@ -75,13 +75,13 @@ public class AppInfo {
 	 * 清除apk缓存
 	 */
 	public void clearAPK(){
-		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename;
+		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
 		adbUtil.runADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
 	public void uninstallAPK(){
-		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename;
+		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
 		adbUtil.runADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);

@@ -180,6 +180,8 @@ public class DevicePackPanel {
             if (flag) {
                 logger.info("设置默认包名："+ResourceBundle.getBundle("config").getString("defaultPackage"));
                 packJComboBox.setSelectedItem(ResourceBundle.getBundle("config").getString("defaultPackage"));
+                DeviceAndPack.getDeviceAndPack().setPackagename(ResourceBundle.getBundle("config").getString("defaultPackage"));
+                logger.info("默认包名：：：：："+DeviceAndPack.packagename);
             }else {
                 logger.info("未安装"+ResourceBundle.getBundle("config").getString("defaultPackage")+"，默认选中包名："+comboValue[0]);
                 DeviceAndPack.getDeviceAndPack().setPackagename(comboValue[0]);
@@ -194,6 +196,7 @@ public class DevicePackPanel {
         JList jList=new JList();
         JScrollPane jp=new JScrollPane(jList);
         jp.setPreferredSize(new Dimension(100, 200));
+        System.out.println("cpkkkkk:"+DeviceAndPack.packagename);
         packJComboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if(e.getStateChange() == ItemEvent.SELECTED) {

@@ -4,6 +4,8 @@ import com.test.log.LogDemo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import com.test.main.StartMonitor;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,6 +33,9 @@ public class MainActivity {
         jFrame.add(new MonkeyPanel().getMonkeyPanel());
         jFrame.add(new PerforPanel().getPerforPanel());
         jFrame.add(new LogPanel().getLogPanel());
+
+        StartMonitor startMonitor = new StartMonitor(jFrame);
+        startMonitor.run();
 
         jFrame.setVisible(true);
 
