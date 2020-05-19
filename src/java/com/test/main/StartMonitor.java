@@ -21,10 +21,12 @@ import javax.swing.*;
 public class StartMonitor implements Runnable {
 	private boolean running;
 	private JFrame jFrame;
-	private ChartPanel xChartPanel;
+	private ChartPanel cpuChart;
+	private ChartPanel memChart;
 	public StartMonitor(JFrame jFrame){
 		this.jFrame = jFrame;
-		xChartPanel=new ChartPanel(jFrame,100);
+		cpuChart=new ChartPanel(jFrame,"","cpu£º"+DeviceAndPack.packagename,100);
+		memChart = new ChartPanel(jFrame,"", "memory£º"+DeviceAndPack.packagename, 100);
 	}
 
 	public void run() {
@@ -40,7 +42,10 @@ public class StartMonitor implements Runnable {
 //			MonitorData.getMeminfolist().add(memInfo);
 			double cpu = AppInfo.getAppInfo().getAPPCPU();
 			System.out.println(cpu);
-			xChartPanel.xchart(cpu);
+			cpuChart.xchart(cpu);
+
+			double mem = AppInfo.getAppInfo().getAPPMem();
+			memChart.xchart(mem);
 			//Ôö¼ÓÑÓÊ±
 			try {
 				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));

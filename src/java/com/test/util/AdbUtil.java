@@ -21,7 +21,7 @@ public class AdbUtil {
 	 * @return
 	 */
 	public List<String> getListByADB(String zhiling){
-		logger.info("adb command:"+zhiling);
+//		logger.info("adb command:"+zhiling);
 		List<String> adblist=new ArrayList<String>();
 		for(String s:cmdUtil.getListByCmd(zhiling)){
 			if (s!=null&&!s.equals("")) {//去掉换行，有的手机会将换行返回

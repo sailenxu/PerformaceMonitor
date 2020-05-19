@@ -50,14 +50,14 @@ public class CmdTool {
 		List<String> list=new ArrayList<String>();
 		try {
 			Process process=Runtime.getRuntime().exec("cmd /c "+cmdString);
-			logger.info("cmd command:"+cmdString);
+//			logger.info("cmd command:"+cmdString);
 			InputStream in=process.getInputStream();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 			String lineString=null;
 			while (StringTool.replaceBlank((lineString=reader.readLine()))!=null) {
 				list.add(lineString.trim());
 			}
-			logger.info("result:"+list);
+//			logger.info("result:"+list);
 			process.waitFor();
 			process.destroy();
 		} catch (Exception e) {

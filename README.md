@@ -50,13 +50,15 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5|findstr com.jingdong.ap
 ~~~
 adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdong.app.mall
 ~~~
-这样成功获取cpu值
+这样成功获取cpu值  
+此命令在华为手机上可以正常获取，oppo手机上获取不到……
 #### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.jingdong.app.mall  
 返回指定应用的内存情况，获取total值作为内存参数  
 方法2：adb shell dumpsys meminfo|findstr Foreground  
 返回当前应用的内存占用，好解析。但是无法确认当前应用，如果app闪退，抓到的是luncher的内存了  
-使用方法1获取成功
+使用方法1获取成功  
+获取内存返回的是kb，数字太大，显示时有问题，需要去掉后三位
 #### 3.获取fps
 adb shell dumpsys gfxinfo com.xstore.sevenfresh
 此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps

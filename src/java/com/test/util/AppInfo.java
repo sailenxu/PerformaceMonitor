@@ -52,7 +52,7 @@ public class AppInfo {
 		if (result.size()!=0&&result!=null){
 			for (String ss:result){
 				if (ss.contains("TOTAL")){
-					mem = Integer.parseInt(ss.split("\\s+")[1]);
+					mem = Integer.parseInt(ss.split("\\s+")[1])/1000;
 					System.out.println(mem);
 				}
 			}
