@@ -25,8 +25,8 @@ public class StartMonitor implements Runnable {
 	private ChartPanel memChart;
 	public StartMonitor(JFrame jFrame){
 		this.jFrame = jFrame;
-		cpuChart=new ChartPanel(jFrame,"","cpu£º"+DeviceAndPack.packagename,100);
-		memChart = new ChartPanel(jFrame,"", "memory£º"+DeviceAndPack.packagename, 100);
+		cpuChart=new ChartPanel(jFrame,"","cpu",100);
+		memChart = new ChartPanel(jFrame,"", "memory", 100);
 	}
 
 	public void run() {

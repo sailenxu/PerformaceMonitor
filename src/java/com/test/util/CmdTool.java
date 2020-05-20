@@ -21,21 +21,10 @@ public class CmdTool {
 	 * 执行cmd命令，不获取返回值
 	 * @param cmdString cmd命令
 	 */
-	public static void singleCmd(String cmdString){
-		String getString="";
+	public void singleCmd(String cmdString){
 		Runtime r=Runtime.getRuntime();
 		try {
-			Process process=r.exec("cmd /c "+cmdString);
-			logger.info("cmd command:"+cmdString);
-			InputStream in=process.getInputStream();
-			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
-			String line=null;
-			while ((line=reader.readLine())!=null) {
-				getString=getString+line+"\n";
-			}
-			logger.info(getString);
-			process.waitFor();
-			process.destroy();
+			r.exec("cmd /c "+cmdString);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

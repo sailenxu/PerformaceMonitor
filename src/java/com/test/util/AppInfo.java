@@ -27,8 +27,7 @@ public class AppInfo {
 	 * @return
 	 * adb -s Q5S5T19529000632 shell dumpsys cpuinfo|findstr com.jingdong.app.mall
 	 */
-	public double
-	getAPPCPU(){
+	public double getAPPCPU(){
 		double cpu=0;
 		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+DeviceAndPack.packagename);
 		//增加判空，可能获取到的结果为空
@@ -53,7 +52,7 @@ public class AppInfo {
 			for (String ss:result){
 				if (ss.contains("TOTAL")){
 					mem = Integer.parseInt(ss.split("\\s+")[1])/1000;
-					System.out.println(mem);
+//					System.out.println(mem);
 				}
 			}
 		}
@@ -63,10 +62,11 @@ public class AppInfo {
 		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
 			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle "+throttle+(isIgnoreCrashes?" --ignore-crashes ":" ")+(isIgnoreTimeouts?" --ignore-timeouts ":" ")+count;
 			logger.info(monkeyCommand);
-			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
-			while (br.readLine() != null) {
-				logger.info(br.readLine());
-			}
+			adbUtil.runADB(monkeyCommand);
+//			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
+//			while (br.readLine() != null) {
+//				logger.info(br.readLine());
+//			}
 		}else {
 			logger.info("请选择设备或包名…………");
 		}
