@@ -100,4 +100,7 @@ https://www.iteye.com/blog/yshjava-1325036
 list直接用remove就可以啊，list中值的顺序不会变，将list.remove(0)第一个数据删除，然后再add新的数据，就保证了list的size不变，添加一个后第一个数删除  
 想太多就会乱，一个很简单的问题，都不能算做问题
 #### 10.monkey按钮，如果执行次数很大时，按钮一直是down状态，无法进行其他操作
-monkey执行不处理返回数据，只执行命令即可
+monkey执行不处理返回数据，只执行命令即可  
+#### 11.可以获得屏幕大小，然后按照百分比来设置控件大小
+可以设置jframe窗体大小不可变，setResizable(true)
+控件可以随便摆放，叫坐标式布局
