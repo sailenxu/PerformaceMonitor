@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import com.test.main.StartMonitor;
+import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
 
 /**
@@ -17,7 +18,7 @@ public class MainActivity {
     public static void main(String[] args) {
         JFrame jFrame = new DropTargetFrame();
         jFrame.setTitle("PerformanceMonitor--by sai");
-        jFrame.setSize(1500, 1000);
+        jFrame.setPreferredSize(new Dimension(1500, 1000));
         jFrame.setLayout(new FlowLayout(FlowLayout.LEFT));
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -27,12 +28,16 @@ public class MainActivity {
                 System.exit(0);
             }
         });
-        
-        jFrame.add(new DevicePackPanel().getDevicePackPanel());
-        jFrame.add(new DeviceInfoPanel().getDeviceInfoPanel());
-        jFrame.add(new MonkeyPanel().getMonkeyPanel());
-        jFrame.add(new PerforPanel().getPerforPanel());
-        jFrame.add(new LogPanel().getLogPanel());
+        JPanel topPanle = new JPanel();
+        topPanle.add(new DevicePackPanel().getDevicePackPanel());
+        topPanle.add(new DeviceInfoPanel().getDeviceInfoPanel());
+        jFrame.add(topPanle);
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new BorderLayout());
+        westPanel.add(new MonkeyPanel().getMonkeyPanel(), BorderLayout.NORTH);
+        westPanel.add(new LogPanel().getLogPanel(), BorderLayout.SOUTH);
+        jFrame.add(westPanel);
+//        jFrame.add(new PerforPanel().getPerforPanel(), BorderLayout.NORTH);
 
         StartMonitor startMonitor = new StartMonitor(jFrame);
         startMonitor.run();

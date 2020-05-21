@@ -5,6 +5,7 @@ import com.test.util.AppInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class MonkeyPanel {
     private JTextField throttle = new JTextField(8);
 
     public JPanel getMonkeyPanel(){
+        monkeyPanel.setPreferredSize(new Dimension(900,70));
         monkeyPanel.setBorder(BorderFactory.createTitledBorder("monkey"));
         monkeyJButton.addActionListener(new ActionListener() {
             @Override
