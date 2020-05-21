@@ -34,7 +34,7 @@ public class StartMonitor implements Runnable {
 	public StartMonitor(JFrame jFrame){
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
-		perJPanel.setPreferredSize(new Dimension(1000, 800));
+		perJPanel.setPreferredSize(new Dimension(1100, 800));
 		perJPanel.setLayout(new GridLayout(2,2));
 		cpuChart=new ChartPanel(jFrame,"","cpu",100);
 		memChart = new ChartPanel(jFrame,"", "memory", 100);

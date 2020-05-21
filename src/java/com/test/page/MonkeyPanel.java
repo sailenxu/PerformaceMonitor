@@ -22,7 +22,7 @@ public class MonkeyPanel {
     private JTextField throttle = new JTextField(8);
 
     public JPanel getMonkeyPanel(){
-        monkeyPanel.setPreferredSize(new Dimension(900,70));
+        monkeyPanel.setPreferredSize(new Dimension(800,70));
         monkeyPanel.setBorder(BorderFactory.createTitledBorder("monkey"));
         monkeyJButton.addActionListener(new ActionListener() {
             @Override

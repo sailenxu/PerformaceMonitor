@@ -37,16 +37,11 @@ public class MainActivity {
         westPanel.add(new MonkeyPanel().getMonkeyPanel(), BorderLayout.NORTH);
         westPanel.add(new LogPanel().getLogPanel(), BorderLayout.SOUTH);
         jFrame.add(westPanel);
-//        jFrame.add(new PerforPanel().getPerforPanel(), BorderLayout.NORTH);
 
         StartMonitor startMonitor = new StartMonitor(jFrame);
         startMonitor.run();
 
         jFrame.setVisible(true);
 
-        //如何在前端添加性能监测折线图？使用多线程来抓性能数据似乎再此不适用，因为需要实时数据，将瞬时数据直接给到前端来显示，而不是收集一个list来return
-//        StartMonitor monitor=new StartMonitor(DeviceAndPack.packagename,DeviceAndPack.deivceid);
-//        Thread t1=new Thread(monitor);
-//        t1.start();
     }
 }

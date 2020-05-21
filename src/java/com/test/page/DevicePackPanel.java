@@ -28,6 +28,7 @@ public class DevicePackPanel {
     private JComboBox packJComboBox=new JComboBox();
     private JButton packRefreshButton=new JButton("刷新");
     private JButton clearCachButton = new JButton("清除缓存");
+    private JButton stopAPP = new JButton("结束进程");
     private JButton uninstallButton = new JButton("卸    载");
     private JButton perforButton = new JButton("性能监测");
 
@@ -76,6 +77,13 @@ public class DevicePackPanel {
                 AppInfo.getAppInfo().clearAPK();
             }
         });
+        stopAPP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logger.info("结束进程："+DeviceAndPack.packagename);
+                AppInfo.getAppInfo().stopAPP();
+            }
+        });
         //卸载按钮监听，卸载后pack下拉框要刷新
         uninstallButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -102,6 +110,7 @@ public class DevicePackPanel {
         devicePanel.add(packJComboBox);
         devicePanel.add(packRefreshButton);
         devicePanel.add(clearCachButton);
+        devicePanel.add(stopAPP);
         devicePanel.add(uninstallButton);
         devicePanel.add(perforButton);
         return devicePanel;

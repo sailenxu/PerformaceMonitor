@@ -80,6 +80,11 @@ public class AppInfo {
 		adbUtil.runADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
+	public void stopAPP(){
+		String command = "adb -s "+DeviceAndPack.deivceid+" shell am force-stop "+DeviceAndPack.packagename;
+		logger.info("adb command:"+command);
+		adbUtil.runADB(command);
+	}
 	public void uninstallAPK(){
 		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
