@@ -62,7 +62,7 @@ public class AppInfo {
 		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
 			String monkeyCommand = "adb -s " + DeviceAndPack.deivceid + " shell monkey -p " + DeviceAndPack.packagename + " -v -v --throttle "+throttle+(isIgnoreCrashes?" --ignore-crashes ":" ")+(isIgnoreTimeouts?" --ignore-timeouts ":" ")+count;
 			logger.info(monkeyCommand);
-			adbUtil.runADB(monkeyCommand);
+			adbUtil.runADBNoRequest(monkeyCommand);
 //			BufferedReader br = new CmdTool().getBRByCmd(monkeyCommand);
 //			while (br.readLine() != null) {
 //				logger.info(br.readLine());
@@ -77,18 +77,18 @@ public class AppInfo {
 	public void clearAPK(){
 		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
-		adbUtil.runADB(command);
+		adbUtil.runADBNoRequest(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
 	}
 	public void stopAPP(){
 		String command = "adb -s "+DeviceAndPack.deivceid+" shell am force-stop "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
-		adbUtil.runADB(command);
+		adbUtil.runADBNoRequest(command);
 	}
 	public void uninstallAPK(){
 		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
-		adbUtil.runADB(command);
+		adbUtil.runADBNoRequest(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
 	}
 

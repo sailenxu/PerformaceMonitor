@@ -34,6 +34,9 @@ public class AdbUtil {
 		}
 		return adblist;
 	}
+	public String getStringByADB(String command){
+		return cmdUtil.getStringByCmd(command);
+	}
 	/**
 	 * 获取当前路径，使用当前路径下的adb
 	 * @return
@@ -47,7 +50,7 @@ public class AdbUtil {
 	 * 执行adb命令
 	 * @param zhiling
 	 */
-	public void runADB(String zhiling){
+	public void runADBNoRequest(String zhiling){
 		cmdUtil.singleCmd(zhiling);
 	}
 

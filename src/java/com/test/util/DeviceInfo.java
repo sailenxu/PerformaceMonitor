@@ -136,7 +136,7 @@ public class DeviceInfo {
 		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
 			String command = "adb -s " + DeviceAndPack.deivceid + " install -r " + path;
 			logger.info("adb command:" + command);
-			adbUtil.runADB(command);
+			adbUtil.runADBNoRequest(command);
 //		runADB("adb -s "+ DeviceAndPack.deivceid+" install -r "+path);
 		}
 	}
@@ -144,7 +144,7 @@ public class DeviceInfo {
 		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
 			String command = "adb -s " + DeviceAndPack.deivceid + " shell logcat -c";
 			logger.info("adb command:" + command);
-			adbUtil.runADB(command);
+			adbUtil.runADBNoRequest(command);
 		}
 	}
 	/**
@@ -171,13 +171,14 @@ public class DeviceInfo {
 	/**
 	 * 截图步骤：adb执行截图，将手机里的pull到电脑，删除手机中图片
 	 */
-	public void screenShot(){
+	public void screenShot() {
 		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
 			long screenName = System.currentTimeMillis();
 			String screenCommand = "adb -s "+DeviceAndPack.deivceid+" shell screencap -p /sdcard/"+String.valueOf(screenName)+".png";
-			adbUtil.runADB(screenCommand);
-			adbUtil.runADB("adb -s "+DeviceAndPack.deivceid+" pull /sdcard/"+String.valueOf(screenName)+".png "+ ResourceBundle.getBundle("config").getString("screenShotPath"));
-			adbUtil.runADB("adb -s "+DeviceAndPack.deivceid+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
+			logger.info(screenCommand);
+			logger.info(adbUtil.getStringByADB(screenCommand));
+			adbUtil.runADBNoRequest("adb -s "+DeviceAndPack.deivceid+" pull /sdcard/"+String.valueOf(screenName)+".png "+ ResourceBundle.getBundle("config").getString("screenShotPath"));
+			adbUtil.runADBNoRequest("adb -s "+DeviceAndPack.deivceid+" shell rm /sdcard/"+String.valueOf(screenName)+".png");
 		}
 	}
 }
