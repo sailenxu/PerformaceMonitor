@@ -1,6 +1,6 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.util.DeviceInfo;
+import com.pm.util.DeviceInfo;
 
 import javax.swing.*;
 import java.awt.*;

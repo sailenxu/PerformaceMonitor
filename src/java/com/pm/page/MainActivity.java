@@ -1,12 +1,11 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.log.LogDemo;
+import com.pm.log.LogDemo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import com.test.main.StartMonitor;
-import org.apache.log4j.Layout;
+import com.pm.main.StartMonitor;
 import org.apache.log4j.Logger;
 
 /**

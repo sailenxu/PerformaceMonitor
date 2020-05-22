@@ -1,9 +1,4 @@
-package com.test.main;
-
-import java.util.List;
-
-import com.test.perfordata.MonitorData;
-import com.test.perforentity.CPUInfo;
+package com.pm.main;
 
 /***
  * 性能数据处理
@@ -22,7 +17,7 @@ public class DealData {
 		String packName="com.jingdong.app.mall";
 		String device="Q5S5T19529000632";
 
-//		com.test.main.StartMonitor monitor=new com.test.main.StartMonitor();
+//		com.pm.main.StartMonitor monitor=new com.pm.main.StartMonitor();
 //		Thread t1=new Thread(monitor);
 //		t1.start();
 		try {

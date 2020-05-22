@@ -1,16 +1,10 @@
-package com.test.main;
+package com.pm.main;
 
 import java.awt.*;
-import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import com.test.page.ChartPanel;
-import com.test.perfordata.DeviceAndPack;
-import com.test.perfordata.MonitorData;
-import com.test.perforentity.CPUInfo;
-import com.test.perforentity.MemInfo;
-import com.test.util.AppInfo;
+import com.pm.page.ChartPanel;
+import com.pm.util.AppInfo;
 
 import javax.swing.*;
 

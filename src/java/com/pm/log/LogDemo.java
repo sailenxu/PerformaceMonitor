@@ -1,4 +1,4 @@
-package com.test.log;
+package com.pm.log;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;

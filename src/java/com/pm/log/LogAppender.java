@@ -1,4 +1,4 @@
-package com.test.log;
+package com.pm.log;
 
 import java.io.IOException;
 import java.io.PipedReader;

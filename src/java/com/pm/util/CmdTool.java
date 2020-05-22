@@ -1,6 +1,6 @@
-package com.test.util;
+package com.pm.util;
 
-import com.test.log.LogDemo;
+import com.pm.log.LogDemo;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;

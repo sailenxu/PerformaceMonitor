@@ -1,6 +1,6 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.log.LogDemo;
+import com.pm.log.LogDemo;
 
 import javax.swing.*;
 

@@ -1,11 +1,9 @@
-package com.test.util;
+package com.pm.util;
 
-import com.test.log.LogDemo;
-import com.test.perfordata.DeviceAndPack;
+import com.pm.log.LogDemo;
+import com.pm.perfordata.DeviceAndPack;
 import org.apache.log4j.Logger;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 

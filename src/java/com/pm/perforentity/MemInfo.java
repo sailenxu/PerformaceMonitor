@@ -1,4 +1,4 @@
-package com.test.perforentity;
+package com.pm.perforentity;
 
 /**
  * 保存内存的瞬间值和时间

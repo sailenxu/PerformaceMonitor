@@ -1,11 +1,6 @@
-package com.test.main;
+package com.pm.main;
 
-import com.test.page.DropTargetFrame;
-import org.apache.log4j.Logger;
-
-import javax.swing.*;
 import java.awt.*;
-import java.util.ResourceBundle;
 
 public class Test {
     private static Test test=new Test();

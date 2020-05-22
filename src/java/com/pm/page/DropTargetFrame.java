@@ -1,8 +1,7 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.log.LogDemo;
-import com.test.util.AdbUtil;
-import com.test.util.DeviceInfo;
+import com.pm.log.LogDemo;
+import com.pm.util.DeviceInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package com.test.perfordata;
+package com.pm.perfordata;
 
 public class DeviceAndPack {
     //增加单例模式

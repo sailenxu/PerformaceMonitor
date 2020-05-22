@@ -1,7 +1,7 @@
-package com.test.util;
+package com.pm.util;
 
-import com.test.log.LogDemo;
-import com.test.perfordata.DeviceAndPack;
+import com.pm.log.LogDemo;
+import com.pm.perfordata.DeviceAndPack;
 import org.apache.log4j.Logger;
 
 import java.util.List;

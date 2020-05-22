@@ -1,11 +1,10 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.log.LogDemo;
-import com.test.util.AppInfo;
+import com.pm.log.LogDemo;
+import com.pm.util.AppInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;

@@ -1,8 +1,7 @@
-package com.test.page;
+package com.pm.page;
 
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 import javax.swing.*;

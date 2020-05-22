@@ -1,10 +1,10 @@
-package com.test.page;
+package com.pm.page;
 
-import com.test.log.LogDemo;
-import com.test.perfordata.DeviceAndPack;
-import com.test.util.AppInfo;
-import com.test.util.DeviceInfo;
-import com.test.util.DevicesInfos;
+import com.pm.log.LogDemo;
+import com.pm.perfordata.DeviceAndPack;
+import com.pm.util.AppInfo;
+import com.pm.util.DeviceInfo;
+import com.pm.util.DevicesInfos;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
