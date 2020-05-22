@@ -1,7 +1,10 @@
 package com.test.main;
 
+import com.test.page.DropTargetFrame;
 import org.apache.log4j.Logger;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ResourceBundle;
 
 public class Test {
@@ -15,6 +18,8 @@ public class Test {
 }
 class ccc{
     public static void main(String[] args) {
-        Test.getTest().aa();
+        double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        System.out.println(width+":::"+height);
     }
 }

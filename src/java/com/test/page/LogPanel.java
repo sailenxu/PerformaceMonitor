@@ -10,8 +10,9 @@ public class LogPanel {
     private JScrollPane logsp = new JScrollPane(logta);
 
     public JPanel getLogPanel(){
-        logta.setColumns(70);
-        logta.setRows(40);
+        logta.setColumns(67);
+        logta.setRows(45);
+//        logta.set(logWidth, logHeight);
         logsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         LogDemo logDemoFrame = new LogDemo(logta, logsp);
         logDemoFrame.initLog();

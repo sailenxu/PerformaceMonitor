@@ -33,7 +33,7 @@ public class DevicePackPanel {
     private JButton perforButton = new JButton("ÐÔÄÜ¼à²â");
 
     public JPanel getDevicePackPanel(){
-        devicePanel.setPreferredSize(new Dimension(1300, 50));
+//        devicePanel.setPreferredSize(new Dimension(1300, 50));
         devicePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         devicePanel.setBackground(Color.YELLOW);
 

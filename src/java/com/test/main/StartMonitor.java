@@ -34,7 +34,12 @@ public class StartMonitor implements Runnable {
 	public StartMonitor(JFrame jFrame){
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
-		perJPanel.setPreferredSize(new Dimension(1100, 800));
+		GraphicsDevice graphDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		DisplayMode disMode = graphDevice.getDisplayMode();
+		int width = disMode.getWidth();
+		int height = disMode.getHeight();
+		perJPanel.setSize((int) (width*0.6), height-70);
+		perJPanel.setLocation((int) (width*0.4), 70);
 		perJPanel.setLayout(new GridLayout(2,2));
 		cpuChart=new ChartPanel(jFrame,"","cpu",100);
 		memChart = new ChartPanel(jFrame,"", "memory", 100);
@@ -58,7 +63,7 @@ public class StartMonitor implements Runnable {
 				perJPanel.add(fpsJPanel);
 				perJPanel.add(dataJPanel);
 				jFrame.add(perJPanel);
-				jFrame.pack();
+//				jFrame.pack();
 				jFrame.setVisible(true);
 				flag = false;
 			}else{
