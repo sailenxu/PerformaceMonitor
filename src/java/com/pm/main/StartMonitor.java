@@ -32,13 +32,13 @@ public class StartMonitor implements Runnable {
 		DisplayMode disMode = graphDevice.getDisplayMode();
 		int width = disMode.getWidth();
 		int height = disMode.getHeight();
-		perJPanel.setSize((int) (width*0.6), height-70);
+		perJPanel.setSize((int) (width*0.6), height-70-50);
 		perJPanel.setLocation((int) (width*0.4), 70);
 		perJPanel.setLayout(new GridLayout(2,2));
-		cpuChart=new ChartPanel(jFrame,"","cpu",100);
-		memChart = new ChartPanel(jFrame,"", "memory", 100);
-		fpsChart = new ChartPanel(jFrame, "", "fps", 100);
-		dataChart = new ChartPanel(jFrame, "", "data", 100);
+		cpuChart=new ChartPanel(jFrame,"","cpu",(int)(width*0.6*0.5), (int)((height-70-50)*0.5),100);
+		memChart = new ChartPanel(jFrame,"", "memory",(int)(width*0.6*0.5), (int)((height-70-50)*0.5), 100);
+		fpsChart = new ChartPanel(jFrame, "", "fps",(int)(width*0.6*0.5), (int)((height-70-50)*0.5), 100);
+		dataChart = new ChartPanel(jFrame, "", "data",(int)(width*0.6*0.5), (int)((height-70-50)*0.5), 100);
 	}
 
 	public void run() {

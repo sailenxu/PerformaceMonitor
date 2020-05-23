@@ -54,6 +54,5 @@ public class MainActivity {
         startMonitor.run();
 
         jFrame.setVisible(true);
-
     }
 }
