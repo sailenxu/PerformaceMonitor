@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
  * 20200427:开始搞界面
  */
 public class MainActivity {
-    private final static Logger logger = Logger.getLogger(LogDemo.class);
 
     public static void main(String[] args) {
         GraphicsDevice graphDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -25,14 +24,8 @@ public class MainActivity {
 //        jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jFrame.setLayout(null);
         jFrame.setSize(width, height);
-        jFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                System.out.println("closing……");
-                System.exit(0);
-            }
-        });
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //顶部设备下拉框和设备信息
         JPanel topPanle = new JPanel();
         topPanle.setLocation(0, 0);
         topPanle.setSize((int)width, 70);
@@ -41,7 +34,7 @@ public class MainActivity {
         topPanle.add(new DevicePackPanel().getDevicePackPanel());
         topPanle.add(new DeviceInfoPanel().getDeviceInfoPanel());
         jFrame.add(topPanle);
-
+        //左边monkey和log
         JPanel westPanel = new JPanel();
         westPanel.setLocation(0, 70);
         westPanel.setSize((int) (width*0.4), height-70);
@@ -55,10 +48,8 @@ public class MainActivity {
         logPanel.setSize((int) (width*0.4), height-70-70);
         westPanel.add(monkeyPanel);
         westPanel.add(logPanel);
-//        westPanel.add(new MonkeyPanel().getMonkeyPanel(), BorderLayout.NORTH);
-//        westPanel.add(new LogPanel().getLogPanel(), BorderLayout.SOUTH);
         jFrame.add(westPanel);
-
+        //添加性能监控折线图
         StartMonitor startMonitor = new StartMonitor(jFrame);
         startMonitor.run();
 

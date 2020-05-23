@@ -11,16 +11,17 @@ public class DevicesInfos {
 	 */
 	public List<String> getDevicesID(){
 		List<String> deviceList=new ArrayList<String>();
-		List<String> resultList=new CmdTool().getListByCmd("adb devices");
-		for(int i=1;i<resultList.size()-1;i++){
+		List<String> resultList=new AdbUtil().getListByADB("adb devices");
+		for(int i=1;i<resultList.size();i++){
 			if (resultList.get(i)!=null&&resultList.get(i)!="") {
-				String[] result=resultList.get(i).split("\t");
+				System.out.println(resultList.get(i));
+				String[] result = resultList.get(i).split("\t");
 				if (result[1].equals("device")) {
-					String device=result[0];
+					String device = result[0];
 					deviceList.add(device);
-				}else if (result[1].equals("offline")) {
-					System.out.println(result[0]+"设备离线，请重新插拔！！！");
-				}else {
+				} else if (result[1].equals("offline")) {
+					System.out.println(result[0] + "设备离线，请重新插拔！！！");
+				} else {
 					System.out.println("设备还是有问题，自己检查吧！！！");
 				}
 			}
