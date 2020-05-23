@@ -27,7 +27,7 @@ public class AppInfo {
 	 */
 	public double getAPPCPU(){
 		double cpu=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr "+DeviceAndPack.packagename);
+		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -n 1|findstr "+DeviceAndPack.packagename);
 		//增加判空，可能获取到的结果为空
 		if (result.size()!=0&&result!=null){
 			if (!result.get(0).equals("")&&result.get(0)!=null){

@@ -5,6 +5,7 @@ import com.pm.util.AppInfo;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -12,16 +13,17 @@ import java.io.IOException;
 public class MonkeyPanel {
     private final static Logger logger = Logger.getLogger(LogDemo.class);
     private JPanel monkeyPanel=new JPanel();
-    private JButton monkeyJButton = new JButton("Ö´ÐÐmonkey");
-    private JLabel countLabel = new JLabel("count(*):");
-    private JTextField count = new JTextField(8);
     private JCheckBox ignoreCrash=new JCheckBox("ignorecrashes");
     private JCheckBox ignoreTimeouts = new JCheckBox("ignoretimeouts");
     private JLabel throttleLabel = new JLabel("throttle(*):");
-    private JTextField throttle = new JTextField(8);
+    private JTextField throttle = new JTextField(5);
+    private JLabel countLabel = new JLabel("count(*):");
+    private JTextField count = new JTextField(5);
+    private JButton monkeyJButton = new JButton("Ö´ÐÐ");
 
     public JPanel getMonkeyPanel(){
 //        monkeyPanel.setPreferredSize(new Dimension(800,70));
+        monkeyPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         monkeyPanel.setBorder(BorderFactory.createTitledBorder("monkey"));
         monkeyJButton.addActionListener(new ActionListener() {
             @Override

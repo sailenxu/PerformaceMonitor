@@ -32,7 +32,7 @@ public class DeviceInfo {
 			}
 		}
 		if (brand.equals("") || brand == null) {
-			brand = "sorry，没获取到……";
+			brand = "null";
 		}
 		return brand;
 	}
@@ -52,7 +52,7 @@ public class DeviceInfo {
 			}
 		}
 		if (model.equals("")||model==null) {
-			model="sorry，没获取到……";
+			model="null";
 		}
 		return model;
 	}
@@ -81,7 +81,7 @@ public class DeviceInfo {
 			}
 		}
 		if (dp.equals("")||dp==null) {
-			dp="sorry，没获取到……";
+			dp="null";
 		}
 		return dp;
 	}
@@ -99,9 +99,9 @@ public class DeviceInfo {
 					break;
 				}
 			}
-			if (versionCode.equals("")||versionCode==null) {
-				versionCode="sorry，没获取到……";
-			}
+		}
+		if (versionCode.equals("")||versionCode==null) {
+			versionCode="null";
 		}
 		return versionCode;
 	}
@@ -122,9 +122,10 @@ public class DeviceInfo {
 					}
 				}
 			}
-			if (imei.equals("")||imei==null) {
-				imei="sorry，没获取到……";
-			}
+
+		}
+		if (imei.equals("")||imei==null) {
+			imei="null";
 		}
 		return imei;
 	}

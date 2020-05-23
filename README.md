@@ -50,7 +50,9 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5|findstr com.jingdong.ap
 adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdong.app.mall
 ~~~
 这样成功获取cpu值  
-此命令在华为手机上可以正常获取，oppo手机上获取不到……
+此命令在华为手机上可以正常获取，oppo手机上获取不到……  
+小米mix2没有-d，在此处-d无作用，可以直接去掉  
+已适配：华为p30，小米mix2
 #### 2.获取内存命令行
 方法1：adb shell dumpsys meminfo com.jingdong.app.mall  
 返回指定应用的内存情况，获取total值作为内存参数  
