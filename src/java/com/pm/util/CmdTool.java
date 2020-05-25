@@ -63,14 +63,14 @@ public class CmdTool {
 		String getString="";
 		try {
 			Process process =Runtime.getRuntime().exec("cmd /c "+cmdString);
-			logger.info("cmd command:"+cmdString);
+//			logger.info("cmd command:"+cmdString);
 			InputStream in=process.getInputStream();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 			String line=null;
 			while ((line=reader.readLine())!=null) {
 				getString=getString+line+"\n";
 			}
-			logger.info(getString);
+//			logger.info(getString);
 			process.waitFor();
 			process.destroy();
 		} catch (Exception e) {

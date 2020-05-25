@@ -20,6 +20,8 @@ public class AppInfo {
 	public static AppInfo getAppInfo() {
 		return appInfo;
 	}
+	private int currentData=0;
+	private String currentPack = DeviceAndPack.packagename;
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
 	 * @return
@@ -49,7 +51,7 @@ public class AppInfo {
 		if (result.size()!=0&&result!=null){
 			for (String ss:result){
 				if (ss.contains("TOTAL")){
-					mem = Integer.parseInt(ss.split("\\s+")[1])/1000;
+					mem = Integer.parseInt(ss.split("\\s+")[1])/1024;
 //					System.out.println(mem);
 				}
 			}
@@ -112,15 +114,33 @@ public class AppInfo {
 		}
 		return pid;
 	}
-	public int getData(){
+	public int getCurrentData(){
 		int data = 0;
 		if (getPid()!=0){
 			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
 			String result = adbUtil.getStringByADB(command);
-			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
+//			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
 			data = Integer.parseInt(result.split("\\s+")[2])+Integer.parseInt(result.split("\\s+")[10]);
 		}
-		return data/1024/1024;
+		return data/1024;
+	}
+	public int getData(){
+		int data = 0;
+		int ccdata = getCurrentData();
+		if (currentPack.equals(DeviceAndPack.packagename)){
+			if (currentData!=0){
+				if (ccdata!=0) {
+					System.out.println(ccdata+"ccccccc"+currentData);
+					data = ccdata - currentData;
+				}
+			}else{
+				currentData = ccdata;
+			}
+		}else{
+			currentPack = DeviceAndPack.packagename;
+			currentData = ccdata;
+		}
+		return data;
 	}
 //	public static void main(String[] args) {
 //		DeviceAndPack deviceAndPack = new DeviceAndPack();

@@ -31,10 +31,10 @@ public class StartMonitor implements Runnable {
 		perJPanel.setSize(width, height);
 		perJPanel.setLocation(x, y);
 		perJPanel.setLayout(new GridLayout(2,2));
-		cpuChart=new ChartPanel(jFrame,"","cpu",(int)(width*0.5), (int)(height*0.5),100);
-		memChart = new ChartPanel(jFrame,"", "memory",(int)(width*0.5), (int)(height*0.5), 100);
+		cpuChart=new ChartPanel(jFrame,"","cpu(%)",(int)(width*0.5), (int)(height*0.5),100);
+		memChart = new ChartPanel(jFrame,"", "memory(mb)",(int)(width*0.5), (int)(height*0.5), 100);
 		fpsChart = new ChartPanel(jFrame, "", "fps",(int)(width*0.5), (int)(height*0.5), 100);
-		dataChart = new ChartPanel(jFrame, "", "data",(int)(width*0.5), (int)(height*0.5), 100);
+		dataChart = new ChartPanel(jFrame, "", "data(kb)",(int)(width*0.5), (int)(height*0.5), 100);
 	}
 
 	public void run() {

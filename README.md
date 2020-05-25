@@ -65,9 +65,11 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdo
 adb shell dumpsys gfxinfo com.xstore.sevenfresh
 此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps
 #### 4.获取流量
-
+方法：  
+1.adb shell ps|findstr xxx获取应用的pid  
+2.adb shell cat /proc/pid/net/dev | finstr wlan0  
+此方法可以获取到pid的流量，但是当打开被测app后，流量立刻好几百，明显不是从0开始统计的，或者是没有清零
 #### 5.获取打开时间
-
 
 ## 问题及解决方法
 #### 1.写页面的时候遇到问题了：创建了deviceandpack类，用来存device和pack，一旦选择就赋值，但是每次用的时候都要初始化类，才可以调里面的get方法，初始化后前面赋值就没啦！get为null  
