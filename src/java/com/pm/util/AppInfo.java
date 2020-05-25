@@ -83,10 +83,11 @@ public class AppInfo {
 		logger.info("adb command:"+command);
 		adbUtil.runADBNoRequest(command);
 	}
+	//–∂‘ÿapk
 	public void uninstallAPK(){
 		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+DeviceAndPack.packagename;
 		logger.info("adb command:"+command);
-		adbUtil.runADBNoRequest(command);
+		adbUtil.getListByADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
 	}
 
