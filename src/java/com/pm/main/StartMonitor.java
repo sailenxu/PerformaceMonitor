@@ -25,15 +25,7 @@ public class StartMonitor implements Runnable {
 	private JPanel memJPanel;
 	private JPanel fpsJPanel;
 	private JPanel dataJPanel;
-	private int x;
-	private int y;
-	private int width;
-	private int height;
 	public StartMonitor(JFrame jFrame,int x, int y, int width, int height){
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
 		perJPanel.setSize(width, height);
@@ -46,7 +38,6 @@ public class StartMonitor implements Runnable {
 	}
 
 	public void run() {
-		long time=System.currentTimeMillis();
 		boolean flag = true;
 		running=true;
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
@@ -61,7 +52,6 @@ public class StartMonitor implements Runnable {
 				perJPanel.add(fpsJPanel);
 				perJPanel.add(dataJPanel);
 				jFrame.add(perJPanel);
-//				jFrame.pack();
 				jFrame.setVisible(true);
 				flag = false;
 			}else{
@@ -70,33 +60,6 @@ public class StartMonitor implements Runnable {
 				fpsChart.rePaint(AppInfo.getAppInfo().getAPPCPU());
 				dataChart.rePaint(AppInfo.getAppInfo().getAPPMem());
 			}
-//			//获取cpu并存储数据
-//			CPUInfo cpuInfo=new CPUInfo(String.valueOf(time), AppInfo.getAppInfo().getAPPCPU());
-//			MonitorData.getCPUinfolist().add(cpuInfo);
-//			//获取内存并存储数据
-//			MemInfo memInfo=new MemInfo(String.valueOf(time), AppInfo.getAppInfo().getAPPMem());
-//			MonitorData.getMeminfolist().add(memInfo);
-//			double cpu = AppInfo.getAppInfo().getAPPCPU();
-//			System.out.println(cpu);
-//			cpuChart.xchart(cpu);
-//			cpuJPanel = cpuChart.getXchartPanel(cpu);
-
-//			double mem = AppInfo.getAppInfo().getAPPMem();
-//			memChart.xchart(mem);
-//			memJPanel = memChart.getXchartPanel(cpu);
-
-//			double fps = AppInfo.getAppInfo().getAPPCPU();
-//			fpsChart.xchart(fps);
-//			fpsJPanel = fpsChart.getXchartPanel(cpu);
-
-//			double data = AppInfo.getAppInfo().getAPPMem();
-//			dataChart.xchart(data);
-
-//			jFrame.add(cpuJPanel);
-//			jFrame.add(memJPanel);
-//			jFrame.add(fpsJPanel);
-
-			//增加延时
 			try {
 				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
 			} catch (InterruptedException e) {
