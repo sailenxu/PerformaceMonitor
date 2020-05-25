@@ -73,27 +73,61 @@ public class AppInfo {
 	 * 清除apk缓存
 	 */
 	public void clearAPK(){
-		String command = "adb -s "+DeviceAndPack.deivceid+" shell pm clear "+DeviceAndPack.packagename;
-		logger.info("adb command:"+command);
-		adbUtil.runADBNoRequest(command);
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " shell pm clear " + DeviceAndPack.packagename;
+			logger.info("adb command:" + command);
+			adbUtil.runADBNoRequest(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
+		}
 	}
 	public void stopAPP(){
-		String command = "adb -s "+DeviceAndPack.deivceid+" shell am force-stop "+DeviceAndPack.packagename;
-		logger.info("adb command:"+command);
-		adbUtil.runADBNoRequest(command);
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " shell am force-stop " + DeviceAndPack.packagename;
+			logger.info("adb command:" + command);
+			adbUtil.runADBNoRequest(command);
+		}
 	}
 	//卸载apk
 	public void uninstallAPK(){
-		String command = "adb -s "+DeviceAndPack.deivceid+" uninstall "+DeviceAndPack.packagename;
-		logger.info("adb command:"+command);
-		adbUtil.getListByADB(command);
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " uninstall " + DeviceAndPack.packagename;
+			logger.info("adb command:" + command);
+			adbUtil.getListByADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+		}
 	}
-
+	//没有设备和没有进程时，都返回0
+	public int getPid(){
+		int pid=0;
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " shell ps -o PID -o NAME|findstr " + DeviceAndPack.packagename;
+			List<String> result = adbUtil.getListByADB(command);
+			if (result.size() > 0) {
+				for(String ss:result){
+					if (ss.split("\\s+")[1].equals(DeviceAndPack.packagename)){
+						pid = Integer.parseInt(ss.split("\\s+")[0]);
+					}
+				}
+			}
+		}
+		return pid;
+	}
+	public int getData(){
+		int data = 0;
+		if (getPid()!=0){
+			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
+			String result = adbUtil.getStringByADB(command);
+			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
+			data = Integer.parseInt(result.split("\\s+")[2])+Integer.parseInt(result.split("\\s+")[10]);
+		}
+		return data/1024/1024;
+	}
 //	public static void main(String[] args) {
-//		AppInfo appInfo=new AppInfo("com.jingdong.app.mall", "Q5S5T19529000632");
-//		int cpuValue = appInfo.getAPPCPU();
-//		System.out.println(cpuValue);
+//		DeviceAndPack deviceAndPack = new DeviceAndPack();
+//		AppInfo appInfo = new AppInfo();
+//		deviceAndPack.setDeivceid("Q5S5T19529000632");
+//		deviceAndPack.setPackagename("com.cleanmaster.mguard_cn");
+//		System.out.println(appInfo.getData());
+////		System.out.println(cpuValue);
 //	}
 }

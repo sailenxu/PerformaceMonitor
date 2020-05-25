@@ -46,7 +46,7 @@ public class StartMonitor implements Runnable {
 				cpuJPanel = cpuChart.getPanel(AppInfo.getAppInfo().getAPPCPU());
 				memJPanel = memChart.getPanel(AppInfo.getAppInfo().getAPPMem());
 				fpsJPanel = fpsChart.getPanel(AppInfo.getAppInfo().getAPPCPU());
-				dataJPanel = dataChart.getPanel(AppInfo.getAppInfo().getAPPMem());
+				dataJPanel = dataChart.getPanel(AppInfo.getAppInfo().getData());
 				perJPanel.add(cpuJPanel);
 				perJPanel.add(memJPanel);
 				perJPanel.add(fpsJPanel);
@@ -58,7 +58,7 @@ public class StartMonitor implements Runnable {
 				cpuChart.rePaint(AppInfo.getAppInfo().getAPPCPU());
 				memChart.rePaint(AppInfo.getAppInfo().getAPPMem());
 				fpsChart.rePaint(AppInfo.getAppInfo().getAPPCPU());
-				dataChart.rePaint(AppInfo.getAppInfo().getAPPMem());
+				dataChart.rePaint(AppInfo.getAppInfo().getData());
 			}
 			try {
 				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
