@@ -2,12 +2,10 @@ package com.pm.log;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import org.apache.log4j.Logger;
 
 public class LogDemo {
     private JScrollPane logScrollPane;
     private JTextArea logTextArea;
-    private final static Logger logger = Logger.getLogger(LogDemo.class);
 
     public LogDemo(JTextArea logTextArea, JScrollPane logScrollPane) {
         this.logScrollPane = logScrollPane;

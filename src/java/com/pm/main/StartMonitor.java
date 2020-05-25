@@ -25,20 +25,24 @@ public class StartMonitor implements Runnable {
 	private JPanel memJPanel;
 	private JPanel fpsJPanel;
 	private JPanel dataJPanel;
-	public StartMonitor(JFrame jFrame){
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	public StartMonitor(JFrame jFrame,int x, int y, int width, int height){
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
-		GraphicsDevice graphDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		DisplayMode disMode = graphDevice.getDisplayMode();
-		int width = disMode.getWidth();
-		int height = disMode.getHeight();
-		perJPanel.setSize((int) (width*0.55), height-70-50);
-		perJPanel.setLocation((int) (width*0.45), 70);
+		perJPanel.setSize(width, height);
+		perJPanel.setLocation(x, y);
 		perJPanel.setLayout(new GridLayout(2,2));
-		cpuChart=new ChartPanel(jFrame,"","cpu",(int)(width*0.55*0.5), (int)((height-70-50)*0.5),100);
-		memChart = new ChartPanel(jFrame,"", "memory",(int)(width*0.55*0.5), (int)((height-70-50)*0.5), 100);
-		fpsChart = new ChartPanel(jFrame, "", "fps",(int)(width*0.55*0.5), (int)((height-70-50)*0.5), 100);
-		dataChart = new ChartPanel(jFrame, "", "data",(int)(width*0.55*0.5), (int)((height-70-50)*0.5), 100);
+		cpuChart=new ChartPanel(jFrame,"","cpu",(int)(width*0.5), (int)(height*0.5),100);
+		memChart = new ChartPanel(jFrame,"", "memory",(int)(width*0.5), (int)(height*0.5), 100);
+		fpsChart = new ChartPanel(jFrame, "", "fps",(int)(width*0.5), (int)(height*0.5), 100);
+		dataChart = new ChartPanel(jFrame, "", "data",(int)(width*0.5), (int)(height*0.5), 100);
 	}
 
 	public void run() {

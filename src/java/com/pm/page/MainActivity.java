@@ -47,14 +47,14 @@ public class MainActivity {
         JPanel monkeyPanel = new MonkeyPanel().getMonkeyPanel();
         monkeyPanel.setLocation(0, 0);
         monkeyPanel.setSize((int) (width*0.45), 70);
-        JPanel logPanel = new LogPanel().getLogPanel();
+        JPanel logPanel = new LogPanel((int) (width*0.45), height-70-70-90).getLogPanel();
         logPanel.setLocation(0,70);
-        logPanel.setSize((int) (width*0.45), height-70-70-50);
+        logPanel.setSize((int) (width*0.45), height-70-70-90);
         westPanel.add(monkeyPanel);
         westPanel.add(logPanel);
         jFrame.add(westPanel);
         //添加性能监控折线图
-        StartMonitor startMonitor = new StartMonitor(jFrame);
+        StartMonitor startMonitor = new StartMonitor(jFrame, (int) (width*0.45), 70, (int) (width*0.55), height-70-90);
         startMonitor.run();
 
         jFrame.setVisible(true);
