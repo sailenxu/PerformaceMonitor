@@ -89,11 +89,12 @@ itemlistener和actionlistener两个监听器，只有在改变的时候才会执
 做一个combobox值得判断，当=1时直接进行赋值，>1时才会走监听器
 #### 4.线程有返回值吗？可以再线程执行时返回数据吗？
 线程有start和stop方法，线程执行过程中不能返回，如果需要返回线程执行结果，也是在stop后返回
-#### 5.jlabel控件无法选中进行复制……
+#### 5.log读取配置文件报错找不到
 一天的时间，终于找到了答案，我的天……https://blog.csdn.net/m0_37874657/article/details/80536086  
 先是按照上面说的，将src设置为sources，然后配置文件放在src根目录下！！！
 #### 6.log4j日志输出到前端控件
-https://www.iteye.com/blog/yshjava-1325036
+https://www.iteye.com/blog/yshjava-1325036  
+参照此方法做了ui上的调整
 #### 7.jcombobox控件的选择监听会执行两遍
 正常情况下，监听会执行两遍，itemstate有两种状态，Selected 和 deSelected（即选中和未被选中），增加一个判断if (e.getStateChange() == e.SELECTED)，itemstate状态和是选中状态时执行。  
 但是点击刷新按钮后，监听会执行四遍，很奇怪……刷新按钮只是把device下拉框重新初始化一遍，选择监听就会执行四遍，难道刷新不可以初始化？  
