@@ -68,7 +68,9 @@ adb shell dumpsys gfxinfo com.xstore.sevenfresh
 方法：  
 1.adb shell ps|findstr xxx获取应用的pid  
 2.adb shell cat /proc/pid/net/dev | finstr wlan0  
-此方法可以获取到pid的流量，但是当打开被测app后，流量立刻好几百，明显不是从0开始统计的，或者是没有清零
+此方法可以获取到pid的流量，但是当打开被测app后，流量立刻好几百，明显不是从0开始统计的，或者是没有清零  
+改进方法：计算两次的差值，差值作为流量的增长情况  
+问题：自己写的demo，没有流量的使用，统计结果流量也会一直上涨，此统计方式似乎并不能作为实际结果
 #### 5.获取打开时间
 
 ## 问题及解决方法

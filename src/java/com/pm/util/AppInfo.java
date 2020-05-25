@@ -120,7 +120,10 @@ public class AppInfo {
 			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
 			String result = adbUtil.getStringByADB(command);
 //			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
-			data = Integer.parseInt(result.split("\\s+")[2])+Integer.parseInt(result.split("\\s+")[10]);
+			String[] value = result.split("\\s+");
+			if (value.length>10) {
+				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
+			}
 		}
 		return data/1024;
 	}
@@ -130,7 +133,6 @@ public class AppInfo {
 		if (currentPack.equals(DeviceAndPack.packagename)){
 			if (currentData!=0){
 				if (ccdata!=0) {
-					System.out.println(ccdata+"ccccccc"+currentData);
 					data = ccdata - currentData;
 				}
 			}else{
