@@ -130,17 +130,20 @@ public class AppInfo {
 	public int getData(){
 		int data = 0;
 		int ccdata = getCurrentData();
-		if (currentPack.equals(DeviceAndPack.packagename)){
-			if (currentData!=0){
-				if (ccdata!=0) {
-					data = ccdata - currentData;
+		//没有设备时，获取到的packagename为null，增加判空
+		if (currentPack!=null) {
+			if (currentPack.equals(DeviceAndPack.packagename)) {
+				if (currentData != 0) {
+					if (ccdata != 0) {
+						data = ccdata - currentData;
+					}
+				} else {
+					currentData = ccdata;
 				}
-			}else{
+			} else {
+				currentPack = DeviceAndPack.packagename;
 				currentData = ccdata;
 			}
-		}else{
-			currentPack = DeviceAndPack.packagename;
-			currentData = ccdata;
 		}
 		return data;
 	}
