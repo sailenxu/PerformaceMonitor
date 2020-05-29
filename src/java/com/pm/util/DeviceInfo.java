@@ -148,6 +148,25 @@ public class DeviceInfo {
 			adbUtil.runADBNoRequest(command);
 		}
 	}
+	public String getCurrentPack(){
+		String pac="";
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command = "adb -s "+ DeviceAndPack.deivceid + " shell dumpsys window|findstr mCurrentFocus";
+			logger.info(command);
+			String result = adbUtil.getStringByADB(command);
+			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
+			if (result!=null && !result.equals("")){
+				String pack = result.split("//s+")[2];
+				if (!pack.equals("StatusBar")){
+					pac = pack.split("\\/")[0];
+				}else {
+					System.out.println("可能锁屏了");
+				}
+			}
+
+		}
+		return pac;
+	}
 	/**
 	 * 获取设备已安装app
 	 * @return

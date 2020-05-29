@@ -27,6 +27,7 @@ public class DevicePackPanel {
     private JLabel packagename=new JLabel("package：");
     private JComboBox packJComboBox=new JComboBox();
     private JButton packRefreshButton=new JButton("刷新");
+    private JButton currentPackButton = new JButton("当前应用");
     private JButton clearCachButton = new JButton("清除缓存");
     private JButton stopAPP = new JButton("结束进程");
     private JButton uninstallButton = new JButton("卸    载");
@@ -66,6 +67,16 @@ public class DevicePackPanel {
         packRefreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 refreshPackCombobox();
+            }
+        });
+        currentPackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String current = DeviceInfo.getDeviceInfo().getCurrentPack();
+                if (!current.equals("")) {
+                    setDefaultPack(current);
+                }
+                logger.info("选择当前包名：");
             }
         });
         //清缓存按钮监听
@@ -171,23 +182,26 @@ public class DevicePackPanel {
         String[] comboValue=DeviceInfo.getDeviceInfo().getAllPack();
         packJComboBox.removeAllItems();
         if (comboValue!=null) {
+            packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
             boolean flag = false;
             for (String s : comboValue) {
                 if (s.contains(ResourceBundle.getBundle("config").getString("defaultPackage"))) {
                     flag = true;
                 }
             }
-            packJComboBox.setModel(new DefaultComboBoxModel(comboValue));
             if (flag) {
-                logger.info("设置默认包名："+ResourceBundle.getBundle("config").getString("defaultPackage"));
-                packJComboBox.setSelectedItem(ResourceBundle.getBundle("config").getString("defaultPackage"));
-                DeviceAndPack.getDeviceAndPack().setPackagename(ResourceBundle.getBundle("config").getString("defaultPackage"));
-                logger.info("默认包名：：：：："+DeviceAndPack.packagename);
+                setDefaultPack(ResourceBundle.getBundle("config").getString("defaultPackage"));
             }else {
                 logger.info("未安装"+ResourceBundle.getBundle("config").getString("defaultPackage")+"，默认选中包名："+comboValue[0]);
                 DeviceAndPack.getDeviceAndPack().setPackagename(comboValue[0]);
             }
         }
+    }
+    private void setDefaultPack(String packagename){
+        logger.info("设置默认包名："+packagename);
+        packJComboBox.setSelectedItem(packagename);
+        DeviceAndPack.getDeviceAndPack().setPackagename(packagename);
+        logger.info("默认包名：：：：："+DeviceAndPack.packagename);
     }
     /**
      * 包名下拉框初始化
