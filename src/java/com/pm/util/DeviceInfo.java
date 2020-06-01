@@ -154,13 +154,14 @@ public class DeviceInfo {
 			String command = "adb -s "+ DeviceAndPack.deivceid + " shell dumpsys window|findstr mCurrentFocus";
 			logger.info(command);
 			String result = adbUtil.getStringByADB(command);
+			logger.info(result);
 			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
 			if (result!=null && !result.equals("")){
-				String pack = result.split("//s+")[2];
-				if (!pack.equals("StatusBar")){
+				String pack = result.trim().split("\\s+")[2];
+				if (!pack.contains("StatusBar")){
 					pac = pack.split("\\/")[0];
 				}else {
-					System.out.println("可能锁屏了");
+					logger.info("可能锁屏了");
 				}
 			}
 

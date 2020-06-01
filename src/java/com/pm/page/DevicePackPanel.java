@@ -69,14 +69,15 @@ public class DevicePackPanel {
                 refreshPackCombobox();
             }
         });
+        //当前包名按钮监听
         currentPackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String current = DeviceInfo.getDeviceInfo().getCurrentPack();
                 if (!current.equals("")) {
+                    logger.info("current:::"+current);
                     setDefaultPack(current);
                 }
-                logger.info("选择当前包名：");
             }
         });
         //清缓存按钮监听
@@ -112,6 +113,7 @@ public class DevicePackPanel {
         devicePanel.add(packagename);
         devicePanel.add(packJComboBox);
         devicePanel.add(packRefreshButton);
+        devicePanel.add(currentPackButton);
         devicePanel.add(clearCachButton);
         devicePanel.add(stopAPP);
         devicePanel.add(uninstallButton);
