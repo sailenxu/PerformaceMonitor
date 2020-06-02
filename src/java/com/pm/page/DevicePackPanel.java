@@ -126,24 +126,23 @@ public class DevicePackPanel {
         DevicesInfos devicesInfos = new DevicesInfos();
         String[] devicesArray=devicesInfos.getDevicesArray();
         deviceJComeboBox.setModel(new DefaultComboBoxModel(devicesArray));
+        deviceJComeboBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == e.SELECTED) {
+                    logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
+                    //选择设备后，需要给device赋值
+                    DeviceAndPack.getDeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
+                    //并且要强制让package下拉框刷新，来获取最新的packages
+                    refreshPackCombobox();
+                    new DeviceInfoPanel().refreshDeviceInfoPanel();
+                }
+            }
+        });
         if (devicesArray.length>1) {
             logger.info("有多个设备，默认选中"+devicesArray[0]);
             DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
             refreshPackCombobox();
             new DeviceInfoPanel().refreshDeviceInfoPanel();
-            deviceJComeboBox.addItemListener(new ItemListener() {
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == e.SELECTED) {
-                        logger.info("选择设备:"+String.valueOf(deviceJComeboBox.getSelectedItem()));
-                        //选择设备后，需要给device赋值
-                        DeviceAndPack.getDeviceAndPack().setDeivceid(String.valueOf(deviceJComeboBox.getSelectedItem()));
-                        System.out.println(DeviceAndPack.deivceid+":::::::::::");
-                        //并且要强制让package下拉框刷新，来获取最新的packages
-                        refreshPackCombobox();
-                        new DeviceInfoPanel().refreshDeviceInfoPanel();
-                    }
-                }
-            });
         }else if(devicesArray.length==1){
             logger.info("检测出一个设备并选中："+devicesArray[0]);
             DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
