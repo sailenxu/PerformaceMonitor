@@ -1,9 +1,12 @@
 package com.pm.page;
 
 import com.pm.log.LogDemo;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 import com.pm.main.StartMonitor;
 import org.apache.log4j.Logger;
@@ -14,12 +17,18 @@ import org.apache.log4j.Logger;
 public class MainActivity {
 
     public static void main(String[] args) {
+        //获取屏幕的宽高
         GraphicsDevice graphDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         DisplayMode disMode = graphDevice.getDisplayMode();
         int width = disMode.getWidth();
         int height = disMode.getHeight();
         JFrame jFrame = new DropTargetFrame();
-        jFrame.setTitle("PerformanceMonitor--by sai");
+        try{
+            Image img = ImageIO.read(new File("img/icon.png"));
+            jFrame.setIconImage(img);
+        }catch (Exception e){e.printStackTrace();}
+
+        jFrame.setTitle("PerformanceMonitor--designed by bei");
 
 //        jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         jFrame.setLayout(null);
