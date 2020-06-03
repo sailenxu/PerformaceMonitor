@@ -74,8 +74,8 @@ public class DevicePackPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String current = DeviceInfo.getDeviceInfo().getCurrentPack();
+                logger.info("current:::"+current);
                 if (!current.equals("")) {
-                    logger.info("current:::"+current);
                     setDefaultPack(current);
                 }
             }
@@ -152,6 +152,7 @@ public class DevicePackPanel {
         }else{
             //没有设备
             logger.info("没有设备…………");
+            DeviceAndPack.getDeviceAndPack().setDeivceid(null);
         }
     }
     /**
@@ -171,7 +172,7 @@ public class DevicePackPanel {
             DeviceAndPack.getDeviceAndPack().setDeivceid(devicesArray[0]);
         }else {
             logger.info("没有设备…………");
-            DeviceAndPack.getDeviceAndPack().setDeivceid("");
+            DeviceAndPack.getDeviceAndPack().setDeivceid(null);
         }
     }
     /**

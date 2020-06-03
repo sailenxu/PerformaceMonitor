@@ -29,13 +29,15 @@ public class AppInfo {
 	 */
 	public double getAPPCPU(){
 		double cpu=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+ DeviceAndPack.deivceid +" shell top -o ARGS -o %CPU -n 1|findstr "+DeviceAndPack.packagename);
-		//增加判空，可能获取到的结果为空
-		if (result.size()!=0&&result!=null){
-			if (!result.get(0).equals("")&&result.get(0)!=null){
-				String cpuValueString = result.get(0);//取到第一行1mcom.jingdong.app.mall       65.5
-				//进行解析，按照%分割
-				cpu = Double.valueOf(cpuValueString.split("\\s+")[1]);//拿到13%，转为int保存
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			List<String> result = adbUtil.getListByADB("adb -s " + DeviceAndPack.deivceid + " shell top -o ARGS -o %CPU -n 1|findstr " + DeviceAndPack.packagename);
+			//增加判空，可能获取到的结果为空
+			if (result.size() != 0 && result != null) {
+				if (!result.get(0).equals("") && result.get(0) != null) {
+					String cpuValueString = result.get(0);//取到第一行1mcom.jingdong.app.mall       65.5
+					//进行解析，按照%分割
+					cpu = Double.valueOf(cpuValueString.split("\\s+")[1]);//拿到13%，转为int保存
+				}
 			}
 		}
 		return cpu;
@@ -46,13 +48,15 @@ public class AppInfo {
 	 */
 	public int getAPPMem(){
 		int mem=0;
-		List<String> result = adbUtil.getListByADB("adb -s "+DeviceAndPack.deivceid+" shell dumpsys meminfo -s "+DeviceAndPack.packagename);
-		//可能获取到的结果为空，或进程不存在
-		if (result.size()!=0&&result!=null){
-			for (String ss:result){
-				if (ss.contains("TOTAL")){
-					mem = Integer.parseInt(ss.split("\\s+")[1])/1024;
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			List<String> result = adbUtil.getListByADB("adb -s " + DeviceAndPack.deivceid + " shell dumpsys meminfo -s " + DeviceAndPack.packagename);
+			//可能获取到的结果为空，或进程不存在
+			if (result.size() != 0 && result != null) {
+				for (String ss : result) {
+					if (ss.contains("TOTAL")) {
+						mem = Integer.parseInt(ss.split("\\s+")[1]) / 1024;
 //					System.out.println(mem);
+					}
 				}
 			}
 		}
@@ -68,7 +72,7 @@ public class AppInfo {
 //				logger.info(br.readLine());
 //			}
 		}else {
-			logger.info("请选择设备或包名…………");
+			logger.info("device or package is error");
 		}
 	}
 	/**
@@ -80,6 +84,8 @@ public class AppInfo {
 			logger.info("adb command:" + command);
 			adbUtil.runADBNoRequest(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" shell pm clear "+packagename);
+		}else {
+			logger.info("device or package is error");
 		}
 	}
 	public void stopAPP(){
@@ -87,6 +93,8 @@ public class AppInfo {
 			String command = "adb -s " + DeviceAndPack.deivceid + " shell am force-stop " + DeviceAndPack.packagename;
 			logger.info("adb command:" + command);
 			adbUtil.runADBNoRequest(command);
+		}else {
+			logger.info("device is error");
 		}
 	}
 	//卸载apk
@@ -96,6 +104,8 @@ public class AppInfo {
 			logger.info("adb command:" + command);
 			adbUtil.getListByADB(command);
 //		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+		}else {
+			logger.info("device is error");
 		}
 	}
 	//没有设备和没有进程时，都返回0
@@ -114,6 +124,7 @@ public class AppInfo {
 		}
 		return pid;
 	}
+	//获取pid的当前流量
 	public int getCurrentData(){
 		int data = 0;
 		if (getPid()!=0){
@@ -127,6 +138,7 @@ public class AppInfo {
 		}
 		return data/1024;
 	}
+	//获取当前流量和上次流量的差值
 	public int getData(){
 		int data = 0;
 		int ccdata = getCurrentData();
