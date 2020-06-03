@@ -125,7 +125,7 @@ public class AppInfo {
 		return pid;
 	}
 	//获取pid的当前流量
-	public int getCurrentData(){
+	public Integer getCurrentData(){
 		int data = 0;
 		if (getPid()!=0){
 			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
@@ -135,15 +135,17 @@ public class AppInfo {
 			if (value.length>10) {
 				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
 			}
+		}else {
+			return null;
 		}
 		return data/1024;
 	}
 	//获取当前流量和上次流量的差值
 	public int getData(){
 		int data = 0;
-		int ccdata = getCurrentData();
+		Integer ccdata = getCurrentData();//有可能为空
 		//没有设备时，获取到的packagename为null，增加判空
-		if (currentPack!=null) {
+		if (currentPack!=null && ccdata!=null) {
 			if (currentPack.equals(DeviceAndPack.packagename)) {
 				if (currentData != 0) {
 					if (ccdata != 0) {
