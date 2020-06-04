@@ -156,7 +156,7 @@ public class DeviceInfo {
 			String result = adbUtil.getStringByADB(command);
 			logger.info(result);
 			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
-			if (result!=null && !result.equals("")){
+			if (result!=null && !result.equals("") && !result.contains("null")){
 				String pack = result.trim().split("\\s+")[2];
 				if (!pack.contains("StatusBar")){
 					pac = pack.split("\\/")[0];
