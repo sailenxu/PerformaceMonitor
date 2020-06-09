@@ -126,19 +126,20 @@ public class AppInfo {
 	}
 	//获取pid的当前流量
 	public Integer getCurrentData(){
-		int data = 0;
+		long data = 0;
 		if (getPid()!=0){
 			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
 			String result = adbUtil.getStringByADB(command);
 //			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
 			String[] value = result.split("\\s+");
 			if (value.length>10) {
-				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
+				data = Long.parseLong(result.split("\\s+")[2])+Long.parseLong(result.split("\\s+")[10]);
+//				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
 			}
 		}else {
 			return null;
 		}
-		return data/1024;
+		return (int)(data/1024);
 	}
 	//获取当前流量和上次流量的差值
 	public int getData(){
