@@ -31,7 +31,6 @@ class TextDropTargetListener implements DropTargetListener {
             System.out.println("ACTION_COPY\n");
         if ((a & DnDConstants.ACTION_MOVE) != 0) {
             System.out.println("ACTION_MOVE\n");
-            logger.info("安装中，请稍等…………");
         }
         if ((a & DnDConstants.ACTION_LINK) != 0)
             System.out.println("ACTION_LINK\n");
@@ -57,7 +56,7 @@ class TextDropTargetListener implements DropTargetListener {
     }
 
     public void drop(DropTargetDropEvent event) {
-        logger.info("拖拽文件监听");
+        logger.info("安装中……安装不显示安装结果");
         if (!isDropAcceptable(event)) {
             //拒绝 Drop。
             event.rejectDrop();
