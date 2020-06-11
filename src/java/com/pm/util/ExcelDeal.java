@@ -225,13 +225,21 @@ public class ExcelDeal {
         String dateString = formatter.format(currentTime);
         return dateString;
     }
-    public void xchart(){
+
+    /**
+     * 绘制折线图
+     * @param xCol 横坐标的列
+     * @param yCol 纵坐标的列
+     * @param startCol 折线图位置
+     * @param startRow 折线图位置
+     */
+    public void xchart(String xchartName,int xCol, int yCol, int startCol, int startRow){
         try {
             FileInputStream isFileInputStream = new FileInputStream(path);
             XSSFWorkbook workbook = new XSSFWorkbook(isFileInputStream);
             XSSFSheet sheet = workbook.getSheetAt(0);
             XSSFDrawing drawing = sheet.createDrawingPatriarch();
-            XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 3, 3, 14, 18);
+            XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, startCol, startRow, startCol+15, startRow+20);
             XSSFChart chart = drawing.createChart(anchor);
             XSSFChartLegend legend = chart.getOrCreateLegend();
             legend.setPosition(LegendPosition.BOTTOM);
@@ -241,12 +249,12 @@ public class ExcelDeal {
             bottomAxis.setMajorTickMark(AxisTickMark.NONE);//取消X轴的标刻度
             ValueAxis leftAxis = chart.getChartAxisFactory().createValueAxis(AxisPosition.LEFT);
             leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
-            ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), 0, 0));
-            ChartDataSource<Number> ys1 = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(1, sheet.getLastRowNum(), 1, 1));
+            ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, sheet.getLastRowNum(), xCol, xCol));
+            ChartDataSource<Number> ys = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, sheet.getLastRowNum(), yCol, yCol));
 
-            LineChartSeries series = data.addSeries(xs, ys1);
-            series.setTitle("name");//设置序列名称
-            chart.setTitleText("内存曲线");//设置图表标题
+            LineChartSeries series = data.addSeries(xs, ys);
+            series.setTitle(xchartName);//设置序列名称
+            chart.setTitleText(xchartName);//设置图表标题
             chart.plot(data, new ChartAxis[] { bottomAxis, leftAxis });
 
             FileOutputStream fileout=new FileOutputStream(path);
@@ -261,17 +269,17 @@ public class ExcelDeal {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
-        // TODO Auto-generated method stub
-        String path="D:\\per.xlsx";
-        ExcelDeal excelDeal = new ExcelDeal(path);
+//    public static void main(String[] args) throws Exception {
+//        // TODO Auto-generated method stub
+//        String path="D:\\per.xlsx";
+//        ExcelDeal excelDeal = new ExcelDeal(path);
 //        excelDeal.createXlsx("D:\\12.xlsx");
-        System.out.println(excelDeal.getStringDate());
-        for (int i=0;i<20;i++){
-            excelDeal.writeToXLSX(i, 0, excelDeal.getStringDate());
-            excelDeal.writeToXLSX(i, 1, i);
-            Thread.sleep(1000);
-        }
-        excelDeal.xchart();
-    }
+//        System.out.println(excelDeal.getStringDate());
+//        for (int i=0;i<20;i++){
+//            excelDeal.writeToXLSX(i, 0, excelDeal.getStringDate());
+//            excelDeal.writeToXLSX(i, 1, i);
+//            Thread.sleep(500);
+//        }
+//        excelDeal.xchart();
+//    }
 }

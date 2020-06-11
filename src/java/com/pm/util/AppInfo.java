@@ -20,7 +20,7 @@ public class AppInfo {
 	public static AppInfo getAppInfo() {
 		return appInfo;
 	}
-	private int currentData=0;
+	private int firstData=0;
 	private String currentPack = DeviceAndPack.packagename;
 	/***
 	 * 获取指定设备的指定应用的cpu瞬时占用情况
@@ -134,6 +134,7 @@ public class AppInfo {
 			String[] value = result.split("\\s+");
 			if (value.length>10) {
 				data = Long.parseLong(result.split("\\s+")[2])+Long.parseLong(result.split("\\s+")[10]);
+//				System.out.println("data:::::::::"+data);
 //				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
 			}
 		}else {
@@ -148,16 +149,16 @@ public class AppInfo {
 		//没有设备时，获取到的packagename为null，增加判空
 		if (currentPack!=null && ccdata!=null) {
 			if (currentPack.equals(DeviceAndPack.packagename)) {
-				if (currentData != 0) {
+				if (firstData != 0) {
 					if (ccdata != 0) {
-						data = ccdata - currentData;
+						data = ccdata - firstData;
 					}
 				} else {
-					currentData = ccdata;
+					firstData = ccdata;
 				}
 			} else {
 				currentPack = DeviceAndPack.packagename;
-				currentData = ccdata;
+				firstData = ccdata;
 			}
 		}
 		return data;

@@ -30,7 +30,7 @@ public class StartMonitor implements Runnable {
 	private JPanel dataJPanel;
 	private ExcelDeal excelDeal;
 	public StartMonitor(JFrame jFrame,int x, int y, int width, int height){
-		excelDeal = new ExcelDeal(System.getProperty("user.dir")+"\\performance.xlsx");
+		excelDeal = new ExcelDeal(ResourceBundle.getBundle("config").getString("performancePath"));
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
 		perJPanel.setSize(width, height);

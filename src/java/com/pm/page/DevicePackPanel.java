@@ -6,6 +6,7 @@ import com.pm.perfordata.DeviceAndPack;
 import com.pm.util.AppInfo;
 import com.pm.util.DeviceInfo;
 import com.pm.util.DevicesInfos;
+import com.pm.util.ExcelDeal;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -120,6 +121,14 @@ public class DevicePackPanel {
                 logger.info("停止采集");
                 DeviceAndPack.getDeviceAndPack().setIsWriteExcel(false);
                 StartMonitor.setHang();//重置为0
+                //停止后绘制折线图
+                ExcelDeal excelDeal = new ExcelDeal(ResourceBundle.getBundle("config").getString("performancePath"));
+                if (excelDeal.isExitFile()){
+                    excelDeal.xchart("cpu", 0, 1, 6, 3);
+                    excelDeal.xchart("mem",0, 2,6, 23);
+                    excelDeal.xchart("fps",0, 3, 6, 43);
+                    excelDeal.xchart("data",0, 4, 6, 63);
+                }
             }
         });
         devicePanel.add(device);
