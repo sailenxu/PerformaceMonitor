@@ -4,7 +4,9 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 import com.pm.page.ChartPanel;
+import com.pm.perfordata.DeviceAndPack;
 import com.pm.util.AppInfo;
+import com.pm.util.ExcelDeal;
 
 import javax.swing.*;
 
@@ -14,6 +16,7 @@ import javax.swing.*;
  *
  */
 public class StartMonitor implements Runnable {
+	private static int hang;
 	private boolean running;
 	private JFrame jFrame;
 	private JPanel perJPanel;
@@ -25,7 +28,9 @@ public class StartMonitor implements Runnable {
 	private JPanel memJPanel;
 	private JPanel fpsJPanel;
 	private JPanel dataJPanel;
+	private ExcelDeal excelDeal;
 	public StartMonitor(JFrame jFrame,int x, int y, int width, int height){
+		excelDeal = new ExcelDeal(System.getProperty("user.dir")+"\\performance.xlsx");
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
 		perJPanel.setSize(width, height);
@@ -42,11 +47,15 @@ public class StartMonitor implements Runnable {
 		running=true;
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
 		while (running) {
+			double cpu = AppInfo.getAppInfo().getAPPCPU();
+			int mem = AppInfo.getAppInfo().getAPPMem();
+			double fps = AppInfo.getAppInfo().getAPPCPU();
+			int data = AppInfo.getAppInfo().getData();
 			if (flag){
-				cpuJPanel = cpuChart.getPanel(AppInfo.getAppInfo().getAPPCPU());
-				memJPanel = memChart.getPanel(AppInfo.getAppInfo().getAPPMem());
-				fpsJPanel = fpsChart.getPanel(AppInfo.getAppInfo().getAPPCPU());
-				dataJPanel = dataChart.getPanel(AppInfo.getAppInfo().getData());
+				cpuJPanel = cpuChart.getPanel(cpu);
+				memJPanel = memChart.getPanel(mem);
+				fpsJPanel = fpsChart.getPanel(fps);
+				dataJPanel = dataChart.getPanel(data);
 				perJPanel.add(cpuJPanel);
 				perJPanel.add(memJPanel);
 				perJPanel.add(fpsJPanel);
@@ -55,10 +64,15 @@ public class StartMonitor implements Runnable {
 				jFrame.setVisible(true);
 				flag = false;
 			}else{
-				cpuChart.rePaint(AppInfo.getAppInfo().getAPPCPU());
-				memChart.rePaint(AppInfo.getAppInfo().getAPPMem());
-				fpsChart.rePaint(AppInfo.getAppInfo().getAPPCPU());
-				dataChart.rePaint(AppInfo.getAppInfo().getData());
+				cpuChart.rePaint(cpu);
+				memChart.rePaint(mem);
+				fpsChart.rePaint(fps);
+				dataChart.rePaint(data);
+				//判断是否需要写入excel
+				if (DeviceAndPack.isWriteExcel){
+					writeExcel(hang, cpu, mem, fps, data);
+					hang++;
+				}
 			}
 			try {
 				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
@@ -67,6 +81,31 @@ public class StartMonitor implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	private void writeExcel(int hang, double cpu, int mem, double fps, int data){
+		if (excelDeal.isExitFile()){
+			write(hang,cpu,mem,fps,data);
+		}else {
+			try {
+				excelDeal.createXlsx();
+				write(hang,cpu,mem,fps,data);
+			}catch (Exception e){}
+		}
+	}
+	private void write(int hang,double cpu, int mem, double fps, int data){
+		String time = excelDeal.getStringDate();
+		try {
+			excelDeal.writeToXLSX(hang, 0, time);
+			excelDeal.writeToXLSX(hang, 1, cpu);
+			excelDeal.writeToXLSX(hang, 2, mem);
+			excelDeal.writeToXLSX(hang, 3, fps);
+			excelDeal.writeToXLSX(hang, 4, data);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	public static void setHang(){
+		hang = 0;
 	}
 }
 

@@ -67,10 +67,10 @@ public class ExcelDeal {
         return filepaths;
     }
     //创建文件
-    public void createXlsx(String pathAndName) throws Exception{
+    public void createXlsx() throws Exception{
         XSSFWorkbook xf=new XSSFWorkbook();
         XSSFSheet sheet=xf.createSheet();
-        FileOutputStream out=new FileOutputStream(pathAndName);
+        FileOutputStream out=new FileOutputStream(path);
         xf.write(out);
         out.close();
     }
@@ -113,7 +113,7 @@ public class ExcelDeal {
      * @param lie 指定列
      * @param value 字符串
      */
-    public void writeStringToXLSX(int hang, int lie, String value) throws Exception{
+    public void writeToXLSX(int hang, int lie, String value) throws Exception{
         FileInputStream isFileInputStream=new FileInputStream(path);
 
         XSSFWorkbook workbook=new XSSFWorkbook(isFileInputStream);
@@ -130,7 +130,24 @@ public class ExcelDeal {
         fileout.close();
         isFileInputStream.close();
     }
-    public void wraiteIntToXLSX(int hang, int lie, int value) throws Exception{
+    public void writeToXLSX(int hang, int lie, int value) throws Exception{
+        FileInputStream isFileInputStream=new FileInputStream(path);
+
+        XSSFWorkbook workbook=new XSSFWorkbook(isFileInputStream);
+        XSSFSheet sheet=workbook.getSheetAt(0);//第一个sheet
+        XSSFRow row=sheet.getRow(hang);
+        if (row == null) {
+            row = sheet.createRow(hang);
+        }
+        XSSFCell cell=row.createCell((short)lie);
+        cell.setCellValue(value);
+        FileOutputStream fileout=new FileOutputStream(path);
+        fileout.flush();
+        workbook.write(fileout);
+        fileout.close();
+        isFileInputStream.close();
+    }
+    public void writeToXLSX(int hang, int lie, double value) throws Exception{
         FileInputStream isFileInputStream=new FileInputStream(path);
 
         XSSFWorkbook workbook=new XSSFWorkbook(isFileInputStream);
@@ -202,7 +219,7 @@ public class ExcelDeal {
         fileout.close();
         isFileInputStream.close();
     }
-    public static String getStringDate() {
+    public String getStringDate() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(currentTime);
@@ -249,10 +266,10 @@ public class ExcelDeal {
         String path="D:\\per.xlsx";
         ExcelDeal excelDeal = new ExcelDeal(path);
 //        excelDeal.createXlsx("D:\\12.xlsx");
-        System.out.println(getStringDate());
+        System.out.println(excelDeal.getStringDate());
         for (int i=0;i<20;i++){
-            excelDeal.writeStringToXLSX(i, 0, getStringDate());
-            excelDeal.wraiteIntToXLSX(i, 1, i);
+            excelDeal.writeToXLSX(i, 0, excelDeal.getStringDate());
+            excelDeal.writeToXLSX(i, 1, i);
             Thread.sleep(1000);
         }
         excelDeal.xchart();

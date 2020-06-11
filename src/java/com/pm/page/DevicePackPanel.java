@@ -1,6 +1,7 @@
 package com.pm.page;
 
 import com.pm.log.LogDemo;
+import com.pm.main.StartMonitor;
 import com.pm.perfordata.DeviceAndPack;
 import com.pm.util.AppInfo;
 import com.pm.util.DeviceInfo;
@@ -31,6 +32,8 @@ public class DevicePackPanel {
     private JButton clearCachButton = new JButton("清除缓存");
     private JButton stopAPP = new JButton("结束进程");
     private JButton uninstallButton = new JButton("卸    载");
+    private JButton startMonitor = new JButton("开始采集");
+    private JButton endMonitor = new JButton("停止采集");
 
     public JPanel getDevicePackPanel(){
 //        devicePanel.setPreferredSize(new Dimension(1300, 50));
@@ -104,7 +107,21 @@ public class DevicePackPanel {
                 refreshPackCombobox();
             }
         });
-
+        startMonitor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logger.info("开始采集性能数据……");
+                DeviceAndPack.getDeviceAndPack().setIsWriteExcel(true);
+            }
+        });
+        endMonitor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logger.info("停止采集");
+                DeviceAndPack.getDeviceAndPack().setIsWriteExcel(false);
+                StartMonitor.setHang();//重置为0
+            }
+        });
         devicePanel.add(device);
         devicePanel.add(deviceJComeboBox);
         devicePanel.add(deviceRefreshButton);
@@ -117,6 +134,8 @@ public class DevicePackPanel {
         devicePanel.add(clearCachButton);
         devicePanel.add(stopAPP);
         devicePanel.add(uninstallButton);
+        devicePanel.add(startMonitor);
+        devicePanel.add(endMonitor);
         return devicePanel;
     }
     /**
