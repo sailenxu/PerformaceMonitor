@@ -124,10 +124,10 @@ public class DevicePackPanel {
                 //Õ£÷π∫ÛªÊ÷∆’€œﬂÕº
                 ExcelDeal excelDeal = new ExcelDeal(ResourceBundle.getBundle("config").getString("performancePath"));
                 if (excelDeal.isExitFile()){
-                    excelDeal.xchart("cpu", 0, 1, 6, 3);
-                    excelDeal.xchart("mem",0, 2,6, 23);
-                    excelDeal.xchart("fps",0, 3, 6, 43);
-                    excelDeal.xchart("data",0, 4, 6, 63);
+                    excelDeal.xchart("cpu", 0, 1, 6, 0);
+                    excelDeal.xchart("mem",0, 2,6, 20);
+                    excelDeal.xchart("fps",0, 3, 6, 40);
+                    excelDeal.xchart("data",0, 4, 6, 60);
                 }
             }
         });
