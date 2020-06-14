@@ -163,6 +163,18 @@ public class AppInfo {
 		}
 		return data;
 	}
+	public void getFPS(){
+		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
+			String command = "adb -s " + DeviceAndPack.deivceid + " shell dumpsys gfxinfo " + DeviceAndPack.packagename;
+			logger.info("adb command:" + command);
+			adbUtil.getListByADB(command);
+			//返回的绘制每一行代表一帧，获取所有行表示这次绘制的总帧数
+			
+//		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+		}else {
+			logger.info("device is error");
+		}
+	}
 //	public static void main(String[] args) {
 //		DeviceAndPack deviceAndPack = new DeviceAndPack();
 //		AppInfo appInfo = new AppInfo();
