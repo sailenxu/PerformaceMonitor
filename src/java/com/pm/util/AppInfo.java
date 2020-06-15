@@ -266,7 +266,7 @@ public class AppInfo {
 			if (StringTool.stringIsNotNull(result)){
 				//有时获取到的activity为空mCurrentFocus=null
 				if (!result.contains("null")) {
-					System.out.println(result);
+//					System.out.println(result);
 					String pack = result.trim().split("\\s+")[2];
 					if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")) {
 						activity = pack.split("\\/")[1];
