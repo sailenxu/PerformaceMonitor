@@ -51,7 +51,7 @@ public class AppInfo {
 	public int getAPPMem(){
 		int mem=0;
 		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
-			List<String> result = adbUtil.getListByADB("adb -s " + DeviceAndPack.deivceid + " shell dumpsys meminfo -s " + DeviceAndPack.packagename);
+			List<String> result = adbUtil.getListByADB("adb -s " + DeviceAndPack.deivceid + " shell dumpsys meminfo -s " + getPid());
 			//可能获取到的结果为空，或进程不存在
 			if (result.size() != 0 && result != null) {
 				for (String ss : result) {
@@ -264,11 +264,14 @@ public class AppInfo {
 //			logger.info(result);
 			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
 			if (StringTool.stringIsNotNull(result)){
-//				System.out.println(result);
-				String pack = result.trim().split("\\s+")[2];
-				if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")){
-					activity = pack.split("\\/")[1];
-					activity = activity.substring(0,activity.length()-1);
+				//有时获取到的activity为空mCurrentFocus=null
+				if (!result.contains("null")) {
+					System.out.println(result);
+					String pack = result.trim().split("\\s+")[2];
+					if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")) {
+						activity = pack.split("\\/")[1];
+						activity = activity.substring(0, activity.length() - 1);
+					}
 				}
 			}
 		}

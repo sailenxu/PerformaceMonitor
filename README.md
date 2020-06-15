@@ -79,7 +79,9 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdo
 方法2：adb shell dumpsys meminfo|findstr Foreground  
 返回当前应用的内存占用，好解析。但是无法确认当前应用，如果app闪退，抓到的是luncher的内存了  
 使用方法1获取成功  
-获取内存返回的是kb，数字太大，显示时有问题，需要去掉后三位
+获取内存返回的是kb，数字太大，显示时有问题，需要去掉后三位  
+获取内存时使用包名执行慢，一次需要4s左右，使用pid来获取更快  
+adb shell dumpsys meminfo pid
 #### 3.获取fps
 adb shell dumpsys gfxinfo com.xstore.sevenfresh  
 此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps  

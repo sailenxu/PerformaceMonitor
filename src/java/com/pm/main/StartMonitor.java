@@ -49,9 +49,13 @@ public class StartMonitor implements Runnable {
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
 		while (running) {
 			double cpu = AppInfo.getAppInfo().getAPPCPU();
+			System.out.println("cpu:"+cpu);
 			int mem = AppInfo.getAppInfo().getAPPMem();
+			System.out.println("mem:"+mem);
 			double fps = AppInfo.getAppInfo().getFPS();
+			System.out.println("fps:"+fps);
 			int data = AppInfo.getAppInfo().getData();
+			System.out.println("data:"+data);
 			if (flag){
 				cpuJPanel = cpuChart.getPanel(cpu);
 				memJPanel = memChart.getPanel(mem);
@@ -75,9 +79,6 @@ public class StartMonitor implements Runnable {
 					hang++;
 				}
 			}
-			try {
-				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
-			} catch (InterruptedException e) {}
 		}
 	}
 	public static void setHang(){
