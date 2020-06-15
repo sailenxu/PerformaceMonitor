@@ -77,7 +77,7 @@ public class DevicePackPanel {
         currentPackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String current = DeviceInfo.getDeviceInfo().getCurrentPack();
+                String current = AppInfo.getAppInfo().getCurrentPack();
                 logger.info("current:::"+current);
                 if (!current.equals("")) {
                     setDefaultPack(current);

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.pm.page.ChartPanel;
 import com.pm.perfordata.DeviceAndPack;
+import com.pm.perforentity.FPSinfo;
 import com.pm.util.AppInfo;
 import com.pm.util.ExcelDeal;
 
@@ -28,9 +29,7 @@ public class StartMonitor implements Runnable {
 	private JPanel memJPanel;
 	private JPanel fpsJPanel;
 	private JPanel dataJPanel;
-	private ExcelDeal excelDeal;
 	public StartMonitor(JFrame jFrame,int x, int y, int width, int height){
-		excelDeal = new ExcelDeal(ResourceBundle.getBundle("config").getString("performancePath"));
 		this.jFrame = jFrame;
 		perJPanel = new JPanel();
 		perJPanel.setSize(width, height);
@@ -40,16 +39,18 @@ public class StartMonitor implements Runnable {
 		memChart = new ChartPanel(jFrame,"", "memory(mb)",(int)(width*0.5), (int)(height*0.5), 100);
 		fpsChart = new ChartPanel(jFrame, "", "fps",(int)(width*0.5), (int)(height*0.5), 100);
 		dataChart = new ChartPanel(jFrame, "", "data(kb)",(int)(width*0.5), (int)(height*0.5), 100);
+//		new FPSinfo(jFrame,perJPanel,x,y,width,height).run();
 	}
 
 	public void run() {
+
 		boolean flag = true;
 		running=true;
 		//循环获取性能数据，直到线程停止，每次各项取一个值，添加到集合中
 		while (running) {
 			double cpu = AppInfo.getAppInfo().getAPPCPU();
 			int mem = AppInfo.getAppInfo().getAPPMem();
-			double fps = AppInfo.getAppInfo().getAPPCPU();
+			double fps = AppInfo.getAppInfo().getFPS();
 			int data = AppInfo.getAppInfo().getData();
 			if (flag){
 				cpuJPanel = cpuChart.getPanel(cpu);
@@ -70,38 +71,13 @@ public class StartMonitor implements Runnable {
 				dataChart.rePaint(data);
 				//判断是否需要写入excel
 				if (DeviceAndPack.isWriteExcel){
-					writeExcel(hang, cpu, mem, fps, data);
+					DealData.getInstance().writeExcel(hang, cpu, mem, fps, data);
 					hang++;
 				}
 			}
 			try {
 				Thread.sleep(Long.parseLong(ResourceBundle.getBundle("config").getString("monitorTime")));
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	private void writeExcel(int hang, double cpu, int mem, double fps, int data){
-		if (excelDeal.isExitFile()){
-			write(hang,cpu,mem,fps,data);
-		}else {
-			try {
-				excelDeal.createXlsx();
-				write(hang,cpu,mem,fps,data);
-			}catch (Exception e){}
-		}
-	}
-	private void write(int hang,double cpu, int mem, double fps, int data){
-		String time = excelDeal.getStringDate();
-		try {
-			excelDeal.writeToXLSX(hang, 0, time);
-			excelDeal.writeToXLSX(hang, 1, cpu);
-			excelDeal.writeToXLSX(hang, 2, mem);
-			excelDeal.writeToXLSX(hang, 3, fps);
-			excelDeal.writeToXLSX(hang, 4, data);
-		}catch (Exception e){
-			e.printStackTrace();
+			} catch (InterruptedException e) {}
 		}
 	}
 	public static void setHang(){

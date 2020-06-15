@@ -18,4 +18,10 @@ public  class StringTool {
         }
         return dest;
 	}
+	public static boolean stringIsNotNull(String result){
+		if (result!=null && !result.equals("")){
+			return true;
+		}
+		return false;
+	}
 }

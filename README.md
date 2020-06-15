@@ -6,7 +6,25 @@
 有刷新按钮，刷新后对device和package进行重置，device下拉框显示所有已连接设备，选择deviceis，显示设备信息、package下拉框显示所有已安装应用，选择package包名，就可以对该应用的性能指数进行监控
 ### 1.设备选择和刷新，包名选择和刷新（已完成）
 显示设备列表，设备刷新按钮，logcat清除，截图抓取  
-包名列表，包名刷新，清缓存，卸载
+包名列表，包名刷新，当前包名，清缓存，卸载
+1.锁屏时无法获取当前包名
+~~~
+>Adb shell dumpsys window|findstr Current
+        mCurrentUserId=0
+  mCurrentFocus=Window{429771 u0 StatusBar}
+    mCurrent=[0,75][1080,2340]
+    mCurrentAppOrientation=SCREEN_ORIENTATION_NOSENSOR
+      mCurrentRotation=ROTATION_0
+~~~
+2.非锁屏时包名
+~~~
+>Adb shell dumpsys window|findstr Current
+        mCurrentUserId=0
+  mCurrentFocus=Window{acbd29 u0 com.tencent.mm/com.tencent.mm.ui.LauncherUI}
+    mCurrent=[0,75][1080,2340]
+    mCurrentAppOrientation=SCREEN_ORIENTATION_PORTRAIT
+      mCurrentRotation=ROTATION_0
+~~~
 ### 2.设备信息查看（已完成）
 写页面的过程中，发现前端控件在一个类中初始化，有点乱，打算把设备信息的panel封装出来  
 品牌，型号，分辨率，android版本
@@ -63,8 +81,47 @@ adb -s Q5S5T19529000632 shell top -o ARGS -o %CPU -d 0.5 -n 1|findstr com.jingdo
 使用方法1获取成功  
 获取内存返回的是kb，数字太大，显示时有问题，需要去掉后三位
 #### 3.获取fps
-adb shell dumpsys gfxinfo com.xstore.sevenfresh
-此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps
+adb shell dumpsys gfxinfo com.xstore.sevenfresh  
+此指令会返回前120个fps数据，需要进行数据的处理才能得到实时的fps  
+前提：手机开发者里需要打开adb shell dumpsys gfxinfo开关，否则获取不到  
+1.获取到的数据有可能为空，没有绘制  
+2.可能有两个activity  
+~~~
+Profile data in ms:
+
+        com.tencent.mm/com.tencent.mm.ui.LauncherUI/android.view.ViewRootImpl@f565645 (visibility=8)
+        Draw    Prepare Process Execute
+
+        com.tencent.mm/com.tencent.mm.plugin.sns.ui.SnsTimeLineUI/android.view.ViewRootImpl@7f2ac31 (visibility=0)
+        Draw    Prepare Process Execute
+
+View hierarchy:
+~~~
+原因是切换activity了，所以解析结果时要先获取当前activity，统计当前activity的帧数
+3.结束进程后  
+~~~
+Profile data in ms:
+
+View hierarchy:
+~~~
+先截取这两个中间的每一行，然后判断有没有当前activity，如果没有直接return  
+4.正常有数据  
+~~~
+Profile data in ms:
+
+        com.tencent.mm/com.tencent.mm.ui.LauncherUI/android.view.ViewRootImpl@f565645 (visibility=8)
+        Draw    Prepare Process Execute
+
+        com.tencent.mm/com.tencent.mm.plugin.sns.ui.SnsTimeLineUI/android.view.ViewRootImpl@7f2ac31 (visibility=0)
+        Draw    Prepare Process Execute
+        4.25    0.17    1.82    2.50
+        1.06    0.14    4.05    1.30
+
+View hierarchy:
+~~~
+从当前activity下一行开始拿，一直到最后一行，然后判断拿到的size，如果size==0就是没绘制或者锁屏了  
+每次都需要获取当前activity，因为只要切换就会改变  
+帧率不能作为流畅度的评判标准，因为在绘制画面时如果需要绘制的内容多帧率就高，绘制完毕帧率为0  
 #### 4.获取流量
 方法：  
 1.adb shell ps|findstr xxx获取应用的pid  

@@ -4,7 +4,9 @@ import com.pm.log.LogDemo;
 import com.pm.perfordata.DeviceAndPack;
 import org.apache.log4j.Logger;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /***
@@ -163,24 +165,126 @@ public class AppInfo {
 		}
 		return data;
 	}
-	public void getFPS(){
+	//获取当前包名
+	public String getCurrentPack(){
+		String pac="";
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command = "adb -s "+ DeviceAndPack.deivceid + " shell dumpsys window|findstr mCurrentFocus";
+			logger.info(command);
+			String result = adbUtil.getStringByADB(command);
+			logger.info(result);
+			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
+			if (result!=null && !result.equals("") && !result.contains("null")){
+				String pack = result.trim().split("\\s+")[2];
+				if (!pack.contains("StatusBar")){
+					pac = pack.split("\\/")[0];
+				}else {
+					logger.info("可能锁屏了");
+				}
+			}
+
+		}
+		return pac;
+	}
+	public List<String> getAllFPS(){
+		List<String> allFPS=new ArrayList<String>();
 		if (DeviceAndPack.deivceid!=null&&DeviceAndPack.packagename!=null) {
 			String command = "adb -s " + DeviceAndPack.deivceid + " shell dumpsys gfxinfo " + DeviceAndPack.packagename;
-			logger.info("adb command:" + command);
-			adbUtil.getListByADB(command);
+//			logger.info("adb command:" + command);
+			List<String> result = adbUtil.getListByADB(command);
 			//返回的绘制每一行代表一帧，获取所有行表示这次绘制的总帧数
-			
-//		runADB("adb -s "+DeviceAndPack.deivceid+" uninstall "+packagename);
+			int start = 0;
+			int mid = 0;
+			int end = 0;
+			String currentActivity = getCurrentActivity();
+			if (!currentActivity.equals("")) {
+				for (int i = 0; i < result.size(); i++) {
+					if (result.get(i).contains("Profile data in ms:")) {
+						start = i;
+					} else if (result.get(i).contains("View hierarchy:")) {
+						end = i;
+					} else if (result.get(i).contains(currentActivity)) {
+						if (mid == 0) {
+							mid = i;
+						}
+					}
+//					System.out.println(i + "::::::" + result.get(i));
+				}
+//				System.out.println(start + ":::::::" + mid + "::::::::" + end);
+				if (end>0 && mid >0) {
+					if (end - start > 3) {
+						if (end - mid > 2) {
+							for (int i = mid + 2; i < end; i++) {
+								allFPS.add(result.get(i));
+//								System.out.println("::::::" + result.get(i));
+							}
+						}
+					}
+				}
+			}
 		}else {
-			logger.info("device is error");
+//			logger.info("device is error");
+		}
+		return allFPS;
+	}
+	public int getFPS(){
+		int fps=0;
+		List<String> all = getAllFPS();
+		int frame_count= all.size();
+		int jank_count = 0;
+		int vsync_overtime = 0;
+		if (all.size()>0) {
+			for (String eve : all) {
+				String[] time_block = eve.split("\\s+");
+				try {
+					float render_time = Float.parseFloat(time_block[0]) + Float.parseFloat(time_block[1]) + Float.parseFloat(time_block[2]) + Float.parseFloat(time_block[3]);
+					if (render_time > 16.67) {
+						jank_count++;
+						if (render_time % 16.67 == 0) {
+							vsync_overtime = vsync_overtime + (int) (render_time / 16.67) - 1;
+						} else {
+							vsync_overtime = vsync_overtime + (int) (render_time / 16.67);
+						}
+					}
+				}catch (Exception e){
+					continue;
+				}
+			}
+			fps= (int) (frame_count * 60 / (frame_count + vsync_overtime));
+		}
+		return fps;
+	}
+	//获取当前activity
+	public String getCurrentActivity(){
+		String activity="";
+		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
+			String command = "adb -s "+ DeviceAndPack.deivceid + " shell dumpsys window|findstr mCurrentFocus";
+//			logger.info(command);
+			String result = adbUtil.getStringByADB(command);
+//			logger.info(result);
+			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
+			if (StringTool.stringIsNotNull(result)){
+//				System.out.println(result);
+				String pack = result.trim().split("\\s+")[2];
+				if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")){
+					activity = pack.split("\\/")[1];
+					activity = activity.substring(0,activity.length()-1);
+				}
+			}
+		}
+		return activity;
+	}
+	public static void main(String[] args) {
+		DeviceAndPack deviceAndPack = new DeviceAndPack();
+		deviceAndPack.setDeivceid("Q5S5T19529000632");
+		deviceAndPack.setPackagename("com.tencent.mm");
+		AppInfo appInfo = new AppInfo();
+//		appInfo.getAllFPS();
+		while(true) {
+			System.out.println(appInfo.getAllFPS().size());
+			try {
+				Thread.sleep(1000);
+			}catch (Exception e){}
 		}
 	}
-//	public static void main(String[] args) {
-//		DeviceAndPack deviceAndPack = new DeviceAndPack();
-//		AppInfo appInfo = new AppInfo();
-//		deviceAndPack.setDeivceid("Q5S5T19529000632");
-//		deviceAndPack.setPackagename("com.cleanmaster.mguard_cn");
-//		System.out.println(appInfo.getData());
-////		System.out.println(cpuValue);
-//	}
 }
