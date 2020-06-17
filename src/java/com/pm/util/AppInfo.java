@@ -208,22 +208,17 @@ public class AppInfo {
 							mid = i;
 						}
 					}
-//					System.out.println(i + "::::::" + result.get(i));
 				}
-//				System.out.println(start + ":::::::" + mid + "::::::::" + end);
 				if (end>0 && mid >0) {
 					if (end - start > 3) {
 						if (end - mid > 2) {
 							for (int i = mid + 2; i < end; i++) {
 								allFPS.add(result.get(i));
-//								System.out.println("::::::" + result.get(i));
 							}
 						}
 					}
 				}
 			}
-		}else {
-//			logger.info("device is error");
 		}
 		return allFPS;
 	}
@@ -266,28 +261,32 @@ public class AppInfo {
 			if (StringTool.stringIsNotNull(result)){
 				//有时获取到的activity为空mCurrentFocus=null
 				if (!result.contains("null")) {
-//					System.out.println(result);
+					System.out.println(result);
 					String pack = result.trim().split("\\s+")[2];
 					if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")) {
-						activity = pack.split("\\/")[1];
-						activity = activity.substring(0, activity.length() - 1);
+						try {
+							activity = pack.split("\\/")[1];
+							activity = activity.substring(0, activity.length() - 1);
+						}catch (Exception e){
+							return activity;
+						}
 					}
 				}
 			}
 		}
 		return activity;
 	}
-	public static void main(String[] args) {
-		DeviceAndPack deviceAndPack = new DeviceAndPack();
-		deviceAndPack.setDeivceid("Q5S5T19529000632");
-		deviceAndPack.setPackagename("com.tencent.mm");
-		AppInfo appInfo = new AppInfo();
-//		appInfo.getAllFPS();
-		while(true) {
-			System.out.println(appInfo.getAllFPS().size());
-			try {
-				Thread.sleep(1000);
-			}catch (Exception e){}
-		}
-	}
+//	public static void main(String[] args) {
+//		DeviceAndPack deviceAndPack = new DeviceAndPack();
+//		deviceAndPack.setDeivceid("Q5S5T19529000632");
+//		deviceAndPack.setPackagename("com.tencent.mm");
+//		AppInfo appInfo = new AppInfo();
+////		appInfo.getAllFPS();
+//		while(true) {
+//			System.out.println(appInfo.getAllFPS().size());
+//			try {
+//				Thread.sleep(1000);
+//			}catch (Exception e){}
+//		}
+//	}
 }
