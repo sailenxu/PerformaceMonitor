@@ -132,12 +132,9 @@ public class AppInfo {
 		if (getPid()!=0){
 			String command = "adb -s "+DeviceAndPack.deivceid+" shell cat /proc/"+getPid()+"/net/dev|findstr wlan0";
 			String result = adbUtil.getStringByADB(command);
-//			System.out.println(result.split("\\s+")[2]+":::::"+result.split("\\s+")[10]);
 			String[] value = result.split("\\s+");
 			if (value.length>10) {
 				data = Long.parseLong(result.split("\\s+")[2])+Long.parseLong(result.split("\\s+")[10]);
-//				System.out.println("data:::::::::"+data);
-//				data = Integer.parseInt(result.split("\\s+")[2]) + Integer.parseInt(result.split("\\s+")[10]);
 			}
 		}else {
 			return null;
@@ -254,14 +251,11 @@ public class AppInfo {
 		String activity="";
 		if (DeviceAndPack.deivceid!=null && !DeviceAndPack.deivceid.equals("")) {
 			String command = "adb -s "+ DeviceAndPack.deivceid + " shell dumpsys window|findstr mCurrentFocus";
-//			logger.info(command);
 			String result = adbUtil.getStringByADB(command);
-//			logger.info(result);
 			//mCurrentFocus=Window{65019b9 u0 com.huawei.android.launcher/com.huawei.android.launcher.unihome.UniHomeLauncher}
 			if (StringTool.stringIsNotNull(result)){
 				//有时获取到的activity为空mCurrentFocus=null
 				if (!result.contains("null")) {
-					System.out.println(result);
 					String pack = result.trim().split("\\s+")[2];
 					if (!pack.contains("StatusBar") && !pack.contains("PopupWindow") && !pack.contains("null")) {
 						try {
