@@ -14,6 +14,11 @@ import java.util.List;
 public class AdbUtil {
 	private final static Logger logger = Logger.getLogger(LogDemo.class);
 	private CmdTool cmdUtil = new CmdTool();
+
+	private static AdbUtil adbUtil = new AdbUtil();
+	public static AdbUtil getAdbUtil(){
+		return adbUtil;
+	}
 	/**
 	 * 执行adb指令，过滤启动信息,返回list集合
 	 * @param zhiling

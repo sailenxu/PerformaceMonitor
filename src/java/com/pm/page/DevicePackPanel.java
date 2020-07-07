@@ -3,10 +3,7 @@ package com.pm.page;
 import com.pm.log.LogDemo;
 import com.pm.main.StartMonitor;
 import com.pm.perfordata.DeviceAndPack;
-import com.pm.util.AppInfo;
-import com.pm.util.DeviceInfo;
-import com.pm.util.DevicesInfos;
-import com.pm.util.ExcelDeal;
+import com.pm.util.*;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -25,6 +22,7 @@ public class DevicePackPanel {
     private JComboBox deviceJComeboBox=new JComboBox();
     private JButton deviceRefreshButton=new JButton("刷新");
     private JButton screenshotButton = new JButton("截图");
+    private JButton screenRecordButton = new JButton("录屏");
     private JButton clearLogcat = new JButton("清除logcat");
     private JLabel packagename=new JLabel("package：");
     private JComboBox packJComboBox=new JComboBox();
@@ -57,6 +55,26 @@ public class DevicePackPanel {
             public void actionPerformed(ActionEvent e) {
                 logger.info("截图…………");
                 DeviceInfo.getDeviceInfo().screenShot();
+            }
+        });
+        screenRecordButton.addActionListener(new ActionListener() {
+            private boolean isRecording=false;
+            ScreenRecord screenRecord = new ScreenRecord();
+            Thread screenRecordThread = new Thread(screenRecord);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isRecording){
+                    screenRecordThread.stop();
+                    screenRecord.getRecord();
+                    screenRecordButton.setText("录屏");
+                    logger.info(screenRecordThread.getState());
+                }else {
+                    logger.info("录屏开始，默认3min");
+                    screenRecordButton.setText("停止");
+                    isRecording = true;
+                    //录屏需要开启一个线程，结束时将线程stop
+                    screenRecordThread.start();
+                }
             }
         });
         //清除logcat按钮监听
@@ -135,6 +153,7 @@ public class DevicePackPanel {
         devicePanel.add(deviceJComeboBox);
         devicePanel.add(deviceRefreshButton);
         devicePanel.add(screenshotButton);
+        devicePanel.add(screenRecordButton);
         devicePanel.add(clearLogcat);
         devicePanel.add(packagename);
         devicePanel.add(packJComboBox);
