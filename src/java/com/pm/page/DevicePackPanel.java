@@ -120,10 +120,26 @@ public class DevicePackPanel {
         //卸载按钮监听，卸载后pack下拉框要刷新
         uninstallButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                logger.info("卸载…………"+DeviceAndPack.packagename);
-                AppInfo.getAppInfo().clearAPK();
-                AppInfo.getAppInfo().uninstallAPK();
-                refreshPackCombobox();
+                //对比包名，如果不是默认包名，需要弹窗确认
+                String defaultPack = ResourceBundle.getBundle("config").getString("defaultPackage");
+                if (!defaultPack.equals(DeviceAndPack.packagename)) {
+                    int value = JOptionPane.showConfirmDialog(null, "与默认配置包名不一致，确定要卸载:"+DeviceAndPack.packagename+"?", "卸载确认", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (value == JOptionPane.YES_OPTION) {
+                        logger.info("卸载…………"+DeviceAndPack.packagename);
+                        AppInfo.getAppInfo().clearAPK();
+                        AppInfo.getAppInfo().uninstallAPK();
+                        refreshPackCombobox();
+                    }else {
+                        logger.info("取消卸载");
+                        return;
+                    }
+                }else {
+                    logger.info("卸载…………"+DeviceAndPack.packagename);
+                    AppInfo.getAppInfo().clearAPK();
+                    AppInfo.getAppInfo().uninstallAPK();
+                    refreshPackCombobox();
+                }
+
             }
         });
         startMonitor.addActionListener(new ActionListener() {
